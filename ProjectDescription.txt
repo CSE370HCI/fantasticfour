@@ -1,0 +1,9 @@
+* Team name: Fantastic Four
+* GitHub repo: https://github.com/CSE410HCI/fantasticfour
+* ZenHub board: https://app.zenhub.com/workspaces/fantastic-four-6022dd1314285f000e8e892a/board?repos=337266784
+*Our team's alternate dispute resolution approach: Rock, Paper, Scissors!
+* Description of the completed version of our project
+	A platform to connect people who create and share memes. The completed version of the project would have a homepage with posts and comments sorted based on the tab selected in the navigation bar on the top. Users would be able to access their own profiles and find other users to follow. Users would be able to post to specific communities that they can subscribe to.
+* Description of  a typical user of our project and how they would use it
+	A typical user would access MemeMe either with or without an account. An account would allow for a personalized user feed based on the communities they subscribe to. However, it will be possible to access a feed of the most popular and latest memes on the platform, even without an account. A user with an account can upload memes that they create, upvote/downvote others’ content, follow other users, join communities, and even message other users directly.
+
