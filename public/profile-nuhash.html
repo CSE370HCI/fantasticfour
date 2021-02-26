@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | Nuhash Chowdhury</title>
+    <style>
+       @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+       body {
+           margin: 0;
+           padding: 0;
+           font-family: 'Playfair Display', serif;
+           font-size: 1.25rem;
+           color: #000;
+           line-height: 1.5;
+       }
+       a:visited {
+           color: inherit;
+       }
+       a:hover {
+           color: #3d37ff;
+       }
+       .main {
+           display: flex;
+           flex-direction: column;
+       }
+       @media (min-width: 769px) {
+            .main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-auto-rows: 50vh;
+        }
+       }
+       
+       .hello {
+           display: grid;
+           text-align: center;
+           grid-row: span 2;
+           background-color: #FFFBF2;
+           align-items: center;
+           font-size: 5rem;
+           color: #1400FF;
+       }
+       .photo {
+           background-position: center;
+           background-size: cover;
+           background-repeat: no-repeat;
+           width: 100%;
+           height: 50vh;
+       }
+       .bio {
+           align-self: center;
+           padding: 10%;
+       }
+       .bio > h3 {
+           font-size: 2rem;
+       }
+       .bio > h3 > span {
+           color: #1400FF;
+       }
+    </style>
+</head>
+<body>
+    <section class="main">
+        <div class="hello">
+            <h1>Hello,</h1>
+        </div>
+        <div class="photo" style="
+        background-image: url(https://i.imgur.com/KCYJtnp.jpg);">
+        </div>
+        <div class="bio">
+            <h3>I am <span><a href="https://www.twitter.com/NuhashC">Nuhash Chowdhury <i class="fa fa-twitter" aria-hidden="true"></i>
+            </a></span></h3>
+            <p>
+                I live in Buffalo and am a senior at UB, and I think coffee is amazing. When I am not drinking coffee (and also when I am), I like to learn about life, solve problems using computers, and photograph moments.
+            </p>
+        </div>
+    </section>
+    <script src="https://kit.fontawesome.com/0bddd8bbd2.js" crossorigin="anonymous"></script>
+</body>
+</html>
