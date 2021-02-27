@@ -1,0 +1,19 @@
+body {
+	background-color: #00203FFF;
+}
+h1 {
+	color: #FFFFFF;
+	font-size: 3.5vw;
+	text-align: center;
+}
+p {
+	color: #FFFFFF;
+	font-size: 2vw;
+}
+img{
+	display: block; 
+	margin:auto;
+	max-width:25%;
+    max-height:25%;
+}
+
