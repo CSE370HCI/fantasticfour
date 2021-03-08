@@ -13,6 +13,7 @@ import Profile from "./Component/Profile.jsx";
 import FriendForm from "./Component/FriendForm.jsx";
 import Modal from "./Component/Modal.jsx";
 import Navbar from "./Component/Navbar.jsx";
+import Upload from "./Component/Upload";
 import {
   BrowserRouter as Router, Route, Switch
 } from 'react-router-dom';
@@ -71,6 +72,12 @@ class App extends React.Component {
 
           <div className="maincontent" id="mainContent">
             <Switch>
+            <Route path="/upload">
+              <div className="upload">
+                <p>Create a New Post</p>
+                <Upload userid={sessionStorage.getItem("user")} />
+              </div>
+            </Route>
             <Route path="/settings">
               <div className="settings">
                 <p>Settings</p>
@@ -86,7 +93,7 @@ class App extends React.Component {
             </Route>
             <Route path={["/posts","/"]}>
               <div>
-                <p>Social Media Test Harness</p>
+                <p>Posts</p>
                 <LoginForm refreshPosts={this.doRefreshPosts}  />
                 <PostForm refresh={this.state.refreshPosts}/>
               </div>
