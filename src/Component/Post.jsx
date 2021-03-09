@@ -72,7 +72,7 @@ export default class Post extends React.Component {
     //else {
       return (
         <div className="comment-block">
-          <img src={this.props.post.thumbnailURL}/>
+          <img src={this.props.post.thumbnailURL} className="post-image"/>
           <div className="comment-indicator">
             <div className="comment-indicator-text">
               {this.getCommentCount()} Comments

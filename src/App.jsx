@@ -74,7 +74,7 @@ class App extends React.Component {
             <Switch>
             <Route path="/upload">
               <div className="upload">
-                <p>Create a New Post</p>
+                <p className='page-title'>Create a New Post</p>
                 <Upload userid={sessionStorage.getItem("user")} />
               </div>
             </Route>

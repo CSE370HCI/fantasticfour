@@ -73,12 +73,17 @@ export default class PostForm extends React.Component {
       <div>
         <form onSubmit={this.submitHandler}>
           <label>
-            Title<br/>
-            <textarea rows="1" cols="70" onChange={this.updateTitle} />
-            <br />
+            <br/>
+              Title<br/>
+            <input type="text" cols="70" className="upload-input" onChange={this.updateTitle} />
+            <br /><br />
             Upload Photo (URL) <br/>
-            <textarea rows="10" cols="70" onChange={this.updateURL} />
+            <input type="text" rows="1" cols="70" className="upload-input" onChange={this.updateURL} />
+            <br /><br />
+            Communities <br/>
+            <input type="text" cols="70" className="upload-input" onChange={this.updateURL} />
           </label>
+          <br />
           <br />
 
           <input type="submit" value="submit" />

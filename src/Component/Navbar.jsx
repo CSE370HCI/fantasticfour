@@ -65,10 +65,10 @@ class Navbar extends React.Component {
         <li className="pm admin">
           <Link to="/upload">
             <img
-                src={newPostIcon}
-                className="sidenav-icon"
-                alt="Create a Post"
-                title="Create a Post"
+              src={newPostIcon}
+              className="sidenav-icon"
+              alt="Create a Post"
+              title="Create a Post"
             />
           </Link>
         </li>
