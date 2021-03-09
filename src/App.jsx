@@ -16,6 +16,8 @@ import Navbar from "./Component/Navbar.jsx";
 import {
   BrowserRouter as Router, Route, Switch
 } from 'react-router-dom';
+import Login from "./Component/Login";
+import Signup from "./Component/Signup"
 
 // toggleModal will both show and hide the modal dialog, depending on current state.  Note that the
 // contents of the modal dialog are set separately before calling toggle - this is just responsible
@@ -86,10 +88,16 @@ class App extends React.Component {
             </Route>
             <Route path={["/posts","/"]}>
               <div>
-                <p>Social Media Test Harness</p>
+              <p>Social Media Test Harness</p>
                 <LoginForm refreshPosts={this.doRefreshPosts}  />
                 <PostForm refresh={this.state.refreshPosts}/>
               </div>
+            </Route>
+            <Route path={"/login"}>
+              <Login />
+            </Route>
+            <Route path={"/signup"}>
+              <Signup />
             </Route>
             </Switch>
           </div>

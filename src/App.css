@@ -281,3 +281,76 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+.login-page {
+
+}
+
+/* styles for login and signup pages
+/* reset */
+
+/* body {
+  margin: 0;
+}
+
+a,ul,li,p {
+  text-decoration: none;
+  list-style: none;
+  padding: 0;
+  color: #333;
+}
+
+nav {
+  display: grid;
+  grid-row: span 1 / 2;
+
+  width: 100%;
+  background-color: white;
+  align-items: center;
+}
+
+nav h1 {
+  margin-left: 20px;
+}
+
+.page {
+  display: grid;
+  grid-template-rows: 90px auto;
+  background-color: #eee;
+  min-height: 100vh;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.container {
+  display: block;
+  background-color: white;
+  width: 20em;
+  height: 10em;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.button {
+
+}
+
+.green {
+  background-color: greenyellow;
+}
+
+.link {
+  color: blue;
+  text-decoration: underline;
+} */
