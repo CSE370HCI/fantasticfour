@@ -111,6 +111,15 @@
   display: inline-flex;
 }
 
+.post-image{
+  width:250px;
+  height:250px;
+  display: block;
+  margin: 0 auto;
+
+  /*margin-bottom:15px;*/
+}
+
 .userlist {
   text-align: left;
   background: blue;
