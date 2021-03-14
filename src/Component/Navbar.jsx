@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 // pull in the images for the menu items
 import postIcon from "../assets/post.svg";
+import newPostIcon from "../assets/new_post.svg";
 import friendIcon from "../assets/friends.svg";
 import settingIcon from "../assets/settings.svg";
 import helpIcon from "../assets/help.svg";
@@ -60,6 +61,16 @@ class Navbar extends React.Component {
               title="Settings"
             />
           </button>
+        </li>
+        <li className="pm admin">
+          <Link to="/upload">
+            <img
+              src={newPostIcon}
+              className="sidenav-icon"
+              alt="Create a Post"
+              title="Create a Post"
+            />
+          </Link>
         </li>
       </ul>
     </div>

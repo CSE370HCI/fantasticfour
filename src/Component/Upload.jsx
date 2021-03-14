@@ -1,6 +1,5 @@
 import React from "react";
 import "../App.css";
-import PostingList from "./PostingList.jsx";
 
 //The post form component holds both a form for posting, and also the list of current posts in your feed
 export default class PostForm extends React.Component {
@@ -8,8 +7,9 @@ export default class PostForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      post_text: "",
-      postmessage: ""
+      post_title: "",
+      post_message: "",
+      post_URL: ""
     };
     this.postListing = React.createRef();
   }
@@ -24,15 +24,15 @@ export default class PostForm extends React.Component {
 
     //make the api call to post
     fetch(process.env.REACT_APP_API_PATH+"/posts", {
-      method: "post",
+      method: "POST",
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer '+sessionStorage.getItem("token")
       },
       body: JSON.stringify({
         authorID: sessionStorage.getItem("user"),
-        content: this.state.post_text,
-        thumbnailURL: "",
+        content: this.state.post_title,
+        thumbnailURL: this.state.post_URL,
         type: "post"
       })
     })
@@ -40,10 +40,11 @@ export default class PostForm extends React.Component {
       .then(
         result => {
           this.setState({
-            postmessage: result.Status
+            post_message: result.Status
           });
-          // once a post is complete, reload the feed
-          this.postListing.current.loadPosts();
+
+          // redirects users back to the posts screen
+          window.location.replace("/posts");
         },
         error => {
           alert("error!");
@@ -53,28 +54,42 @@ export default class PostForm extends React.Component {
 
   // this method will keep the current post up to date as you type it,
   // so that the submit handler can read the information from the state.
-  myChangeHandler = event => {
+  updateTitle = event => {
     this.setState({
-      post_text: event.target.value
+      post_title: event.target.value
     });
   };
+
+  updateURL = event => {
+    this.setState({
+      post_URL: event.target.value
+    });
+  };
+
+
 
   render() {
     return (
       <div>
-        {/*<form onSubmit={this.submitHandler}>*/}
-        {/*  <label>*/}
-        {/*    Post Something!*/}
-        {/*    <br />*/}
-        {/*    <textarea rows="10" cols="70" onChange={this.myChangeHandler} />*/}
-        {/*  </label>*/}
-        {/*  <br />*/}
+        <form onSubmit={this.submitHandler}>
+          <label>
+            <br/>
+              Title<br/>
+            <input type="text" cols="70" className="upload-input" onChange={this.updateTitle} />
+            <br /><br />
+            Upload Photo (URL) <br/>
+            <input type="text" rows="1" cols="70" className="upload-input" onChange={this.updateURL} />
+            <br /><br />
+            Communities <br/>
+            <input type="text" cols="70" className="upload-input" onChange={this.updateURL} />
+          </label>
+          <br />
+          <br />
 
-        {/*  <input type="submit" value="submit" />*/}
-        {/*  <br />*/}
-        {/*  {this.state.postmessage}*/}
-        {/*</form>*/}
-        <PostingList ref={this.postListing} refresh={this.props.refresh} type="postlist" />
+          <input type="submit" value="submit" />
+          <br />
+          {this.state.post_message}
+        </form>
       </div>
     );
   }
