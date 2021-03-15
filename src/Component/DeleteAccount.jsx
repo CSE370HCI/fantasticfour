@@ -38,24 +38,31 @@ export default class PostForm extends React.Component {
                 }
             )
                 .then(
-                    fetch(process.env.REACT_APP_API_PATH + "/auth/logout", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: "Bearer " + sessionStorage.getItem("token"),
-                        },
-                    })
+                    (result) => {
+                        fetch(process.env.REACT_APP_API_PATH + "/auth/logout", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: "Bearer " + sessionStorage.getItem("token"),
+                            },
+                        });
+                        window.location.replace("/");
+                        fetch(process.env.REACT_APP_API_PATH + "/auth/verify", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: "Bearer " + sessionStorage.getItem("token"),
+                            },
+                        });
+                        fetch(process.env.REACT_APP_API_PATH + "/auth/verify", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: "Bearer " + sessionStorage.getItem("token"),
+                            },
+                        });
+                    }
                 )
-                .then(window.location.replace("/"))
-                .then(
-                    fetch(process.env.REACT_APP_API_PATH + "/auth/verify", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: "Bearer " + sessionStorage.getItem("token"),
-                        },
-                    })
-                );
         } else if (this.state.delete_option == "PURGE") {
             fetch(
                 process.env.REACT_APP_API_PATH +
@@ -95,6 +102,13 @@ export default class PostForm extends React.Component {
                             }
                         );
                         window.location.replace("/");
+                        fetch(process.env.REACT_APP_API_PATH + "/auth/verify", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: "Bearer " + sessionStorage.getItem("token"),
+                            },
+                        });
                         fetch(process.env.REACT_APP_API_PATH + "/auth/verify", {
                             method: "POST",
                             headers: {
