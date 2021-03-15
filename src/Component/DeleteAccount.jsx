@@ -43,6 +43,10 @@ export default class PostForm extends React.Component {
     window.location.replace("/");
   };
 
+  redirect = () => {
+    window.location.replace("/");
+  }
+
   // this method will keep the current post up to date as you type it,
   // so that the submit handler can read the information from the state.
   updateInput = event => {
@@ -79,6 +83,8 @@ export default class PostForm extends React.Component {
           </label>
           <br />
           <br />
+
+          <input type="button" className= "cancel-button" onClick={this.redirect} value="Cancel" />
           <input type="submit" disabled = {this.state.button_disabled} className={this.state.button_state_css} value="Confirm" />
           <br />
         </form>
