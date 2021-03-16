@@ -15,6 +15,7 @@ import Modal from "./Component/Modal.jsx";
 import Navbar from "./Component/Navbar.jsx";
 import Upload from "./Component/Upload";
 import PostingList from "./Component/PostingList.jsx";
+import TagsBlock from "./Component/TagsBlock.jsx";
 import {
   BrowserRouter as Router, Route, Switch
 } from 'react-router-dom';
@@ -100,11 +101,16 @@ class App extends React.Component {
               </div>
             </Route>
             <Route path={["/postinglist", "/"]}>
-              <div className="temp-login-form">
-                <LoginForm refreshPosts={this.doRefreshPosts} />
-                </div>
               <div className="posting-block">
                 <PostingList refresh={this.state.refreshPosts}/>
+              </div>
+              <div className="column-view">
+                <div className="temp-login-form">
+                  <LoginForm refreshPosts={this.doRefreshPosts} />
+                </div>
+                <div>
+                  <TagsBlock />
+                </div>
               </div>
             </Route>
             </Switch>
