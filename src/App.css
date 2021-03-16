@@ -151,8 +151,8 @@
 .maincontent{
   display: flex;
   flex-direction: column;
-
-  justify-content: center;
+  margin-top:70px;
+  justify-content: left;
   flex-grow: 1;
 }
 
@@ -209,6 +209,41 @@
   height:40px;
 
   margin-bottom:15px;
+}
+
+.topnav{
+  /* need to specify some position other than static, so height can apply.
+     Fixed works since it will stay fixed to the side - 0 from both left and top. */
+  position: fixed;
+  left:0px;
+  top:0px;
+  height:70px;
+  width:100%;
+
+  /* internally to this container, we want to use flex positioning of the menu elements */
+
+  background-color: blue;
+}
+
+.topnav ul{
+
+  display:flex;
+  list-style-type: none;
+
+  margin-top:15px;
+}
+
+.topnav-button {
+  margin-right: 30px;
+}
+
+.topnav-button-right {
+  position: absolute;
+  right: 30px;
+}
+
+.topnav-home-button {
+  height: 40px;
 }
 
 .comment-indicator{
@@ -280,4 +315,20 @@
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+.posting-block {
+  position:absolute;
+  left: 0px;
+  width: 70%;
+  height:90%;
+  background-color: #C4C4C4;
+}
+
+.temp-login-form {
+  float:right;
+}
+
+.temp-login {
+  left: 0px;
 }
