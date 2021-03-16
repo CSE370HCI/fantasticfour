@@ -38,7 +38,27 @@ export default class Post extends React.Component {
   };
 
   addTag(tag){
-    this.state.tags.push(tag);
+    fetch(process.env.REACT_APP_API_PATH+"/post-tags/", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '+sessionStorage.getItem("token")
+      },
+      body: JSON.stringify({
+        postID: this.props.post.id,
+        userID: sessionStorage.getItem("user"),
+        name: tag,
+        type: "hashtag"
+      })
+    }).then(res => res.json())
+    .then(
+      result => {
+        this.state.tags.push(tag)
+      },
+      error => {
+        alert("error!");
+      }
+    );
   }
 
   getTags(){
