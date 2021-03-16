@@ -11,9 +11,12 @@ export default class LoginForm extends React.Component {
     super(props);
     this.state = {
       username: "",
+      email: "",
       password: "",
       alanmessage: "",
-      sessiontoken: ""
+      sessiontoken: "",
+      signup: false,
+      passwordmismatch: true
     };
     this.refreshPostsFromLogin = this.refreshPostsFromLogin.bind(this);
   }
@@ -33,61 +36,132 @@ export default class LoginForm extends React.Component {
     });
   };
 
+  emailChangeHandler = event => {
+    this.setState({
+      email: event.target.value
+    });
+  }
+
   passwordChangeHandler = event => {
     this.setState({
       password: event.target.value
     });
   };
 
+  toggleSignup = () => {
+    this.setState({
+      signup: !this.state.signup
+    });
+  }
+
   // when the user hits submit, process the login through the API
   submitHandler = event => {
     //keep the form from actually submitting
     event.preventDefault();
 
-    //make the api call to the authentication page
-    fetch(process.env.REACT_APP_API_PATH+"/auth/login", {
-      method: "post",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: this.state.username,
-        password: this.state.password
-      })
-    })
-      .then(res => res.json())
-      .then(
-        result => {
-          console.log("Testing");
-          if (result.userID) {
-
-            // set the auth token and user ID in the session state
-            sessionStorage.setItem("token", result.token);
-            sessionStorage.setItem("user", result.userID);
-
-            this.setState({
-              sessiontoken: result.token,
-              alanmessage: result.token
-            });
-
-            // call refresh on the posting list
-            this.refreshPostsFromLogin();
-          } else {
-
-            // if the login failed, remove any infomation from the session state
-            sessionStorage.removeItem("token");
-            sessionStorage.removeItem("user");
-            this.setState({
-              sessiontoken: "",
-              alanmessage: result.message
-            });
-          }
+    // in signup mode
+    if (this.state.signup) {
+      //make the api call to the signup page
+      fetch(process.env.REACT_APP_API_PATH+"/auth/signup", {
+        method: "post",
+        headers: {
+          'Content-Type': 'application/json',
         },
-        error => {
-          alert("error!");
+        body: JSON.stringify({
+          email: this.state.email,
+          password: this.state.password,
+        })
+      })
+      .then(res => res.json())
+      .then(result => {
+        console.log(result);
+        if (result.userID) {
+
+          // set the auth token and user ID in the session state
+          sessionStorage.setItem("token", result.token);
+          sessionStorage.setItem("user", result.userID);
+
+          this.setState({
+            sessiontoken: result.token,
+            alanmessage: result.token
+          });
+
+          // call refresh on the posting list
+          this.refreshPostsFromLogin();
+        } else {
+
+          // if the login failed, remove any infomation from the session state
+          sessionStorage.removeItem("token");
+          sessionStorage.removeItem("user");
+          this.setState({
+            sessiontoken: "",
+            alanmessage: result.message
+          });
         }
-      );
+      },
+      error => {
+        alert(error);
+      });
+    }
+    else {
+      //make the api call to the login page
+      fetch(process.env.REACT_APP_API_PATH+"/auth/login", {
+        method: "post",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: this.state.email,
+          password: this.state.password
+        })
+      })
+        .then(res => res.json())
+        .then(
+          result => {
+            console.log("Testing");
+            if (result.userID) {
+
+              // set the auth token and user ID in the session state
+              sessionStorage.setItem("token", result.token);
+              sessionStorage.setItem("user", result.userID);
+
+              this.setState({
+                sessiontoken: result.token,
+                alanmessage: result.token
+              });
+
+              // call refresh on the posting list
+              this.refreshPostsFromLogin();
+            } else {
+
+              // if the login failed, remove any infomation from the session state
+              sessionStorage.removeItem("token");
+              sessionStorage.removeItem("user");
+              this.setState({
+                sessiontoken: "",
+                alanmessage: result.message
+              });
+            }
+          },
+          error => {
+            alert("error!");
+          }
+        );
+      }
   };
+
+  verifyPassword = (event) => {
+    if (this.state.password === event.target.value) {
+      this.setState({
+        passwordmismatch: false
+      });
+    }
+    else {
+      this.setState({
+        passwordmismatch: true
+      });
+    }
+  }
 
   render() {
     // console.log("Rendering login, token is " + sessionStorage.getItem("token"));
@@ -97,16 +171,59 @@ export default class LoginForm extends React.Component {
         <div className="temp-login-form">
           <form onSubmit={this.submitHandler}>
             <label>
-              Username
-              <input type="text" onChange={this.myChangeHandler} />
+              Email
+              <input type="email" onChange={this.emailChangeHandler} />
             </label>
             <br />
+
+            { // if in signup state, display the email input
+              this.state.signup ?
+              (
+                <label>
+                  Username
+                  <input type="text" onChange={this.myChangeHandler} />
+                  <br/>
+                </label>
+              ) : ""
+            }
+
             <label>
               Password
               <input type="password" onChange={this.passwordChangeHandler} />
             </label>
             <br />
+
+            {
+              this.state.signup ?
+              (
+                <label>
+                  Confirm Password
+                  <input type="password" onChange={this.verifyPassword} />
+                  <br/>
+                  {
+                  this.state.passwordmismatch ?
+                    <p>Passwords don't match</p>
+                    :
+                    ""
+                  }
+                </label>
+              ) : ""
+            }
+
+            
+
             <input type="submit" value="submit" />
+            {
+              this.state.signup ?
+              (
+                <p>Already registered? <span className="link" href="#" onClick={this.toggleSignup}>Sign in</span></p>
+              )
+              :
+              (
+                <p>Not a member? <span className="link" href="#" onClick={this.toggleSignup}>Sign Up</span></p>
+              )
+
+            }
             <p>{this.state.alanmessage}</p>
           </form>
         </div>

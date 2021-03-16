@@ -102,7 +102,7 @@ class App extends React.Component {
             <Route path={["/postinglist", "/"]}>
               <div className="temp-login-form">
                 <LoginForm refreshPosts={this.doRefreshPosts} />
-                </div>
+              </div>
               <div className="posting-block">
                 <PostingList refresh={this.state.refreshPosts}/>
               </div>
