@@ -9,10 +9,11 @@ import "./App.css";
 import PostForm from "./Component/PostForm.jsx";
 import FriendList from "./Component/FriendList.jsx";
 import LoginForm from "./Component/LoginForm.jsx";
-import Profile from "./Component/Profile.jsx";
+import EditSettings from "./Component/EditSettings.jsx";
 import FriendForm from "./Component/FriendForm.jsx";
 import Modal from "./Component/Modal.jsx";
 import Navbar from "./Component/Navbar.jsx";
+import StyleGuide from "./Component/StyleGuide.jsx";
 import {
   BrowserRouter as Router, Route, Switch
 } from 'react-router-dom';
@@ -63,7 +64,7 @@ class App extends React.Component {
       // the same effect as /posts, needs to go last, because it uses regular
       // expressions, and would otherwise capture all the routes.  Ask me how I
       // know this.
-      <Router basename={process.env.PUBLIC_URL}>
+      <Router>
       <div className="App">
         <header className="App-header">
 
@@ -73,8 +74,7 @@ class App extends React.Component {
             <Switch>
             <Route path="/settings">
               <div className="settings">
-                <p>Settings</p>
-                <Profile userid={sessionStorage.getItem("user")} />
+                <EditSettings userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
             <Route path="/friends">
@@ -82,6 +82,33 @@ class App extends React.Component {
                 <p>Friends</p>
                 <FriendForm userid={sessionStorage.getItem("user")} />
                 <FriendList userid={sessionStorage.getItem("user")} />
+              </div>
+            </Route>
+            <Route path="/home">
+              <div>
+                <p>Home</p>
+              </div>
+            </Route>
+            <Route path="/latest">
+              <div>
+                <p>Latest</p>
+              </div>
+            </Route>
+            <Route path="/popular">
+              <div>
+                <p>Popular</p>
+              </div>
+            </Route>
+            <Route path="/random">
+              <div>
+                <p>Random</p>
+              </div>
+            </Route>
+            <Route path="/styleguide">
+              <div>
+                <br/>
+                <p>Style Guide</p>
+                <StyleGuide/>
               </div>
             </Route>
             <Route path={["/posts","/"]}>
