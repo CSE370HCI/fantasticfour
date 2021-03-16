@@ -94,19 +94,22 @@ export default class LoginForm extends React.Component {
 
     if (!sessionStorage.getItem("token")) {
       return (
-        <form onSubmit={this.submitHandler}>
-          <label>
-            Username
-            <input type="text" onChange={this.myChangeHandler} />
-          </label>
-          <br />
-          <label>
-            Password
-            <input type="password" onChange={this.passwordChangeHandler} />
-          </label>
-          <input type="submit" value="submit" />
-          <p>{this.state.alanmessage}</p>
-        </form>
+        <div className="temp-login-form">
+          <form onSubmit={this.submitHandler}>
+            <label>
+              Username
+              <input type="text" onChange={this.myChangeHandler} />
+            </label>
+            <br />
+            <label>
+              Password
+              <input type="password" onChange={this.passwordChangeHandler} />
+            </label>
+            <br />
+            <input type="submit" value="submit" />
+            <p>{this.state.alanmessage}</p>
+          </form>
+        </div>
       );
     } else {
       console.log("Returning welcome message");

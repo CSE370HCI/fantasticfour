@@ -9,10 +9,47 @@ export default class Post extends React.Component {
     super(props);
     this.state = {
       showModal: false,
-      comments: this.props.post.commentCount
+      comments: this.props.post.commentCount,
+      likes: 1,
+      dislikes: 0,
+      tags: []
     };
     this.post = React.createRef();
 
+  }
+
+  setLikesCount(newcount){
+    this.setState({
+      likes: this.state.likes + newcount
+    });
+  };
+
+  getLikesCount() {
+    if (!this.state.likes || this.state.likes === "0") {
+      return 0;
+    }
+    return parseInt(this.state.likes);
+  }
+
+  setDisikesCount(newcount) {
+    this.setState({
+      dslikes: this.state.dislikes + newcount
+    });
+  };
+
+  addTag(tag){
+    this.state.tags.push(tag);
+  }
+
+  getTags(){
+    return this.state.tags
+  }
+
+  getDisikesCount() {
+    if (!this.state.dislikes || this.state.dislikes === "0") {
+      return 0;
+    }
+    return parseInt(this.state.dislikes);
   }
 
   showModal = e => {

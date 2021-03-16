@@ -14,6 +14,7 @@ import FriendForm from "./Component/FriendForm.jsx";
 import Modal from "./Component/Modal.jsx";
 import Navbar from "./Component/Navbar.jsx";
 import Upload from "./Component/Upload";
+import PostingList from "./Component/PostingList.jsx";
 import {
   BrowserRouter as Router, Route, Switch
 } from 'react-router-dom';
@@ -91,11 +92,19 @@ class App extends React.Component {
                 <FriendList userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
-            <Route path={["/posts","/"]}>
+            <Route path={["/posts"]}>
               <div>
                 <p>Posts</p>
                 <LoginForm refreshPosts={this.doRefreshPosts}  />
                 <PostForm refresh={this.state.refreshPosts}/>
+              </div>
+            </Route>
+            <Route path={["/postinglist", "/"]}>
+              <div className="temp-login-form">
+                <LoginForm refreshPosts={this.doRefreshPosts} />
+                </div>
+              <div className="posting-block">
+                <PostingList refresh={this.state.refreshPosts}/>
               </div>
             </Route>
             </Switch>
