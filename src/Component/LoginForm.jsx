@@ -74,22 +74,35 @@ export default class LoginForm extends React.Component {
       })
       .then(res => res.json())
       .then(result => {
-        console.log(result);
         if (result.userID) {
+          // add the username to the user account provided during signup
+          fetch(process.env.REACT_APP_API_PATH+`/users/${result.userID}`, {
+            method: "PATCH",
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization' : `Bearer ${result.token}`
+            },
+            body: JSON.stringify({
+              username: this.state.username
+            })
+          })
+          .then(res => res.json())
+          .then(result => {
+            // set the auth token and user ID in the session state
+            sessionStorage.setItem("token", result.token);
+            sessionStorage.setItem("user", result.userID);
 
-          // set the auth token and user ID in the session state
-          sessionStorage.setItem("token", result.token);
-          sessionStorage.setItem("user", result.userID);
+            this.setState({
+              sessiontoken: result.token,
+              alanmessage: result.token
+            });
 
-          this.setState({
-            sessiontoken: result.token,
-            alanmessage: result.token
+            // call refresh on the posting list
+            this.refreshPostsFromLogin();
+          }, error => {
+            console.log("after signup error: ", error);
           });
-
-          // call refresh on the posting list
-          this.refreshPostsFromLogin();
         } else {
-
           // if the login failed, remove any infomation from the session state
           sessionStorage.removeItem("token");
           sessionStorage.removeItem("user");

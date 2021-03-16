@@ -83,11 +83,11 @@ export default class PostingList extends React.Component {
         </div>
 
       );
-    }else{
-      return (<div> No Posts Found </div>);
-    }
+      } else {
+          return (<div> No Posts Found </div>);
+        }
     } else {
-      return <div> Please Log In... </div>;
-    }
+        return <div> Please Log In... </div>;
+      }
   }
 }
