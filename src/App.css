@@ -410,3 +410,9 @@ input[type="submit"] {
 .none {
 
 }
+
+.addTag{
+  border:none;
+  border-radius:5px;
+  background-color:lightgray;
+}

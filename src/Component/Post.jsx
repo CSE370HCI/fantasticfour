@@ -53,7 +53,9 @@ export default class Post extends React.Component {
     }).then(res => res.json())
     .then(
       result => {
-        this.state.tags.push(tag)
+        this.setState({
+          responseMessage: result.Status
+        });
       },
       error => {
         alert("error!");
