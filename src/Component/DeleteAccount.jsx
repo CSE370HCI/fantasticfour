@@ -109,13 +109,6 @@ export default class PostForm extends React.Component {
                                 Authorization: "Bearer " + sessionStorage.getItem("token"),
                             },
                         });
-                        fetch(process.env.REACT_APP_API_PATH + "/auth/verify", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                                Authorization: "Bearer " + sessionStorage.getItem("token"),
-                            },
-                        });
                     }
                 );
         }
