@@ -19,6 +19,7 @@ import TagsBlock from "./Component/TagsBlock.jsx";
 import {
   BrowserRouter as Router, Route, Switch
 } from 'react-router-dom';
+import DeleteAccount from "./Component/DeleteAccount";
 import UserProfile from "./Component/UserProfile";
 
 // toggleModal will both show and hide the modal dialog, depending on current state.  Note that the
@@ -83,6 +84,12 @@ class App extends React.Component {
               <div className="upload">
                 <p className='page-title'>Create a New Post</p>
                 <Upload userid={sessionStorage.getItem("user")} />
+              </div>
+            </Route>
+            <Route path="/delete">
+              <div className="deleteAccount">
+                <p className='page-title'>Delete Your Account</p>
+                <DeleteAccount userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
             <Route path="/settings">
