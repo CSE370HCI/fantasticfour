@@ -70,8 +70,6 @@ class App extends React.Component {
       <div className="App">
         <header className="App-header">
 
-          <Navbar toggleModal={e => toggleModal(this, e)} />
-
           <div className="maincontent" id="mainContent">
             <Switch>
             <Route path="/upload">
@@ -101,6 +99,9 @@ class App extends React.Component {
               </div>
             </Route>
             <Route path={["/postinglist", "/"]}>
+              <div className="temp-login-form">
+                <LoginForm refreshPosts={this.doRefreshPosts} />
+              </div>
               <div className="posting-block">
                 <PostingList refresh={this.state.refreshPosts}/>
               </div>
@@ -115,6 +116,8 @@ class App extends React.Component {
             </Route>
             </Switch>
           </div>
+          {/*Navbar on bottom makes sure its prioritized over all elements.*/}
+          <Navbar toggleModal={e => toggleModal(this, e)} />
         </header>
 
         <Modal show={this.state.openModal} onClose={e => toggleModal(this, e)}>

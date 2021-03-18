@@ -79,12 +79,12 @@ export default class Profile extends React.Component {
       .then(
         result => {
           if (result) {
-            console.log(result);
+            console.log("Result- "+ typeof(result)+ " : " + result);
             let favoritecolor = "";
 
             // read the user preferences and convert to an associative array for reference
 
-            result.forEach(function(pref) {
+            result[0].forEach(function(pref) {
               if (pref.name === "favoritecolor") {
                 favoritecolor = pref;
               }

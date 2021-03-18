@@ -13,8 +13,37 @@ export default class TagsBlock extends React.Component {
           addClicked: false,
           tempTag: ''
         };
-        this.myChangeHandler.bind(this)
-        this.tagblock = React.createRef()
+        this.tagblock = React.createRef();
+    }
+
+    componentDidMount() {
+        this.getTags();
+    }
+
+    getTags(){
+        fetch(process.env.REACT_APP_API_PATH+"/post-tags?userID="+sessionStorage.getItem("user")+"&type=hashtag", {
+            method: "GET",
+            headers: {
+              'Authorization': 'Bearer '+sessionStorage.getItem("token")
+            }
+          }).then(res => res.json()
+          ).then(
+              result => {
+                  this.saveTags(result);
+                  }
+          )
+    }
+
+    saveTags(result){
+        this.setState({
+            list: []
+        })
+        const count = result[1];
+        const list = result[0];
+        for(var i=0;i<count;i++){
+            this.state.list.push(list[i].name);
+        }
+        console.log("TAGS: ", this.state.list);
     }
 
     setType(input){
@@ -77,38 +106,55 @@ export default class TagsBlock extends React.Component {
         }
     }
 
-    addTag = (event) => {
+    hasTag(result, tag){
+        const count = result[1];
+        const list = result[0];
+        for(var i=0; i<count;i++){
+            if(list[0].name === tag){
+                return true;
+            }
+        }
+        return false;
+    }
 
+    addTag = (event) => {
+        event.preventDefault();
         var tag = this.state.tempTag;
         console.log("Attempting to fetch tag: "+ tag)
-        fetch(process.env.REACT_APP_API_PATH+"/post-tags?userID="+sessionStorage.getItem("user")+"?name="+tag+"?type=hashtag", {
+        fetch(process.env.REACT_APP_API_PATH+"/post-tags?userID="+sessionStorage.getItem("user")+"&name="+tag+"&type=hashtag", {
             method: "GET",
             headers: {
-              'Content-Type': 'application/json',
               'Authorization': 'Bearer '+sessionStorage.getItem("token")
             }
           }).then(res => res.json()
           ).then(
               result => {
-                  console.log("RETURNED OBJECT: "+result)
-                  if(result.tags.includes(tag)){
-                      
-                  }else{
+                  console.log("RETURNED OBJECT: "+result[0])
+                  if(!(this.hasTag(result, tag)) || result[1] === 0){
+                    console.log("No existing tag found")
                     fetch(process.env.REACT_APP_API_PATH+"/post-tags", {
                         method: "POST",
                         headers: {
                           'Content-Type': 'application/json',
+                          'Authorization': 'Bearer '+sessionStorage.getItem("token")
                         },
                         body: JSON.stringify({
-                          userID: sessionStorage.getItem("user"),
-                          name: tag,
-                          type: "hashtag"
+                            postID: 4,
+                            userID: sessionStorage.getItem("user"),
+                            name: tag,
+                            type: "hashtag"
                         })
-                        
-                      })
+                      }).then(
+                          res => res.json()
+                      ).then(
+                          result =>{
+                              console.log("Received: " + result.name)
+                          }
+                      )
                   }
               }
           )
+          this.getTags()
     }
 
     myChangeHandler = (event) =>{
@@ -135,15 +181,18 @@ export default class TagsBlock extends React.Component {
     }
 
     render() {
-        var tagList = [];
-        for (const [index, value] of this.state.list){
-            tagList.push(<a href="" key={index}>#{value}</a>)
+        const tagList = this.state.list;
+        console.log("Rendering Tags: " + tagList)
+        var elementList = [];
+        for (var i = 0; i<tagList.length;i++){
+            var link = "/post-tag/" + tagList[i]
+            elementList.push(<a href={link}>#{tagList[i]} </a>)
         }
         return(
             <div className="tagBlock"> 
                 <p className="tag-header">Tags</p>
                 <div className="tags">
-                    {tagList}
+                    {elementList}
                     {this.addTagsButton()}
                 </div>
             </div>
