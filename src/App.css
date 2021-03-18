@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: #282c34;
 }
 
 .App-logo {
@@ -15,6 +16,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  height:fit-content;
 }
 
 .deletePost{
@@ -163,6 +165,7 @@
   margin-top:70px;
 
   flex-grow: 1;
+  height:fit-content;
 }
 
 .posts{
@@ -362,7 +365,7 @@ input[type="submit"] {
 .posting-block {
   position:absolute;
   left: 0px;
-  width: 70%;
+  width: 72%;
   height:fit-content;
   background-color: #C4C4C4;
   overflow: hidden;
@@ -378,6 +381,7 @@ input[type="submit"] {
 }
 
 .tagBlock {
+  position:fixed;
   background-color: white;
   height: 100%;
 }
@@ -415,4 +419,73 @@ input[type="submit"] {
   border:none;
   border-radius:5px;
   background-color:lightgray;
+}
+
+.post-comment-block{
+  background-color: black;
+  display:flex;
+  flex-direction: row;
+  width: 96%;
+  margin-top: 20px;
+}
+
+.meme-side{
+  position:relative;
+  left: 0px;
+  top: 0%;
+  width: 48%;
+}
+
+.comment-side{
+  position: relative;
+  left: 4%;
+  width:48%;
+
+}
+
+.meme{
+  width:100%
+}
+
+.name-block{
+  margin-left:2%;
+  width:50%;
+}
+
+.meme-name{
+  left:0px;
+  font-size: 20px;
+  text-align:left;
+}
+
+.poster-block{
+  margin-left:2%;
+  width:20%;
+}
+
+.meme-poster{
+  right:0px;
+  font-size: 20px;
+  text-align:left;
+}
+
+.upButton{
+  background-color: #00FF47;
+  width:13%;
+}
+
+.downButton{
+  background-color: #FF8B8B;
+  width:13%;
+}
+
+.memeStuff{
+  display: flex;
+  flex-direction:row;
+}
+
+.arrows{
+  height: 50%;
+  position: relative;
+  top: 25%;
 }

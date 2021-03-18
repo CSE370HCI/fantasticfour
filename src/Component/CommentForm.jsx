@@ -56,7 +56,7 @@ export default class CommentForm extends React.Component {
       <div>
         <form onSubmit={this.submitHandler}>
           <label>
-            Add A Comment to Post {this.props.parent}
+            Add A Comment to Post
             <br />
             <textarea rows="10" cols="70" onChange={this.myChangeHandler} />
           </label>
@@ -66,11 +66,7 @@ export default class CommentForm extends React.Component {
           <br />
           {this.state.postmessage}
         </form>
-        <PostingList
-          ref={this.postListing}
-          parentid={this.props.parent}
-          type="commentlist"
-        />
+        
       </div>
     );
   }

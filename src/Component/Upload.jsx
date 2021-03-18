@@ -50,7 +50,41 @@ export default class PostForm extends React.Component {
           alert("error!");
         }
       );
+      //Run addTags() here, submit string split by commas and postID 
+      //This function can only run if the post associated is POSTed first
   };
+
+  addTags(list, post){
+    for(var i=0;i<list.length;i++){
+      var tag = list[0];
+      if(tag.charAt(0) === '#'){
+        tag = tag.substring(1);
+      }
+      this.addTag(tag, post);
+    }
+  }
+
+  addTag(tag, post){
+    fetch(process.env.REACT_APP_API_PATH+"/post-tags", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '+sessionStorage.getItem("token")
+      },
+      body: JSON.stringify({
+          postID: post,
+          userID: sessionStorage.getItem("user"),
+          name: tag,
+          type: "hashtag"
+      })
+    }).then(
+        res => res.json()
+    ).then(
+        result =>{
+            console.log("Received: " + result.name)
+        }
+    )
+  }
 
   // this method will keep the current post up to date as you type it,
   // so that the submit handler can read the information from the state.

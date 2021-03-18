@@ -201,7 +201,4 @@ export default class TagsBlock extends React.Component {
 
 
     }
-
-
-
 }
