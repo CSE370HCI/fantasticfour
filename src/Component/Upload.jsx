@@ -9,7 +9,9 @@ export default class PostForm extends React.Component {
     this.state = {
       post_title: "",
       post_message: "",
-      post_URL: ""
+      post_URL: "",
+      tag: "",
+      canIPost: false
     };
     this.postListing = React.createRef();
   }
@@ -21,37 +23,45 @@ export default class PostForm extends React.Component {
 
     //keep the form from actually submitting via HTML - we want to handle it in react
     event.preventDefault();
-
-    //make the api call to post
-    fetch(process.env.REACT_APP_API_PATH+"/posts", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer '+sessionStorage.getItem("token")
-      },
-      body: JSON.stringify({
-        authorID: sessionStorage.getItem("user"),
-        content: this.state.post_title,
-        thumbnailURL: this.state.post_URL,
-        type: "post"
-      })
-    })
-      .then(res => res.json())
-      .then(
-        result => {
-          this.setState({
-            post_message: result.Status
-          });
-
-          // redirects users back to the posts screen
-          window.location.replace("/posts");
+    if (this.state.post_title.length == 0) {
+      alert("You need a post title to continue")
+    }
+    else if (this.state.post_URL.length == 0) {
+      alert("You need to include an image URL to continue")
+    }
+    else if (!this.state.post_URL.match("(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\\.(?:jpg|gif|png))(?:\\?([^#]*))?(?:#(.*))?")){
+      alert("You must use a proper image URL")
+    }
+    else {
+      this.state.canIPost = true;
+    }
+    if (this.state.canIPost) {
+      //make the api call to post
+      fetch(process.env.REACT_APP_API_PATH+"/posts", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+sessionStorage.getItem("token")
         },
-        error => {
-          alert("error!");
-        }
-      );
-      //Run addTags() here, submit string split by commas and postID 
-      //This function can only run if the post associated is POSTed first
+        body: JSON.stringify({
+          authorID: sessionStorage.getItem("user"),
+          content: this.state.post_title,
+          thumbnailURL: this.state.post_URL,
+          type: "post"
+        })
+      })
+          .then(res => res.json())
+          .then(
+              result => {
+                this.setState({
+                  post_message: result.Status
+                });
+                this.addTag(this.state.tag, result["id"])
+                // redirects users back to the posts screen
+                window.location.replace("/posts");
+              }
+          );
+    }
   };
 
   addTags(list, post){
@@ -100,6 +110,12 @@ export default class PostForm extends React.Component {
     });
   };
 
+  updateTag = event => {
+    this.setState({
+      tag: event.target.value
+    });
+  };
+
 
 
   render() {
@@ -108,14 +124,14 @@ export default class PostForm extends React.Component {
         <form onSubmit={this.submitHandler}>
           <label>
             <br/>
-              Title<br/>
+              Title*<br/>
             <input type="text" cols="70" className="upload-input" onChange={this.updateTitle} />
             <br /><br />
-            Upload Photo (URL) <br/>
+            Upload Photo (URL)* <br/>
             <input type="text" rows="1" cols="70" className="upload-input" onChange={this.updateURL} />
             <br /><br />
             Communities <br/>
-            <input type="text" cols="70" className="upload-input" onChange={this.updateURL} />
+            <input type="text" cols="70" className="upload-input" onChange={this.updateTag} />
           </label>
           <br />
           <br />
