@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: #282c34;
 }
 
 .App-logo {
@@ -15,6 +16,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  height:fit-content;
 }
 
 .deletePost{
@@ -159,10 +161,11 @@
 
 .maincontent{
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  margin-top:70px;
 
-  justify-content: center;
   flex-grow: 1;
+  height:fit-content;
 }
 
 .posts{
@@ -218,6 +221,41 @@
   height:40px;
 
   margin-bottom:15px;
+}
+
+.topnav{
+  /* need to specify some position other than static, so height can apply.
+     Fixed works since it will stay fixed to the side - 0 from both left and top. */
+  position: fixed;
+  left:0px;
+  top:0px;
+  height:70px;
+  width:100%;
+
+  /* internally to this container, we want to use flex positioning of the menu elements */
+
+  background-color: blue;
+}
+
+.topnav ul{
+
+  display:flex;
+  list-style-type: none;
+
+  margin-top:15px;
+}
+
+.topnav-button {
+  margin-right: 30px;
+}
+
+.topnav-button-right {
+  position: absolute;
+  right: 30px;
+}
+
+.topnav-home-button {
+  height: 40px;
 }
 
 .comment-indicator{
@@ -333,6 +371,143 @@
   margin-left: 25%;
   width: 50%;
 }
+.posting-block {
+  position:absolute;
+  left: 0px;
+  width: 72%;
+  height:fit-content;
+  background-color: #C4C4C4;
+  overflow: hidden;
+}
+
+.temp-login-form {
+  float:right;
+  height:fit-content;
+}
+
+.temp-login {
+  left: 0px;
+}
+
+.tagBlock {
+  position:fixed;
+  background-color: white;
+  height: 100%;
+}
+
+.tags {
+  background-color: white;
+  margin:10px;
+  border-style: double;
+  border-radius: 10px;
+  border-color: black;
+  min-height: 100px;
+}
+
+.column-view {
+  position:absolute;
+  left:75%;
+  display: flex;
+  flex-direction: column;
+}
+
+.tag-header {
+  color: black;
+  height: fit-content;
+}
+
+.black-text {
+  color: black;
+}
+
+.none {
+
+}
+
+.addTag{
+  border:none;
+  border-radius:5px;
+  background-color:lightgray;
+}
+
+.post-comment-block{
+  background-color: black;
+  display:flex;
+  flex-direction: row;
+  width: 96%;
+  margin-top: 20px;
+}
+
+.meme-side{
+  position:relative;
+  left: 0px;
+  top: 0%;
+  width: 48%;
+}
+
+.comment-side{
+  position: relative;
+  left: 4%;
+  width:48%;
+
+}
+
+.meme{
+  width:100%
+}
+
+.name-block{
+  margin-left:2%;
+  width:50%;
+}
+
+.meme-name{
+  left:0px;
+  font-size: 20px;
+  text-align:left;
+}
+
+.poster-block{
+  margin-left:2%;
+  width:20%;
+}
+
+.meme-poster{
+  right:0px;
+  font-size: 20px;
+  text-align:left;
+}
+
+.upButton{
+  background-color: #00FF47;
+  width:13%;
+}
+
+.downButton{
+  background-color: #FF8B8B;
+  width:13%;
+}
+
+.memeStuff{
+  display: flex;
+  flex-direction:row;
+}
+
+.arrows{
+  height: 50%;
+  position: relative;
+  top: 25%;
+}
+
+.user-profile {
+  color: black;
+  background: white;
+  padding-bottom: 25px;
+  box-sizing: content-box;
+  padding: 50px;
+  margin-left: 25%;
+  width: 50%;
+}
 
 .danger-button-blocked {
   background-color:#FF5959;
@@ -360,9 +535,20 @@
   background-color:#7E7E7E;
   color: white;
   opacity: 1;
+}
+  
+.user-profile-picture {
+  object-fit: cover;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+}
+ 
+.edit-button {
+  background-color:#2D86D8;
+  color: white;
   border-radius:42px;
   border: none;
   font-size:15px;
   padding:10px 30px;
-  /*text-decoration:none;*/
 }

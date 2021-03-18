@@ -3,16 +3,77 @@ import "../App.css";
 import CommentForm from "./CommentForm.jsx";
 import helpIcon from "../assets/delete.png";
 import commentIcon from "../assets/comment.svg";
+import upArrow from "../assets/UpArrow.svg";
+import downArrow from "../assets/DownArrow.svg";
 
 export default class Post extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       showModal: false,
-      comments: this.props.post.commentCount
+      comments: this.props.post.commentCount,
+      likes: 1,
+      dislikes: 0,
+      tags: []
     };
     this.post = React.createRef();
 
+  }
+
+  setLikesCount(newcount){
+    this.setState({
+      likes: this.state.likes + newcount
+    });
+  };
+
+  getLikesCount() {
+    if (!this.state.likes || this.state.likes === "0") {
+      return 0;
+    }
+    return parseInt(this.state.likes);
+  }
+
+  setDisikesCount(newcount) {
+    this.setState({
+      dslikes: this.state.dislikes + newcount
+    });
+  };
+
+  addTag(tag){
+    fetch(process.env.REACT_APP_API_PATH+"/post-tags/", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '+sessionStorage.getItem("token")
+      },
+      body: JSON.stringify({
+        postID: this.props.post.id,
+        userID: sessionStorage.getItem("user"),
+        name: tag,
+        type: "hashtag"
+      })
+    }).then(res => res.json())
+    .then(
+      result => {
+        this.setState({
+          responseMessage: result.Status
+        });
+      },
+      error => {
+        alert("error!");
+      }
+    );
+  }
+
+  getTags(){
+    return this.state.tags
+  }
+
+  getDisikesCount() {
+    if (!this.state.dislikes || this.state.dislikes === "0") {
+      return 0;
+    }
+    return parseInt(this.state.dislikes);
   }
 
   showModal = e => {
@@ -72,7 +133,6 @@ export default class Post extends React.Component {
     //else {
       return (
         <div className="comment-block">
-          <img src={this.props.post.thumbnailURL} className="post-image"/>
           <div className="comment-indicator">
             <div className="comment-indicator-text">
               {this.getCommentCount()} Comments
@@ -100,7 +160,7 @@ export default class Post extends React.Component {
   // we only want to expose the delete post functionality if the user is
   // author of the post
   showDelete(){
-    if (this.props.post.author.id == sessionStorage.getItem("user")) {
+    if (this.props.post.author.id === sessionStorage.getItem("user")) {
       return(
       <img
         src={helpIcon}
@@ -115,22 +175,37 @@ export default class Post extends React.Component {
   }
 
   render() {
-
+    console.log("Post.jsx div: "+ [this.props.type,"postbody"].join(" "));
     return (
-      <div>
+      <div className="post-comment-block">
+        <div className="meme-side">
+          <div>
+            <img src={this.props.post.thumbnailURL} className="meme"/>
+          </div>
 
-      <div
-        key={this.props.post.id}
-        className={[this.props.type, "postbody"].join(" ")}
-      >
-      <div className="deletePost">
-      {this.props.post.author.username} ({this.props.post.createdAt})
-      {this.showDelete()}
-      </div>
-         <br />{" "}
-        {this.props.post.content}
-        {this.conditionalDisplay()}
-      </div>
+          <div className="memeStuff">
+            <div className="upButton">
+              <img src={upArrow} className="arrows"/>
+            </div>
+            <div className="downButton">
+              <img src={downArrow} className="arrows"/>
+            </div>
+            <div className="name-block">
+              <h1 className="meme-name">{this.props.post.content}</h1>
+            </div>
+            <div className="poster-block">
+              <h1 className="meme-poster">{this.props.post.author.username}</h1>
+            </div>
+          </div>
+        </div>
+
+        <div  className="comment-side">
+          <div className="">
+            ({this.props.post.createdAt})
+            {this.showDelete()}
+          </div>
+          {this.conditionalDisplay()}
+        </div>
       </div>
     );
   }

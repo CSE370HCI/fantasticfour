@@ -8,7 +8,9 @@ import postIcon from "../assets/post.svg";
 import newPostIcon from "../assets/new_post.svg";
 import friendIcon from "../assets/friends.svg";
 import settingIcon from "../assets/settings.svg";
-import helpIcon from "../assets/help.svg";
+// import helpIcon from "../assets/help.svg";
+import homeIcon from "../assets/MemeMe.svg"
+import profileIcon from "../assets/profile.svg"
 
 /* The Navbar class provides navigation through react router links.  Note the callback
    to the parent app class in the last entry... this is an example of calling a function
@@ -17,9 +19,19 @@ class Navbar extends React.Component {
 
   render() {
     return (
-    <div id="sidenav" className="sidenav">
-      <ul id="side-menu-items">
-        <li className="pm admin student">
+    <div id="topnav" className="topnav">
+      <ul id="topnav ul">
+      <li className="topnav-button">
+          <Link to="/">
+          <img
+              src={homeIcon}
+              className="topnav-home-button"
+              alt="Home"
+              title="Home"
+            />
+          </Link>
+        </li>
+        <li className="topnav-button">
           <Link to="/posts">
             <img
               src={postIcon}
@@ -29,7 +41,7 @@ class Navbar extends React.Component {
             />
           </Link>
         </li>
-        <li className="pm admin">
+        <li className="topnav-button">
           <Link to="/friends">
             <img
               src={friendIcon}
@@ -39,7 +51,7 @@ class Navbar extends React.Component {
             />
           </Link>
         </li>
-        <li className="pm admin">
+        <li className="topnav-button-right">
           <Link to="/settings">
             <img
               src={settingIcon}
@@ -49,20 +61,7 @@ class Navbar extends React.Component {
             />
           </Link>
         </li>
-        <li className="pm admin">
-          <button
-            className="link-button"
-            onClick={e => this.props.toggleModal(e)}
-          >
-            <img
-              src={helpIcon}
-              className="sidenav-icon"
-              alt="Settings"
-              title="Settings"
-            />
-          </button>
-        </li>
-        <li className="pm admin">
+        <li className="topnav-button">
           <Link to="/upload">
             <img
               src={newPostIcon}
@@ -72,6 +71,17 @@ class Navbar extends React.Component {
             />
           </Link>
         </li>
+        <li className="topnav-button">
+          <Link to="/profile">
+            <img
+                src={profileIcon}
+                className="sidenav-icon"
+                alt="My Profile"
+                title="My Profile"
+            />
+          </Link>
+        </li>
+
       </ul>
     </div>
   );
