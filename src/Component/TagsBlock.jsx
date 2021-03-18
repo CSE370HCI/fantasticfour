@@ -119,7 +119,9 @@ export default class TagsBlock extends React.Component {
 
     addTag = (event) => {
         var tag = this.state.tempTag;
-        console.log("Attempting to fetch tag: "+ tag)
+        if(tag.charAt(0) === '#'){
+            tag = tag.substring(1);
+          }
         fetch(process.env.REACT_APP_API_PATH+"/post-tags?userID="+sessionStorage.getItem("user")+"&name="+tag+"&type=hashtag", {
             method: "GET",
             headers: {
@@ -177,7 +179,6 @@ export default class TagsBlock extends React.Component {
 
     render() {
         const tagList = this.state.list;
-        console.log("Rendering Tags: " + tagList)
         var elementList = [];
         for (var i = 0; i<tagList.length;i++){
             var link = "/post-tag/" + tagList[i]

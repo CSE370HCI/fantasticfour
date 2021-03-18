@@ -14,66 +14,190 @@ export default class Post extends React.Component {
       comments: this.props.post.commentCount,
       likes: 1,
       dislikes: 0,
-      tags: []
+      tags: [],
+      userreaction: 0
     };
     this.post = React.createRef();
 
   }
 
-  setLikesCount(newcount){
-    this.setState({
-      likes: this.state.likes + newcount
-    });
-  };
-
-  getLikesCount() {
-    if (!this.state.likes || this.state.likes === "0") {
-      return 0;
-    }
-    return parseInt(this.state.likes);
+  componentDidMount() {
+    this.getReputation()
   }
 
-  setDisikesCount(newcount) {
-    this.setState({
-      dslikes: this.state.dislikes + newcount
-    });
-  };
-
-  addTag(tag){
-    fetch(process.env.REACT_APP_API_PATH+"/post-tags/", {
-      method: "POST",
+  //SETTING THE USER REACTION IS FAULTY, MIGHT TAKE A FEW CLICKS
+  getReputation(){
+    fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id+"&name=upvote&type=reaction", {
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': 'Bearer '+sessionStorage.getItem("token")
-      },
-      body: JSON.stringify({
-        postID: this.props.post.id,
-        userID: sessionStorage.getItem("user"),
-        name: tag,
-        type: "hashtag"
-      })
-    }).then(res => res.json())
-    .then(
-      result => {
-        this.setState({
-          responseMessage: result.Status
-        });
-      },
-      error => {
-        alert("error!");
       }
-    );
+    }).then(res => res.json()
+    ).then(
+        result => {
+            this.setState({
+              likes: result[1]
+            })
+        }
+    )
+    fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id+"&name=downvote&type=reaction", {
+      method: "GET",
+      headers: {
+        'Authorization': 'Bearer '+sessionStorage.getItem("token")
+      }
+    }).then(res => res.json()
+    ).then(
+        result => {
+            this.setState({
+              dislikes: result[1]
+            })
+        }
+    )
+    fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&name=upvote&type=reaction", {
+      method: "GET",
+      headers: {
+        'Authorization': 'Bearer '+sessionStorage.getItem("token")
+      }
+    }).then(res => res.json()
+    ).then(
+        result => {
+            var status = 0;
+            if(result[1] === 1){
+              status = 1;
+              console.log("Check1:"+status);
+            }else{
+              fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&name=downvote&type=reaction", {
+                method: "GET",
+                headers: {
+                  'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                }
+              }).then(res => res.json()
+              ).then(
+                  result => {
+                      if(result[1] === 1){
+                        status = -1;
+                        console.log("Check2:"+status);
+                      }else{
+                        status = 0;
+                        console.log("Check3:"+status);
+                      }
+                  }
+              )
+            }
+            this.setState({
+              userreaction: status
+            });
+            console.log("Reputation given by user: " + this.state.userreaction);
+        }
+    )
   }
 
-  getTags(){
-    return this.state.tags
+
+  like(event) {
+    console.log("postid??"+event.target.id);
+    fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&name=upvote&type=reaction", {
+      method: "GET",
+      headers: {
+        'Authorization': 'Bearer '+sessionStorage.getItem("token")
+      }
+    }).then(res => res.json()
+    ).then(
+        result => {
+            if(result[1] === 0){
+              fetch(process.env.REACT_APP_API_PATH+"/post-tags", {
+                  method: "POST",
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                  },
+                  body: JSON.stringify({
+                      postID: this.props.post.id,
+                      userID: sessionStorage.getItem("user"),
+                      name: "upvote",
+                      type: "reaction"
+                  })
+                }).then(
+                    res => res.json()
+                ).then(
+                    result =>{
+                        console.log("Sent reaction: " + result.name)
+                    }
+                )
+            }
+        }
+    )
+    fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&name=downvote&type=reaction", {
+      method: "GET",
+      headers: {
+        'Authorization': 'Bearer '+sessionStorage.getItem("token")
+      }
+    }).then(res => res.json()
+    ).then(
+        result => {
+            if(result[1] === 1){
+              fetch(process.env.REACT_APP_API_PATH+"/post-tags/"+result[0][0].id, {
+                  method: "DELETE",
+                  headers: {
+                    'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                  }
+                })
+            }
+        }
+    )
+    this.getReputation()
   }
 
-  getDisikesCount() {
-    if (!this.state.dislikes || this.state.dislikes === "0") {
-      return 0;
-    }
-    return parseInt(this.state.dislikes);
+  dislike(event){
+    fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&name=downvote&type=reaction", {
+      method: "GET",
+      headers: {
+        'Authorization': 'Bearer '+sessionStorage.getItem("token")
+      }
+    }).then(res => res.json()
+    ).then(
+        result => {
+            if(result[1] === 0){
+              fetch(process.env.REACT_APP_API_PATH+"/post-tags", {
+                  method: "POST",
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                  },
+                  body: JSON.stringify({
+                      postID: this.props.post.id,
+                      userID: sessionStorage.getItem("user"),
+                      name: "downvote",
+                      type: "reaction"
+                  })
+                }).then(
+                    res => res.json()
+                ).then(
+                    result =>{
+                        console.log("Sent reaction: " + result.name)
+                    }
+                )
+            }
+        }
+    )
+    fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&name=upvote&type=reaction", {
+      method: "GET",
+      headers: {
+        'Authorization': 'Bearer '+sessionStorage.getItem("token")
+      }
+    }).then(res => res.json()
+    ).then(
+        result => {
+            if(result[1] === 1){
+              fetch(process.env.REACT_APP_API_PATH+"/post-tags/"+result[0][0].id, {
+                  method: "DELETE",
+                  headers: {
+                    'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                  }
+                })
+            }
+        }
+    )
+    this.getReputation()
   }
 
   showModal = e => {
@@ -124,8 +248,6 @@ export default class Post extends React.Component {
 
   // we only want to display comment information if this is a post that accepts comments
   conditionalDisplay() {
-    console.log("Comment count is " + this.props.post.commentCount);
-
     //if (this.props.post.commentCount <= 0) {
     //  return "";
     //  }
@@ -160,7 +282,7 @@ export default class Post extends React.Component {
   // we only want to expose the delete post functionality if the user is
   // author of the post
   showDelete(){
-    if (this.props.post.author.id === sessionStorage.getItem("user")) {
+    if (this.props.post.author.id == sessionStorage.getItem("user")) {
       return(
       <img
         src={helpIcon}
@@ -175,33 +297,32 @@ export default class Post extends React.Component {
   }
 
   render() {
-    console.log("Post.jsx div: "+ [this.props.type,"postbody"].join(" "));
     return (
       <div className="post-comment-block">
         <div className="meme-side">
           <div>
             <img src={this.props.post.thumbnailURL} className="meme"/>
           </div>
-
           <div className="memeStuff">
-            <div className="upButton">
-              <img src={upArrow} className="arrows"/>
+            <div>
+              <h1 className="meme-name">{this.props.post.content}</h1><br/>
             </div>
-            <div className="downButton">
-              <img src={downArrow} className="arrows"/>
-            </div>
-            <div className="name-block">
-              <h1 className="meme-name">{this.props.post.content}</h1>
-            </div>
-            <div className="poster-block">
-              <h1 className="meme-poster">{this.props.post.author.username}</h1>
+            <div className="postInterations">
+              <div className="upButton">
+                <img src={upArrow} className="arrows" onClick={event => this.like(event)}/>
+              </div>
+              <div className="downButton">
+                <img src={downArrow} className="arrows" onClick={event => this.dislike(event)}/>
+              </div>
+              <div className="poster-block">
+                <h1 className="meme-poster">{this.props.post.author.username}</h1>
+              </div>
             </div>
           </div>
         </div>
 
         <div  className="comment-side">
           <div className="">
-            ({this.props.post.createdAt})
             {this.showDelete()}
           </div>
           {this.conditionalDisplay()}
@@ -209,4 +330,5 @@ export default class Post extends React.Component {
       </div>
     );
   }
+  //note: time removed from render because time is irrelevant, memes are timeless
 }
