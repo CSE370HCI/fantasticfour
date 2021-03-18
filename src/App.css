@@ -393,6 +393,7 @@
   position:fixed;
   background-color: white;
   height: 100%;
+  margin-right:10px;
 }
 
 .tags {
@@ -469,7 +470,7 @@
 
 .poster-block{
   margin-left:2%;
-  width:20%;
+  width:30%;
 }
 
 .meme-poster{
@@ -480,15 +481,22 @@
 
 .upButton{
   background-color: #00FF47;
-  width:13%;
+  width:20%;
+
 }
 
 .downButton{
   background-color: #FF8B8B;
-  width:13%;
+  width:20%;
+  max-height: 15%;
 }
 
 .memeStuff{
+  display: flex;
+  flex-direction:column;
+}
+
+.postInterations{
   display: flex;
   flex-direction:row;
 }
