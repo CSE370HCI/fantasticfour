@@ -49,7 +49,7 @@ export default class PostForm extends React.Component {
         );
   };
     redirect = () => {
-        window.location.replace("/");
+        window.location.replace("/settings");
     };
 
   componentDidMount() {
