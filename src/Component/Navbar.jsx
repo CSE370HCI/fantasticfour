@@ -8,8 +8,9 @@ import postIcon from "../assets/post.svg";
 import newPostIcon from "../assets/new_post.svg";
 import friendIcon from "../assets/friends.svg";
 import settingIcon from "../assets/settings.svg";
-import helpIcon from "../assets/help.svg";
+// import helpIcon from "../assets/help.svg";
 import homeIcon from "../assets/MemeMe.svg"
+import profileIcon from "../assets/profile.svg"
 
 /* The Navbar class provides navigation through react router links.  Note the callback
    to the parent app class in the last entry... this is an example of calling a function
@@ -67,6 +68,16 @@ class Navbar extends React.Component {
               className="sidenav-icon"
               alt="Create a Post"
               title="Create a Post"
+            />
+          </Link>
+        </li>
+        <li className="topnav-button">
+          <Link to="/profile">
+            <img
+                src={profileIcon}
+                className="sidenav-icon"
+                alt="My Profile"
+                title="My Profile"
             />
           </Link>
         </li>
