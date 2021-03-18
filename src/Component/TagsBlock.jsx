@@ -17,7 +17,7 @@ export default class TagsBlock extends React.Component {
     }
 
     componentDidMount() {
-        this.getTags();
+        this.getTags()
     }
 
     getTags(){
@@ -35,15 +35,15 @@ export default class TagsBlock extends React.Component {
     }
 
     saveTags(result){
-        this.setState({
-            list: []
-        })
+        var taglist = []
         const count = result[1];
         const list = result[0];
         for(var i=0;i<count;i++){
-            this.state.list.push(list[i].name);
+            taglist.push(list[i].name);
         }
-        console.log("TAGS: ", this.state.list);
+        this.setState({
+            list: taglist
+        })
     }
 
     setType(input){
@@ -118,7 +118,6 @@ export default class TagsBlock extends React.Component {
     }
 
     addTag = (event) => {
-        event.preventDefault();
         var tag = this.state.tempTag;
         console.log("Attempting to fetch tag: "+ tag)
         fetch(process.env.REACT_APP_API_PATH+"/post-tags?userID="+sessionStorage.getItem("user")+"&name="+tag+"&type=hashtag", {
@@ -129,9 +128,7 @@ export default class TagsBlock extends React.Component {
           }).then(res => res.json()
           ).then(
               result => {
-                  console.log("RETURNED OBJECT: "+result[0])
                   if(!(this.hasTag(result, tag)) || result[1] === 0){
-                    console.log("No existing tag found")
                     fetch(process.env.REACT_APP_API_PATH+"/post-tags", {
                         method: "POST",
                         headers: {
@@ -166,9 +163,7 @@ export default class TagsBlock extends React.Component {
         if(this.state.addClicked === false){
             return(
                 <form onSubmit={this.addTag}>
-                    Adding {this.state.tempTag} 
-                    <br />
-                    <input type="text" placeholder="hashtag" onChange={this.myChangeHandler}></input>
+                    <input type="text" placeholder="hashtag" onChange={this.myChangeHandler} onSubmit={this.addTag}></input>
                     <button className="addTag">add tag</button>
                 </form>
             )
@@ -186,7 +181,7 @@ export default class TagsBlock extends React.Component {
         var elementList = [];
         for (var i = 0; i<tagList.length;i++){
             var link = "/post-tag/" + tagList[i]
-            elementList.push(<a href={link}>#{tagList[i]} </a>)
+            elementList.push(<a href={link} key={i}>#{tagList[i]} </a>)
         }
         return(
             <div className="tagBlock"> 
