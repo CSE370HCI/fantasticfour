@@ -1,6 +1,5 @@
 import React from "react";
 import "../App.css";
-import Modal from "./Modal.jsx";
 import {
    Link
 } from 'react-router-dom';
@@ -157,8 +156,7 @@ export default class EditSettings extends React.Component {
     };
   render() {
     return (
-    <div id="myModal" className="editProfile">
-            <div className="modal-content">
+            <div className="settings-content">
               <Link to="/styleguide" className="close" style={{textDecoration: 'none'}}>
                 &times;
               </Link>
@@ -225,7 +223,6 @@ export default class EditSettings extends React.Component {
                      />
                   </form>
             </div>
-    </div>
     );
   }
 }
