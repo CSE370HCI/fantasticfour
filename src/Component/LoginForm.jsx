@@ -75,6 +75,15 @@ export default class LoginForm extends React.Component {
       .then(res => res.json())
       .then(result => {
         if (result.userID) {
+          // set the auth token and user ID in the session state
+          sessionStorage.setItem("token", result.token);
+          sessionStorage.setItem("user", result.id);
+
+          this.setState({
+            sessiontoken: result.token,
+            alanmessage: result.token
+          });
+
           // add the username to the user account provided during signup
           fetch(process.env.REACT_APP_API_PATH+`/users/${result.userID}`, {
             method: "PATCH",
@@ -88,17 +97,29 @@ export default class LoginForm extends React.Component {
           })
           .then(res => res.json())
           .then(result => {
-            // set the auth token and user ID in the session state
-            sessionStorage.setItem("token", result.token);
-            sessionStorage.setItem("user", result.userID);
 
-            this.setState({
-              sessiontoken: result.token,
-              alanmessage: result.token
-            });
+            console.log("UserID: " + result.id);
 
-            // call refresh on the posting list
-            this.refreshPostsFromLogin();
+            // set default profile picture for user
+            fetch(process.env.REACT_APP_API_PATH+"/user-artifacts", {
+              method: "POST",
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.state.sessiontoken}`
+              },
+              body: JSON.stringify({
+                ownerID: result.id,
+                type: "image",
+                //Sets default profile picture. User can change it in their profile settings
+                url: "https://imgur.com/a/rAAHLMu",
+                category: "profile_picture"
+              })
+            })
+            .then(res => {
+              // call refresh on the posting list
+              this.refreshPostsFromLogin();
+            }
+            );
           }, error => {
             console.log("after signup error: ", error);
           });
@@ -118,20 +139,6 @@ export default class LoginForm extends React.Component {
     }
     else {
       // make the api call to the login page
-      /*fetch(process.env.REACT_APP_API_PATH+"/users?email=" + this.state.email, {
-        method: "GET",
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      })
-          .then(res => res.json())
-          .then(result => {
-            //email must be in database otherwise API response will be empty.
-            //Can change email parameter to username if needed
-            if (result[0][0]["status"] == "DISABLED") {
-              alert("This user's account has been disabled!");
-            }
-          }) */
       fetch(process.env.REACT_APP_API_PATH+"/auth/login", {
         method: "post",
         headers: {
