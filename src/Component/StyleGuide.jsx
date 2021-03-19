@@ -27,6 +27,7 @@ export default class StyleGuide extends React.Component {
         <heading>
           Color Palette
           <content>
+            <p></p>
             <div className="colorblocks">
               <div className="color-primary block">
                 <code>#FFFFFF</code>
@@ -62,18 +63,30 @@ export default class StyleGuide extends React.Component {
           <br/>
           <content>
             Font (Desktop Header)
+            <div className="font-desktop-header">
+              <h1>Roboto Bold • 24px • The quick brown fox jumps over the lazy dog</h1>
+            </div>
           </content>
           <br/>
           <content>
             Font (Desktop Body)
+            <div className="font-desktop-body">
+              <p>Roboto • 18px • The quick brown fox jumps over the lazy dog</p>
+            </div>
           </content>
           <br/>
           <content>
             Font (Mobile Header)
+            <div className="font-mobile-header">
+              <h1>Roboto Bold • 18px • The quick brown fox jumps over the lazy dog</h1>
+            </div>
           </content>
           <br/>
           <content>
             Font (Mobile Body)
+            <div className="font-mobile-body">
+              <p>Roboto • 12px • The quick brown fox jumps over the lazy dog</p>
+            </div>
           </content>
         </heading>
         <br/>
