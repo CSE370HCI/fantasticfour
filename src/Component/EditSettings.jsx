@@ -151,9 +151,7 @@ export default class EditSettings extends React.Component {
       );
 
   };
-    redirect = () => {
-        window.location.replace("/delete");
-    };
+
   render() {
     return (
             <div className="settings-content">
@@ -162,7 +160,7 @@ export default class EditSettings extends React.Component {
               </Link>
               <br/>
               Edit Personal Information
-                 <form onSubmit={this.submitHandler} className="profileform" >
+                 <form onSubmit={this.submitHandler} className="settingsform" >
                     <br/>
                     <label>
                         Username
@@ -216,11 +214,9 @@ export default class EditSettings extends React.Component {
                     <br/>
                     <br/>
                     <br/>
-                     <input
-                         type="button"
-                         onClick={this.redirect}
-                         value="Delete Account"
-                     />
+                    <button onclick="">
+                    Delete Account
+                    </button>
                   </form>
             </div>
     );
