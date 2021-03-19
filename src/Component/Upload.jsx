@@ -46,8 +46,8 @@ export default class PostForm extends React.Component {
         body: JSON.stringify({
           authorID: sessionStorage.getItem("user"),
           content: this.state.post_title,
-          thumbnailURL: this.state.post_URL,
-          type: "post"
+          type: "post",
+          thumbnailURL: this.state.post_URL
         })
       })
           .then(res => res.json())

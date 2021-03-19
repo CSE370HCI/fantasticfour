@@ -16,7 +16,7 @@ export default class LoginForm extends React.Component {
       alanmessage: "",
       sessiontoken: "",
       signup: false,
-      passwordmismatch: true
+      passwordmismatch: true,
     };
     this.refreshPostsFromLogin = this.refreshPostsFromLogin.bind(this);
   }

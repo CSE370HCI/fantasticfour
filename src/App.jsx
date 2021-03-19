@@ -21,6 +21,7 @@ import {
 } from 'react-router-dom';
 import DeleteAccount from "./Component/DeleteAccount";
 import UserProfile from "./Component/UserProfile";
+import EditSettings from "./Component/EditSettings";
 
 // toggleModal will both show and hide the modal dialog, depending on current state.  Note that the
 // contents of the modal dialog are set separately before calling toggle - this is just responsible
@@ -74,6 +75,11 @@ class App extends React.Component {
 
           <div className="maincontent" id="mainContent">
             <Switch>
+            <Route path="/settings">
+              <div className="settings">
+                <EditSettings userid={sessionStorage.getItem("user")} />
+              </div>
+            </Route>
             <Route path="/profile">
               <div className="user-profile">
                 <p className='page-title'>My Profile</p>
@@ -90,12 +96,6 @@ class App extends React.Component {
               <div className="deleteAccount">
                 <p className='page-title'>Delete Your Account</p>
                 <DeleteAccount userid={sessionStorage.getItem("user")} />
-              </div>
-            </Route>
-            <Route path="/settings">
-              <div className="settings">
-                <p>Settings</p>
-                <Profile userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
             <Route path="/friends">
