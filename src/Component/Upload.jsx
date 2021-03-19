@@ -83,7 +83,7 @@ export default class PostForm extends React.Component {
       },
       body: JSON.stringify({
           postID: post,
-          userID: sessionStorage.getItem("user"),
+          userID: null,
           name: tag,
           type: "hashtag"
       })
