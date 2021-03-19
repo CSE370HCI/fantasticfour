@@ -77,8 +77,7 @@ export default class LoginForm extends React.Component {
         if (result.userID) {
           // set the auth token and user ID in the session state
           sessionStorage.setItem("token", result.token);
-          sessionStorage.setItem("user", result.id);
-
+          sessionStorage.setItem("user", result.userID);
           this.setState({
             sessiontoken: result.token,
             alanmessage: result.token
@@ -99,19 +98,18 @@ export default class LoginForm extends React.Component {
           .then(result => {
 
             console.log("UserID: " + result.id);
-
             // set default profile picture for user
             fetch(process.env.REACT_APP_API_PATH+"/user-artifacts", {
               method: "POST",
               headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.state.sessiontoken}`
+                'Authorization': 'Bearer '+ sessionStorage.getItem("token")
               },
               body: JSON.stringify({
                 ownerID: result.id,
                 type: "image",
                 //Sets default profile picture. User can change it in their profile settings
-                url: "https://imgur.com/a/rAAHLMu",
+                url: "https://i.imgur.com/UJ9uaCg.png",
                 category: "profile_picture"
               })
             })
