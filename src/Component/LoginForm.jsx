@@ -61,7 +61,7 @@ export default class LoginForm extends React.Component {
 
     // in signup mode
     if (this.state.signup) {
-      //make the api call to the signup page
+      // make the api call to the signup page
       fetch(process.env.REACT_APP_API_PATH+"/auth/signup", {
         method: "post",
         headers: {
@@ -117,7 +117,21 @@ export default class LoginForm extends React.Component {
       });
     }
     else {
-      //make the api call to the login page
+      // make the api call to the login page
+      /*fetch(process.env.REACT_APP_API_PATH+"/users?email=" + this.state.email, {
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+          .then(res => res.json())
+          .then(result => {
+            //email must be in database otherwise API response will be empty.
+            //Can change email parameter to username if needed
+            if (result[0][0]["status"] == "DISABLED") {
+              alert("This user's account has been disabled!");
+            }
+          }) */
       fetch(process.env.REACT_APP_API_PATH+"/auth/login", {
         method: "post",
         headers: {
@@ -131,20 +145,14 @@ export default class LoginForm extends React.Component {
         .then(res => res.json())
         .then(
           result => {
-            console.log("Testing");
             if (result.userID) {
-
-              // set the auth token and user ID in the session state
-              sessionStorage.setItem("token", result.token);
-              sessionStorage.setItem("user", result.userID);
-
-              this.setState({
-                sessiontoken: result.token,
-                alanmessage: result.token
+              // check if disabled user
+              return fetch(process.env.REACT_APP_API_PATH+"/users?email=" + this.state.email, {
+                method: "GET",
+                headers: {
+                  'Content-Type': 'application/json',
+                }
               });
-
-              // call refresh on the posting list
-              this.refreshPostsFromLogin();
             } else {
 
               // if the login failed, remove any infomation from the session state
@@ -159,7 +167,30 @@ export default class LoginForm extends React.Component {
           error => {
             alert("error!");
           }
-        );
+        )
+        .then(res => res.json())
+        .then(result => {
+          if (result[0][0]["status"] == "DISABLED") {
+            alert("This user's account has been disabled!");
+          }
+          else {
+            // set the auth token and user ID in the session state
+            sessionStorage.setItem("token", result.token);
+            sessionStorage.setItem("user", result.userID);
+
+            this.setState({
+              sessiontoken: result.token,
+              alanmessage: result.token
+            });
+
+            // call refresh on the posting list
+            this.refreshPostsFromLogin();
+          }
+        },
+        error => {
+          alert("Error retrieving account");
+          console.log(error);
+        });
       }
   };
 
