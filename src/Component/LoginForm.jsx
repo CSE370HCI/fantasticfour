@@ -153,6 +153,11 @@ export default class LoginForm extends React.Component {
         .then(
           result => {
             if (result.userID) {
+              this.setState({
+                sessiontoken: result.token,
+                alanmessage: result.userID
+              });
+
               // check if disabled user
               return fetch(process.env.REACT_APP_API_PATH+"/users?email=" + this.state.email, {
                 method: "GET",
@@ -182,12 +187,12 @@ export default class LoginForm extends React.Component {
           }
           else {
             // set the auth token and user ID in the session state
-            sessionStorage.setItem("token", result.token);
-            sessionStorage.setItem("user", result.userID);
+            sessionStorage.setItem("token", this.state.sessiontoken);
+            sessionStorage.setItem("user", this.state.alanmessage);
 
             this.setState({
-              sessiontoken: result.token,
-              alanmessage: result.token
+              sessiontoken: this.state.sessiontoken,
+              alanmessage: this.state.sessiontoken
             });
 
             // call refresh on the posting list
