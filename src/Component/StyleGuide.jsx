@@ -127,6 +127,12 @@ export default class StyleGuide extends React.Component {
           <br/>
           <content>
             Post Content Buttons
+            <div className="post-buttons">
+              {/* cancel button */}
+              <div className="button-cancel-post">Cancel</div>
+              {/* post button */}
+              <div className="button-submit-post">Post</div>
+            </div>
           </content>
         </heading>
         <br/>
