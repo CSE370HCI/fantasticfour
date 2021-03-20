@@ -180,8 +180,8 @@ export default class LoginForm extends React.Component {
         )
         .then(res => res.json())
         .then(result => {
-          if (result[0][0]["status"] == "DISABLED") {
-            alert("This user's account has been disabled!");
+          if (result[0][0]["status"] == "DELETED") {
+            alert("This user's account has been deleted!");
           }
           else {
             // set the auth token and user ID in the session state
