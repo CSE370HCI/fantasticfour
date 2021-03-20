@@ -9,13 +9,20 @@ import "./App.css";
 import PostForm from "./Component/PostForm.jsx";
 import FriendList from "./Component/FriendList.jsx";
 import LoginForm from "./Component/LoginForm.jsx";
-import Profile from "./Component/Profile.jsx";
+import EditSettings from "./Component/EditSettings.jsx";
 import FriendForm from "./Component/FriendForm.jsx";
 import Modal from "./Component/Modal.jsx";
 import Navbar from "./Component/Navbar.jsx";
+import StyleGuide from "./Component/StyleGuide.jsx";
+import Upload from "./Component/Upload";
+import PostingList from "./Component/PostingList.jsx";
+import TagsBlock from "./Component/TagsBlock.jsx";
 import {
   BrowserRouter as Router, Route, Switch
 } from 'react-router-dom';
+import DeleteAccount from "./Component/DeleteAccount";
+import UserProfile from "./Component/UserProfile";
+import {Link} from 'react-router-dom';
 
 // toggleModal will both show and hide the modal dialog, depending on current state.  Note that the
 // contents of the modal dialog are set separately before calling toggle - this is just responsible
@@ -63,18 +70,27 @@ class App extends React.Component {
       // the same effect as /posts, needs to go last, because it uses regular
       // expressions, and would otherwise capture all the routes.  Ask me how I
       // know this.
-      <Router basename={process.env.PUBLIC_URL}>
+      <Router>
       <div className="App">
         <header className="App-header">
 
-          <Navbar toggleModal={e => toggleModal(this, e)} />
-
           <div className="maincontent" id="mainContent">
             <Switch>
+            <Route path="/profile">
+              <div className="user-profile">
+                <p className='page-title'>My Profile</p>
+                <UserProfile userid={sessionStorage.getItem("user")} />
+              </div>
+            </Route>
+            <Route path="/delete">
+              <div className="deleteAccount">
+                <p className='page-title'>Delete Your Account</p>
+                <DeleteAccount userid={sessionStorage.getItem("user")} />
+              </div>
+            </Route>
             <Route path="/settings">
               <div className="settings">
-                <p>Settings</p>
-                <Profile userid={sessionStorage.getItem("user")} />
+                <EditSettings userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
             <Route path="/friends">
@@ -84,15 +100,70 @@ class App extends React.Component {
                 <FriendList userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
-            <Route path={["/posts","/"]}>
+            <Route path="/home">
               <div>
-                <p>Social Media Test Harness</p>
+                <p>Home</p>
+              </div>
+            </Route>
+            <Route path="/latest">
+              <div>
+                <p>Latest</p>
+              </div>
+            </Route>
+            <Route path="/popular">
+              <div>
+                <p>Popular</p>
+              </div>
+            </Route>
+            <Route path="/random">
+              <div>
+                <p>Random</p>
+              </div>
+            </Route>
+            <Route path="/styleguide">
+              <div>
+                <br/>
+                <p>Style Guide</p>
+                <StyleGuide/>
+              </div>
+            </Route>
+            <Route path="/upload">
+              <div className="upload">
+                <p className='page-title'>Create a New Post</p>
+                <Upload userid={sessionStorage.getItem("user")} />
+              </div>
+            </Route>
+            <Route path={["/posts"]}>
+              <div>
+                <p>Posts</p>
                 <LoginForm refreshPosts={this.doRefreshPosts}  />
                 <PostForm refresh={this.state.refreshPosts}/>
               </div>
             </Route>
+            <Route path={["/login", "signup"]}>
+              <div>
+                <LoginForm refreshPosts={this.doRefreshPosts}/>
+              </div>
+            </Route>
+            <Route path={["/postinglist", "/"]}>
+              <div className="posting-block">
+                <PostingList refresh={this.state.refreshPosts}/>
+              </div>
+              <div className="column-view">
+                <div className="upload-button">
+                <Link to="/upload" className="upload-button-text">
+                  Upload a Post
+                </Link>
+                </div>
+                <div>
+                  <TagsBlock />
+                </div>
+              </div>
+            </Route>
             </Switch>
           </div>
+          {/*Navbar on bottom makes sure its prioritized over all elements.*/}
+          <Navbar toggleModal={e => toggleModal(this, e)} />
         </header>
 
         <Modal show={this.state.openModal} onClose={e => toggleModal(this, e)}>

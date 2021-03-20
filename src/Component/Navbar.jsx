@@ -4,10 +4,15 @@ import {
    Link
 } from 'react-router-dom';
 // pull in the images for the menu items
+import post from "../assets/createpost.png";
+import logo from "../assets/logo.png";
 import postIcon from "../assets/post.svg";
+import newPostIcon from "../assets/new_post.svg";
 import friendIcon from "../assets/friends.svg";
 import settingIcon from "../assets/settings.svg";
-import helpIcon from "../assets/help.svg";
+// import helpIcon from "../assets/help.svg";
+import homeIcon from "../assets/MemeMe.svg"
+import profileIcon from "../assets/profile.svg"
 
 /* The Navbar class provides navigation through react router links.  Note the callback
    to the parent app class in the last entry... this is an example of calling a function
@@ -16,52 +21,59 @@ class Navbar extends React.Component {
 
   render() {
     return (
-    <div id="sidenav" className="sidenav">
+    <div id="sidenav" className="topNav">
+      <iconbar id="logobar" className="logobar">
+        <li className="home">
+          <Link to="/" >
+            <img src={logo} />
+          </Link>
+        </li>
+      </iconbar>
       <ul id="side-menu-items">
-        <li className="pm admin student">
-          <Link to="/posts">
+        <li className="latest">
+          <Link to="/latest" style={{textDecoration: 'none', color: 'black'}}>
+            Latest
+          </Link>
+        </li>
+        <li className="popular">
+          <Link to="/popular" style={{textDecoration: 'none', color: 'black'}}>
+            Popular
+          </Link>
+        </li>
+        <li className="random">
+          <Link to="/random" style={{textDecoration: 'none', color: 'black'}}>
+            Random
+          </Link>
+        </li>
+        <li className="style guide">
+          <Link to="/styleguide" style={{textDecoration: 'none', color: 'black'}}>
+            Style Guide
+          </Link>
+        </li>
+        <li className="topnav-button">
+          <Link to="/profile">
             <img
-              src={postIcon}
-              className="sidenav-icon"
-              alt="Posts"
-              title="Posts"
+                src={profileIcon}
+                className="sidenav-icon"
+                alt="My Profile"
+                title="My Profile"
             />
           </Link>
         </li>
-        <li className="pm admin">
-          <Link to="/friends">
-            <img
-              src={friendIcon}
-              className="sidenav-icon"
-              alt="Friends"
-              title="Friends"
-            />
-          </Link>
-        </li>
-        <li className="pm admin">
-          <Link to="/settings">
-            <img
-              src={settingIcon}
-              className="sidenav-icon"
-              alt="Settings"
-              title="Settings"
-            />
-          </Link>
-        </li>
-        <li className="pm admin">
-          <button
-            className="link-button"
-            onClick={e => this.props.toggleModal(e)}
-          >
-            <img
-              src={helpIcon}
-              className="sidenav-icon"
-              alt="Settings"
-              title="Settings"
-            />
-          </button>
-        </li>
+
       </ul>
+      <loginbar id="loginbar" className="loginbar">
+        <li className="login">
+          <Link to="/login" style={{textDecoration: 'none', color: 'black'}}>
+            Login
+          </Link>
+        </li>
+        <li className="sign up">
+          <Link to="/signup" style={{textDecoration: 'none', color: 'black'}}>
+            Sign Up
+          </Link>
+        </li>
+      </loginbar>
     </div>
   );
   }
