@@ -1117,8 +1117,3 @@ heading{
   font-size:15px;
   padding:10px 30px;
 }
-
-.styleGuide {
-  display: flex;
-  flex-direction: column;
-}
