@@ -1083,3 +1083,241 @@ heading{
   font-size:15px;
   padding:10px 30px;
 }
+
+/* styling for the style guide page */
+.colorblocks {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    margin: 20px auto;
+}
+
+.colorblocks .block {
+    min-width: 50px;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+/* Color Palette */
+
+.color-primary {
+    background-color: #FFFFFF;
+}
+
+.color-secondary {
+    background-color: #2D86D8;
+}
+
+.color-confirm {
+    background-color: #30D82D;
+}
+
+.color-decline {
+    background-color: #FF5959;
+}
+
+.color-main-background {
+    background-color: #C4C4C4;
+}
+
+/* Fonts */
+.font-desktop-header {
+    font-family: 'Roboto bold', sans-serif;
+    font-size: 24px;
+}
+.font-desktop-body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+}
+.font-mobile-header {
+    font-family: 'Roboto bold', sans-serif;
+    font-size: 18px;
+}
+.font-mobile-body {
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 12px;
+}
+
+.desktop-confirm {
+    width: 426px;
+    height: 47.41px;
+    background: #30D82D;
+    padding: 0;
+    border: none;
+    color: #FFFFFF;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+}
+
+.desktop-confirm:hover {
+}
+
+.desktop-confirm:hover span{
+}
+
+.desktop-confirm:focus span{
+}
+
+.desktop-confirm:focus{
+}
+
+.desktop-delete {
+    width: 426px;
+    height: 47.41px;
+    background: #FF5959;
+    padding: 0;
+    border: none;
+    color: #FFFFFF;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+}
+
+.desktop-tag {
+    width: 301.77px;
+    height: 159.98px;
+
+    border: 2px solid #50E97A;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    transition-duration: 0.4s;
+}
+
+.desktop-tag:hover {
+  background-color: #50E97A;
+}
+
+.desktop-tag:hover span{
+  color: #FFFFFF;
+  transition-duration: 0.4s;
+}
+
+.desktop-tag:focus span{
+  color: #FFFFFF;
+}
+
+.desktop-tag:focus{
+  background: #50E97A;
+  border: 2px solid #50E97A;
+  box-sizing: border-box;
+  outline:0;
+}
+
+.mobile-tag {
+    width: 350.31px;
+    height: 64.83px;
+
+    border: 2px solid #50E97A;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    transition-duration: 0.4s;
+}
+
+.mobile-tag:hover {
+  background-color: #50E97A;
+}
+
+.mobile-tag:hover span{
+  color: #FFFFFF;
+  transition-duration: 0.4s;
+}
+
+.mobile-tag:focus span{
+  color: #FFFFFF;
+}
+
+.mobile-tag:focus{
+  background: #50E97A;
+  border: 2px solid #50E97A;
+  box-sizing: border-box;
+  outline:0;
+}
+
+content{
+    font-size: 18px;
+    font-style: normal;
+    color: black;
+}
+
+heading{
+    font-size: 24px;
+    font-style: bold;
+    color: black;
+}
+
+.settingsform {
+   text-align: center;
+   display:block;
+   font-size: 12px;
+   color:black;
+}
+
+.topNav{
+  /* need to specify some position other than static, so height can apply.
+     Fixed works since it will stay fixed to the side - 0 from both left and top. */
+  position:fixed;
+  left:0px;
+  top:0px;
+  height:50px;
+  width:100%;
+
+  /* internally to this container, we want to use flex positioning of the menu elements */
+  display:flex;
+  flex-direction: row;
+  background-color: #FFFFFF;
+}
+
+.topNav ul{
+   display:flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: center;
+   font-size: 20px;
+   list-style-type: none;
+   margin-right: auto;
+   margin-left: auto;
+   gap: 30px;
+}
+
+.topNav loginbar{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    list-style-type: none;
+    margin-right: 5px;
+    margin-left: auto;
+    gap: 30px;
+}
+
+.topNav iconbar{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    list-style-type: none;
+    margin-right: auto;
+    margin-left: 5px;
+}
+
+.desktop-back {
+  color: #aaa;
+  line-height: 42px;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.desktop-back:hover,
+.desktop-back:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.stylepage{
+    display: flex;
+    flex-direction: column;
+    background-color: #ddd;
+    justify-content: center;
+    flex-grow: 1;
+}

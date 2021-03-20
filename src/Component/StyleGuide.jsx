@@ -3,12 +3,13 @@ import "../App.css";
 import {
    Link
 } from 'react-router-dom';
+import back from "../assets/back.png";
 
 export default class StyleGuide extends React.Component {
 
   render() {
     return (
-      <div id="styleguide" className="styleGuide maincontent">
+      <div id="styleguide" className="styleGuide stylepage">
         <heading>
           Branding
           <br/>
@@ -54,7 +55,7 @@ export default class StyleGuide extends React.Component {
               </div>
             </div>
           </content>
-          
+
         </heading>
         <br/>
         <br/>
@@ -96,10 +97,14 @@ export default class StyleGuide extends React.Component {
           <br/>
           <content>
             Confirmation Button (Edit)
+            <br/>
+            <button class="desktop-confirm"><span>Confirm</span></button>
           </content>
           <br/>
           <content>
             Confirmation Button (Delete)
+            <br/>
+            <button class="desktop-delete"><span>Delete</span></button>
           </content>
         </heading>
         <br/>
@@ -147,6 +152,38 @@ export default class StyleGuide extends React.Component {
           <br/>
           <content>
             Downvote (Selected)
+          </content>
+        </heading>
+        <br/>
+        <heading>
+          Tags
+          <br/>
+          <content>
+            Desktop
+            <br/>
+            <button class="desktop-tag"><span>#tag</span></button>
+          </content>
+          <br/>
+          <content>
+            Mobile
+            <br/>
+            <button class="mobile-tag"><span>#tag</span></button>
+          </content>
+        </heading>
+        <br/>
+        <heading>
+          Navigation Buttons
+          <br/>
+          <content>
+            Back (Desktop)
+            <br/>
+            <Link className="desktop-back" style={{textDecoration: 'none'}}>&times;</Link>
+          </content>
+          <br/>
+          <content>
+            Back (Mobile)
+            <br/>
+            <Link><img src={back}/></Link>
           </content>
         </heading>
       </div>
