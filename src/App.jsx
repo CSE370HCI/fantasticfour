@@ -22,6 +22,7 @@ import {
 } from 'react-router-dom';
 import DeleteAccount from "./Component/DeleteAccount";
 import UserProfile from "./Component/UserProfile";
+import {Link} from 'react-router-dom';
 
 // toggleModal will both show and hide the modal dialog, depending on current state.  Note that the
 // contents of the modal dialog are set separately before calling toggle - this is just responsible
@@ -114,6 +115,12 @@ class App extends React.Component {
                 <StyleGuide/>
               </div>
             </Route>
+            <Route path="/upload">
+              <div className="upload">
+                <p className='page-title'>Create a New Post</p>
+                <Upload userid={sessionStorage.getItem("user")} />
+              </div>
+            </Route>
             <Route path={["/posts"]}>
               <div>
                 <p>Posts</p>
@@ -132,11 +139,36 @@ class App extends React.Component {
               </div>
               <div className="column-view">
                 <div className="temp-login-form">
-                  <LoginForm refreshPosts={this.doRefreshPosts} />
+                  <LoginForm refreshPosts={this.doRefreshPosts} className="temp-login-form"/>
+                </div>
+                <div>
+                  <div className="upload-button">
+                  <Link to="/upload" className="upload-button-text">
+                    Upload a Post
+                  </Link>
+                  </div>
                 </div>
                 <div>
                   <TagsBlock />
                 </div>
+              </div>
+            </Route>
+            <Route path="/profile">
+              <div className="user-profile">
+                <p className='page-title'>My Profile</p>
+                <UserProfile userid={sessionStorage.getItem("user")} />
+              </div>
+            </Route>
+            <Route path="/upload">
+              <div className="upload">
+                <p className='page-title'>Create a New Post</p>
+                <Upload userid={sessionStorage.getItem("user")} />
+              </div>
+            </Route>
+            <Route path="/delete">
+              <div className="deleteAccount">
+                <p className='page-title'>Delete Your Account</p>
+                <DeleteAccount userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
             </Switch>

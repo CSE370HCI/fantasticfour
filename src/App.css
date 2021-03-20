@@ -912,6 +912,21 @@ heading{
   left: 0px;
 }
 
+.upload-button{
+  margin-right: 10px;
+  border-style: solid;
+  border-color: black;
+  border-radius: 10px;
+  background-color:lightgray;
+}
+
+.upload-button-text{
+  text-justify: center;
+  text-align: center;
+  text-decoration: none;
+  text-decoration-color: blue;
+}
+
 .tagBlock {
   position:fixed;
   background-color: white;
@@ -933,6 +948,7 @@ heading{
   left:75%;
   display: flex;
   flex-direction: column;
+  width:25%;
 }
 
 .tag-header {
@@ -1083,3 +1099,12 @@ heading{
   font-size:15px;
   padding:10px 30px;
 }
+
+.stylepage{
+  display: flex;
+  flex-direction: column;
+  background-color: #ddd;
+  justify-content: center;
+  flex-grow: 1;
+}
+

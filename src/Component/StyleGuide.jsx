@@ -8,7 +8,7 @@ export default class StyleGuide extends React.Component {
 
   render() {
     return (
-      <div id="styleguide" className="styleGuide maincontent">
+      <div id="styleguide" className="=stylepage">
         <heading>
           Branding
           <br/>
