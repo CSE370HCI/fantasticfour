@@ -7,9 +7,12 @@ import {
 import post from "../assets/createpost.png";
 import logo from "../assets/logo.png";
 import postIcon from "../assets/post.svg";
+import newPostIcon from "../assets/new_post.svg";
 import friendIcon from "../assets/friends.svg";
 import settingIcon from "../assets/settings.svg";
-import helpIcon from "../assets/help.svg";
+// import helpIcon from "../assets/help.svg";
+import homeIcon from "../assets/MemeMe.svg"
+import profileIcon from "../assets/profile.svg"
 
 /* The Navbar class provides navigation through react router links.  Note the callback
    to the parent app class in the last entry... this is an example of calling a function
@@ -21,10 +24,8 @@ class Navbar extends React.Component {
     <div id="sidenav" className="topNav">
       <iconbar id="logobar" className="logobar">
         <li className="home">
-          <Link to="/home" >
-            <img
-              src={logo}
-            />
+          <Link to="/" >
+            <img src={logo} />
           </Link>
         </li>
       </iconbar>
@@ -49,15 +50,26 @@ class Navbar extends React.Component {
             Style Guide
           </Link>
         </li>
+        <li className="topnav-button">
+          <Link to="/profile">
+            <img
+                src={profileIcon}
+                className="sidenav-icon"
+                alt="My Profile"
+                title="My Profile"
+            />
+          </Link>
+        </li>
+
       </ul>
       <loginbar id="loginbar" className="loginbar">
         <li className="login">
-          <Link to="/settings" style={{textDecoration: 'none', color: 'black'}}>
+          <Link to="/login" style={{textDecoration: 'none', color: 'black'}}>
             Login
           </Link>
         </li>
         <li className="sign up">
-          <Link to="/settings" style={{textDecoration: 'none', color: 'black'}}>
+          <Link to="/signup" style={{textDecoration: 'none', color: 'black'}}>
             Sign Up
           </Link>
         </li>

@@ -1,6 +1,7 @@
 import React from "react";
 import "../App.css";
 import Modal from "./Modal.jsx";
+import {Link} from 'react-router-dom';
 
 export default class EditSettings extends React.Component {
   constructor(props) {
