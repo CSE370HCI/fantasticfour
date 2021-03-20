@@ -527,7 +527,7 @@ heading{
   align-items: flex-center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: black;
   height:fit-content;
 }
 

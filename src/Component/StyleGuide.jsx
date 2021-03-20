@@ -4,6 +4,13 @@ import {
    Link
 } from 'react-router-dom';
 import back from "../assets/back.png";
+import upvote_enabled from "../assets/upvote-enabled.png";
+import downvote_enabled from "../assets/downvote-enabled.png";
+import upvote_selected from "../assets/upvote-selected.png";
+import downvote_selected from "../assets/downvote-selected.png";
+import upvote_disabled from "../assets/upvote-disabled.png";
+import downvote_disabled from "../assets/downvote-disabled.png";
+import createpost from "../assets/createpost.png";
 
 export default class StyleGuide extends React.Component {
 
@@ -114,6 +121,8 @@ export default class StyleGuide extends React.Component {
           <br/>
           <content>
             Create Post Button
+            <br/>
+            <img src={createpost}/>
           </content>
           <br/>
           <content>
@@ -123,35 +132,30 @@ export default class StyleGuide extends React.Component {
         <br/>
         <br/>
         <heading>
-          Upvote Post Icons (Desktop)
+          Post Voting Icons
           <br/>
           <content>
             Upvote / Downvote (Not Selected)
+            <br/>
+            <img src={upvote_enabled}/>
+            <img src={downvote_enabled}/>
+            <br/>
           </content>
           <br/>
           <content>
             Upvote (Selected)
+            <br/>
+            <img src={upvote_selected}/>
+            <img src={downvote_disabled}/>
+            <br/>
           </content>
           <br/>
           <content>
             Downvote (Selected)
-          </content>
-        </heading>
-        <br/>
-        <br/>
-        <heading>
-          Upvote Post Icons (Mobile)
-          <br/>
-          <content>
-            Upvote / Downvote (Not Selected)
-          </content>
-          <br/>
-          <content>
-            Upvote (Selected)
-          </content>
-          <br/>
-          <content>
-            Downvote (Selected)
+            <br/>
+            <img src={upvote_disabled}/>
+            <img src={downvote_selected}/>
+            <br/>
           </content>
         </heading>
         <br/>
