@@ -151,6 +151,10 @@ export default class EditSettings extends React.Component {
 
   };
 
+    redirect = () => {
+        window.location.replace("/delete");
+    };
+
   render() {
     return (
     <div id="myModal" className="editProfile">
@@ -214,9 +218,12 @@ export default class EditSettings extends React.Component {
                     <br/>
                     <br/>
                     <br/>
-                    <button onclick="">
-                    Delete Account
-                    </button>
+                     <input
+                         type="button"
+                         className="edit-button"
+                         onClick={this.redirect}
+                         value="Edit"
+                     />
                   </form>
             </div>
     </div>
