@@ -14,9 +14,14 @@ import FriendForm from "./Component/FriendForm.jsx";
 import Modal from "./Component/Modal.jsx";
 import Navbar from "./Component/Navbar.jsx";
 import StyleGuide from "./Component/StyleGuide.jsx";
+import Upload from "./Component/Upload";
+import PostingList from "./Component/PostingList.jsx";
+import TagsBlock from "./Component/TagsBlock.jsx";
 import {
   BrowserRouter as Router, Route, Switch
 } from 'react-router-dom';
+import DeleteAccount from "./Component/DeleteAccount";
+import UserProfile from "./Component/UserProfile";
 
 // toggleModal will both show and hide the modal dialog, depending on current state.  Note that the
 // contents of the modal dialog are set separately before calling toggle - this is just responsible
@@ -68,8 +73,6 @@ class App extends React.Component {
       <div className="App">
         <header className="App-header">
 
-          <Navbar toggleModal={e => toggleModal(this, e)} />
-
           <div className="maincontent" id="mainContent">
             <Switch>
             <Route path="/settings">
@@ -111,15 +114,35 @@ class App extends React.Component {
                 <StyleGuide/>
               </div>
             </Route>
-            <Route path={["/posts","/"]}>
+            <Route path={["/posts"]}>
               <div>
-                <p>Social Media Test Harness</p>
+                <p>Posts</p>
                 <LoginForm refreshPosts={this.doRefreshPosts}  />
                 <PostForm refresh={this.state.refreshPosts}/>
               </div>
             </Route>
+            <Route path={["/login", "signup"]}>
+              <div>
+                <LoginForm refreshPosts={this.doRefreshPosts}/>
+              </div>
+            </Route>
+            <Route path={["/postinglist", "/"]}>
+              <div className="posting-block">
+                <PostingList refresh={this.state.refreshPosts}/>
+              </div>
+              <div className="column-view">
+                <div className="temp-login-form">
+                  <LoginForm refreshPosts={this.doRefreshPosts} />
+                </div>
+                <div>
+                  <TagsBlock />
+                </div>
+              </div>
+            </Route>
             </Switch>
           </div>
+          {/*Navbar on bottom makes sure its prioritized over all elements.*/}
+          <Navbar toggleModal={e => toggleModal(this, e)} />
         </header>
 
         <Modal show={this.state.openModal} onClose={e => toggleModal(this, e)}>
