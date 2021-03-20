@@ -220,9 +220,8 @@ export default class EditSettings extends React.Component {
                     <br/>
                      <input
                          type="button"
-                         className="edit-button"
                          onClick={this.redirect}
-                         value="Edit"
+                         value="Delete Account"
                      />
                   </form>
             </div>
