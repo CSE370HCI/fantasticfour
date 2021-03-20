@@ -350,6 +350,40 @@
     font-size: 12px;
 }
 
+.button-create-post {
+  display: block;
+  width: 100px;
+  height: 85px;
+  background-image: url("../src/assets/create.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  margin: 5px auto;
+}
+
+.post-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+  margin: 10px 0;
+}
+
+.button-submit-post {
+  width: 6rem;
+  height: 30px;
+  padding-top: 6px;
+  background-color: #2D86D8;
+  color: white;
+}
+
+.button-cancel-post {
+  width: 6rem;
+  height: 30px;
+  padding-top: 6px;
+  background-color: #8a97a7;
+  color: white;
+}
+
 .desktop-confirm {
     width: 426px;
     height: 47.41px;
