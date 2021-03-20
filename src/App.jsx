@@ -138,15 +138,10 @@ class App extends React.Component {
                 <PostingList refresh={this.state.refreshPosts}/>
               </div>
               <div className="column-view">
-                <div className="temp-login-form">
-                  <LoginForm refreshPosts={this.doRefreshPosts} className="temp-login-form"/>
-                </div>
-                <div>
-                  <div className="upload-button">
-                  <Link to="/upload" className="upload-button-text">
-                    Upload a Post
-                  </Link>
-                  </div>
+                <div className="upload-button">
+                <Link to="/upload" className="upload-button-text">
+                  Upload a Post
+                </Link>
                 </div>
                 <div>
                   <TagsBlock />
