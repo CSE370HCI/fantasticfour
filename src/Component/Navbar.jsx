@@ -18,7 +18,7 @@ class Navbar extends React.Component {
 
   render() {
     return (
-    <div id="sidenav" className="sidenav">
+    <div id="sidenav" className="topNav">
       <iconbar id="logobar" className="logobar">
         <li className="home">
           <Link to="/home" >
