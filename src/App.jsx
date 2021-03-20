@@ -76,6 +76,18 @@ class App extends React.Component {
 
           <div className="maincontent" id="mainContent">
             <Switch>
+            <Route path="/profile">
+              <div className="user-profile">
+                <p className='page-title'>My Profile</p>
+                <UserProfile userid={sessionStorage.getItem("user")} />
+              </div>
+            </Route>
+            <Route path="/delete">
+              <div className="deleteAccount">
+                <p className='page-title'>Delete Your Account</p>
+                <DeleteAccount userid={sessionStorage.getItem("user")} />
+              </div>
+            </Route>
             <Route path="/settings">
               <div className="settings">
                 <EditSettings userid={sessionStorage.getItem("user")} />
@@ -146,24 +158,6 @@ class App extends React.Component {
                 <div>
                   <TagsBlock />
                 </div>
-              </div>
-            </Route>
-            <Route path="/profile">
-              <div className="user-profile">
-                <p className='page-title'>My Profile</p>
-                <UserProfile userid={sessionStorage.getItem("user")} />
-              </div>
-            </Route>
-            <Route path="/upload">
-              <div className="upload">
-                <p className='page-title'>Create a New Post</p>
-                <Upload userid={sessionStorage.getItem("user")} />
-              </div>
-            </Route>
-            <Route path="/delete">
-              <div className="deleteAccount">
-                <p className='page-title'>Delete Your Account</p>
-                <DeleteAccount userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
             </Switch>
