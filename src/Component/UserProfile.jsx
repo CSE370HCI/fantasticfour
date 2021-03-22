@@ -14,40 +14,6 @@ export default class UserProfile extends React.Component {
     this.postListing = React.createRef();
   }
 
-  // the handler for submitting a new post.  This will call the API to create a new post.
-  // while the test harness does not use images, if you had an image URL you would pass it
-  // in the thumbnailURL field.
-  submitHandler = event => {
-
-    //keep the form from actually submitting via HTML - we want to handle it in react
-    event.preventDefault();
-
-    //make the api call to post
-    fetch(process.env.REACT_APP_API_PATH+"/posts", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer '+sessionStorage.getItem("token")
-      },
-      body: JSON.stringify({
-        authorID: sessionStorage.getItem("user"),
-        content: this.state.post_title,
-        thumbnailURL: this.state.post_URL,
-        type: "post"
-      })
-    })
-        .then(res => res.json())
-        .then(
-            result => {
-              this.setState({
-                post_message: result.Status
-              });
-
-              // redirects users back to the posts screen
-              window.location.replace("/posts");
-            }
-        );
-  };
     redirect = () => {
         window.location.href = "settings";
     };
