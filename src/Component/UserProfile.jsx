@@ -2,7 +2,7 @@ import React from "react";
 import "../App.css";
 
 //The post form component holds both a form for posting, and also the list of current posts in your feed
-export default class PostForm extends React.Component {
+export default class UserProfile extends React.Component {
 
   constructor(props) {
     super(props);
