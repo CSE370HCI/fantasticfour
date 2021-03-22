@@ -49,7 +49,7 @@ export default class UserProfile extends React.Component {
         );
   };
     redirect = () => {
-        window.location.replace("/settings");
+        window.location.href = "settings";
     };
 
   componentDidMount() {
