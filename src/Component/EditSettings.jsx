@@ -87,7 +87,7 @@ export default class EditSettings extends React.Component {
             alert("Username must contain 4-20 characters.");
             event.preventDefault();
     }
-    if (!this.state.username == "" && this.state.email.length < 5 && (!this.state.email.includes("@") || !this.state.email.includes("."))){
+    if (!this.state.email == "" && this.state.email.length < 5 && (!this.state.email.includes("@") || !this.state.email.includes("."))){
             alert("Please provide a valid email address.");
             event.preventDefault();
     }
