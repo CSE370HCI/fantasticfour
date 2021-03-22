@@ -46,7 +46,7 @@ export default class DeleteAccount extends React.Component {
                                 Authorization: "Bearer " + sessionStorage.getItem("token"),
                             },
                         });
-                        window.location.replace("/");
+                        this.redirect()
                         fetch(process.env.REACT_APP_API_PATH + "/auth/verify", {
                             method: "POST",
                             headers: {
@@ -101,7 +101,7 @@ export default class DeleteAccount extends React.Component {
                                 },
                             }
                         );
-                        window.location.replace("/");
+                        this.redirect();
                         fetch(process.env.REACT_APP_API_PATH + "/auth/verify", {
                             method: "POST",
                             headers: {
@@ -116,7 +116,7 @@ export default class DeleteAccount extends React.Component {
     };
 
     redirect = () => {
-        window.location.replace("/");
+        window.location.href = "/";
     };
 
     // this method will keep the current post up to date as you type it,
