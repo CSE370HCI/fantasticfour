@@ -140,7 +140,7 @@ class App extends React.Component {
                 <PostForm refresh={this.state.refreshPosts}/>
               </div>
             </Route>
-            <Route path={["/login", "signup"]}>
+            <Route path={["/login", "/signup"]}>
               <div>
                 <LoginForm refreshPosts={this.doRefreshPosts}/>
               </div>
