@@ -118,6 +118,7 @@ export default class TagsBlock extends React.Component {
     }
 
     addTag = (event) => {
+        event.preventDefault();
         var tag = this.state.tempTag;
         if(tag.charAt(0) === '#'){
             tag = tag.substring(1);
@@ -194,7 +195,5 @@ export default class TagsBlock extends React.Component {
             </div>
         );
         
-
-
     }
 }
