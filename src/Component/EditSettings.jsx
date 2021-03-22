@@ -152,7 +152,7 @@ export default class EditSettings extends React.Component {
   };
 
     redirect = () => {
-        window.location.replace("/delete");
+        window.location.href = "delete";
     };
 
   render() {
