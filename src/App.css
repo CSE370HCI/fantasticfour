@@ -351,25 +351,6 @@
 /*  resize: none;*/
 /*}*/
 
-/*input[type="submit"] {*/
-/*  background-color:#2D86D8;*/
-/*  color: white;*/
-/*  border-radius:42px;*/
-/*  border: none;*/
-/*  font-size:15px;*/
-/*  padding:10px 50px;*/
-/*  !*text-decoration:none;*!*/
-/*}*/
-
-.upload {
-  color: black;
-  background: white;
-  padding-bottom: 25px;
-  box-sizing: content-box;
-  margin-left: 25%;
-  width: 50%;
-}
-
 .upload-input {
   border-radius:7px;
   width: 75%;
@@ -379,15 +360,6 @@
   font-size: 40px;
 }
 
-.deleteAccount {
-  color: black;
-  background: white;
-  padding-bottom: 25px;
-  box-sizing: content-box;
-  padding: 50px;
-  margin-left: 25%;
-  width: 50%;
-}
 .posting-block {
   position:absolute;
   left: 0px;
@@ -544,16 +516,6 @@
   height: 50%;
   position: relative;
   top: 25%;
-}
-
-.user-profile {
-  color: black;
-  background: white;
-  padding-bottom: 25px;
-  box-sizing: content-box;
-  padding: 50px;
-  margin-left: 25%;
-  width: 50%;
 }
 
 .danger-button-blocked {
@@ -842,4 +804,16 @@ heading{
 .profile-followers {
   cursor: pointer;
   color: dodgerblue;
+}
+
+.page-template {
+  color: black;
+  background: white;
+  box-sizing: content-box;
+  margin-left:auto;
+  margin-right:auto;
+  padding-bottom: 30px;
+  padding-right: 20px;
+  padding-left: 20px;
+  width: 40%;
 }

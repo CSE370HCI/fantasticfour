@@ -23,6 +23,7 @@ import {
 import DeleteAccount from "./Component/DeleteAccount";
 import UserProfile from "./Component/UserProfile";
 import {Link} from 'react-router-dom';
+import Followers from "./Component/Followers";
 
 // toggleModal will both show and hide the modal dialog, depending on current state.  Note that the
 // contents of the modal dialog are set separately before calling toggle - this is just responsible
@@ -77,13 +78,19 @@ class App extends React.Component {
           <div className="maincontent" id="mainContent">
             <Switch>
             <Route path="/profile">
-              <div className="user-profile">
+              <div className="page-template">
                 <p className='page-title'>My Profile</p>
                 <UserProfile userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
+              <Route path="/followers">
+                <div className="page-template">
+                  <p className='page-title'>Followers</p>
+                  <Followers userid={sessionStorage.getItem("user")} />
+                </div>
+              </Route>
             <Route path="/delete">
-              <div className="deleteAccount">
+              <div className="page-template">
                 <p className='page-title'>Delete Your Account</p>
                 <DeleteAccount userid={sessionStorage.getItem("user")} />
               </div>
@@ -128,7 +135,7 @@ class App extends React.Component {
               </div>
             </Route>
             <Route path="/upload">
-              <div className="upload">
+              <div className="page-template">
                 <p className='page-title'>Create a New Post</p>
                 <Upload userid={sessionStorage.getItem("user")} />
               </div>
