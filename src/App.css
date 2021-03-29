@@ -52,18 +52,18 @@
 }
 
 .no-suggestions {
-  color: #999;
+  color: white;
   padding: 0.5rem;
 
 }
 
 .autocomplete input {
-    width: calc(300px + 1rem);
+    width: 75%;
 }
 
-.autocomplete{
-    min-height: 165px;
-}
+/*.autocomplete{*/
+/*    min-height: 165px;*/
+/*}*/
 
 .suggestions {
   border: 1px solid #999;
@@ -73,7 +73,7 @@
   max-height: 143px;
   overflow-y: auto;
   padding-left: 0;
-  width: calc(300px + 1rem);
+  width: 75%;
 
   display:inline-block;
   position:relative;
@@ -86,8 +86,8 @@
 
 .suggestion-active,
 .suggestions li:hover {
-  background-color: #008f68;
-  color: #fae042;
+  background-color: #2D86D8;
+  color: white;
   cursor: pointer;
   font-weight: 700;
 }
@@ -802,17 +802,16 @@ heading{
   box-sizing: content-box;
   margin-left:auto;
   margin-right:auto;
-  padding-bottom: 30px;
-  padding-right: 20px;
-  padding-left: 20px;
+  padding-bottom: 2%;
+  padding-right: 1%;
+  padding-left: 1%;
   width: 40%;
 }
 
 .follower-list {
   color: black;
   text-align: left;
-  padding:10px;
-  margin:40px;
+  margin:2%;
   display: flex;
   align-items:center;
 }
@@ -823,4 +822,16 @@ heading{
   width: 75px;
   height: 75px;
   border-radius: 50%;
+}
+
+.follower-column {
+  float: left;
+}
+
+.left {
+  width: 60%;
+}
+
+.right {
+  width: 40%;
 }
