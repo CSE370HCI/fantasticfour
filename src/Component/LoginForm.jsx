@@ -221,7 +221,37 @@ export default class LoginForm extends React.Component {
   render() {
     // console.log("Rendering login, token is " + sessionStorage.getItem("token"));
 
-    if (!sessionStorage.getItem("token")) {
+    if (this.props.logout === true && sessionStorage.getItem("token")) {
+      // make logout call to API
+      fetch(process.env.REACT_APP_API_PATH+"/auth/logout", {
+        method: "post",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+ sessionStorage.getItem("token")
+        }
+      })
+      .then(result => {
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("user");
+        this.setState({
+          sessiontoken: "",
+          alanmessage: result.message
+        });
+
+        return (
+          <div>
+            <h1>Logged out!</h1>
+            <p>Go to <Link to="/login">login</Link></p>
+          </div>
+        )
+      }, error=> {
+        console.log(error);
+        return (
+          <h1>Logout failed :c</h1>
+        );
+      });
+    }
+    else if (!sessionStorage.getItem("token")) {
       return (
         <div className="temp-login-form">
           <form onSubmit={this.submitHandler}>
@@ -245,7 +275,8 @@ export default class LoginForm extends React.Component {
             <label>
               Password
               <input type="password" onChange={this.passwordChangeHandler} />
-              <Link to="/forgot-password">Forgot password?</Link>
+              
+              {!this.state.signup ? <Link to="/forgot-password">Forgot password?</Link> : ""}
             </label>
             <br />
 
