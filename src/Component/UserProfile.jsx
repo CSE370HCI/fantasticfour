@@ -29,9 +29,11 @@ export default class UserProfile extends React.Component {
           .then(res => res.json())
           .then(
               result => {
-                  this.setState({
-                      profile_picture: result[0][0]["url"]
-                  });
+                  if(sessionStorage.getItem("user") != null){
+                    this.setState({
+                        profile_picture: result[0][0]["url"]
+                    });
+                  }
               }
           );
       fetch(process.env.REACT_APP_API_PATH+"/users/" + sessionStorage.getItem("user"), {

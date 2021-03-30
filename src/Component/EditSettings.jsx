@@ -155,16 +155,20 @@ export default class EditSettings extends React.Component {
         window.location.href = "delete";
     };
 
+    onClose = () => {
+            window.location.href = "profile";
+        };
+
   render() {
     return (
     <div id="myModal" className="editProfile">
-            <div className="modal-content">
+            <div className="settings-content">
               <span className="close" onClick={this.onClose}>
                 &times;
               </span>
               <br/>
               Edit Personal Information
-                 <form onSubmit={this.submitHandler} className="profileform" >
+                 <form onSubmit={this.submitHandler} style={{'font-size': '15px'}}>
                     <br/>
                     <label>
                         Username

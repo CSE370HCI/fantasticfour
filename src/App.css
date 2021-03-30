@@ -18,7 +18,7 @@
   align-items: flex-center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: black;
+  color: white;
   height:fit-content;
 }
 
@@ -588,6 +588,13 @@
   object-fit: cover;
   width: 300px;
   height: 300px;
+  border-radius: 50%;
+}
+
+.small-profile-picture {
+  object-fit: cover;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
 }
  
