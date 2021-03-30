@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from 'react-router-dom';
 import "../App.css";
 
 //The post form component holds both a form for posting, and also the list of current posts in your feed
@@ -67,6 +68,10 @@ export default class UserProfile extends React.Component {
                 onClick={this.redirect}
                 value="Edit"
             />
+            <br/>
+            <Link to="/logout">
+                <input type="button" className="danger-button-unblocked" value="Logout"/>
+            </Link>
         </div>
     );
   }
