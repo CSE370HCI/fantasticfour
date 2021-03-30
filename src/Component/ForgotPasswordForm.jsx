@@ -9,7 +9,8 @@ class ForgotPasswordForm extends React.Component {
           password: "",
           resettoken: "",
           sessiontoken: "",
-          tokensent: false
+          tokensent: true,
+          passwordmismatch: true
         };
     }
 
@@ -25,6 +26,19 @@ class ForgotPasswordForm extends React.Component {
         });
     }
 
+    verifyPassword = (event) => {
+        if (this.state.password === event.target.value) {
+          this.setState({
+            passwordmismatch: false
+          });
+        }
+        else {
+          this.setState({
+            passwordmismatch: true
+          });
+        }
+    }
+
     submitHandler = event => {
         // don't submit form
         event.preventDefault();
@@ -32,10 +46,16 @@ class ForgotPasswordForm extends React.Component {
         // before sending reset email
         if (!this.state.tokensent) {
             // call API with email
+
             // toggletokensent
         }
         // after sending reset email
         else {
+            // continue only if passwords match
+            if (this.state.passwordmismatch) {
+                return;
+            }
+
             // call API with token
             // toggletokensent
         }
@@ -50,7 +70,7 @@ class ForgotPasswordForm extends React.Component {
                     <form onSubmit={this.submitHandler}>
                         <label>
                             E-mail
-                            <input type="email"/>
+                            <input type="email" onChange={this.emailChangeHandler}/>
                         </label>
                         <br/>
                         <input type="submit" value="Reset Password"/>
@@ -71,14 +91,15 @@ class ForgotPasswordForm extends React.Component {
                         <br/>
                         <label>
                             Enter new password
-                            <input type="password" name="password"/>
+                            <input type="password" name="password" onChange={this.passwordChangeHandler}/>
                         </label>
                         <br/>
                         <label>
                             Confirm new password
-                            <input type="password" name="confirmPassword"/>
+                            <input type="password" name="confirmPassword" onChange={this.verifyPassword}/>
                         </label>
                         <br/>
+                        { this.state.passwordmismatch ? <p>Passwords don't match</p> : <></> }
                         <input type="submit" value="Create New Password"/>
                     </form>
                 </div>
