@@ -289,7 +289,7 @@ export default class LoginForm extends React.Component {
       if (this.state.username) {
         return <p>Welcome, {this.state.username}</p>;
       } else {
-        return <p>{this.state.alanmessage}</p>;
+        return <p>Welcome!</p>;
       }
     }
   }

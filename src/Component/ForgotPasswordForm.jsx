@@ -1,4 +1,6 @@
 import React from "react";
+import {Link} from 'react-router-dom';
+
 import "../App.css";
 
 class ForgotPasswordForm extends React.Component {
@@ -9,14 +11,21 @@ class ForgotPasswordForm extends React.Component {
           password: "",
           resettoken: "",
           sessiontoken: "",
-          tokensent: true,
-          passwordmismatch: true
+          tokensent: false,
+          passwordmismatch: true,
+          resetSuccessful: false
         };
     }
 
     emailChangeHandler = event => {
         this.setState({
           email: event.target.value
+        });
+    }
+
+    tokenChangeHandler = event => {
+        this.setState({
+            resettoken: event.target.value
         });
     }
 
@@ -46,8 +55,26 @@ class ForgotPasswordForm extends React.Component {
         // before sending reset email
         if (!this.state.tokensent) {
             // call API with email
-
-            // toggletokensent
+            fetch(process.env.REACT_APP_API_PATH+"/auth/request-reset", {
+                method: "post",
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  email: this.state.email
+                })
+            })
+            .then(res => res.status)
+            .then(result => {
+                //console.log(result);
+                if (result == 200) {
+                    // toggle tokensent
+                    this.toggleTokenSent();
+                }
+            },
+            error => {
+                alert("Error requesting token.")
+            });
         }
         // after sending reset email
         else {
@@ -57,9 +84,39 @@ class ForgotPasswordForm extends React.Component {
             }
 
             // call API with token
-            // toggletokensent
+            fetch(process.env.REACT_APP_API_PATH+"/auth/reset-password", {
+                method: "post",
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  token: this.state.resettoken,
+                  password: this.state.password
+                })
+            })
+            .then(res => res.status)
+            .then(result => {
+                // if reset succesful, navigate to login page
+                if (result == 200) {
+                    this.setState({
+                        resetSuccessful: true
+                    });
+                }
+                else if (result == 401) {
+                    alert("Oops, invalid token, please try again!");
+                }
+            }, error => {
+                alert("Could not reset password. Try resetting again.");
+            });
         }
     }
+
+    toggleTokenSent = () => {
+        this.setState({
+            tokensent: !this.state.tokensent
+        });
+    }
+
     render() {
         // before token is sent, ask the user for email address
         if (!this.state.tokensent) {
@@ -80,13 +137,13 @@ class ForgotPasswordForm extends React.Component {
         }
         // ask for token and new password 
         else{
-            return (
+            return !this.state.resetSuccessful ? (
                 <div>
                     <h1>Reset Password</h1>
                     <form onSubmit={this.submitHandler}>
                         <label>
                             Token
-                            <input type="text" name="token"/>
+                            <input type="text" name="token" onChange={this.tokenChangeHandler}/>
                         </label>
                         <br/>
                         <label>
@@ -104,6 +161,13 @@ class ForgotPasswordForm extends React.Component {
                     </form>
                 </div>
             )
+            :
+            (
+                <>
+                    <h1>Password reset complete!</h1>
+                    <Link to="/login">Go to login.</Link>
+                </>
+            );
         }
         
     }
