@@ -162,7 +162,7 @@ class ForgotPasswordForm extends React.Component {
                 </div>
             )
             :
-            (
+            (   // notify user that password reset was successful
                 <>
                     <h1>Password reset complete!</h1>
                     <Link to="/login">Go to login.</Link>
