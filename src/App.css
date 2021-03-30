@@ -521,13 +521,43 @@
 .upButton{
   background-color: #00FF47;
   width:20%;
+  border-color: #00FF47;
+  border-width: 5%;
+  border-style: solid; 
+}
 
+.upButtonLit{
+  background-color: #00FF47;
+  width:20%;
+  border-color: #2D86D8;
+  border-width: 5%;
+  border-style: solid; 
 }
 
 .downButton{
   background-color: #FF8B8B;
   width:20%;
+  border-color: #FF8B8B;
+  border-width: 5%;
+  border-style: solid; 
+}
+
+.downButtonLit{
+  background-color: #FF8B8B;
+  width:20%;
   max-height: 15%;
+  border-color: #2D86D8;
+  border-width: 5%;
+  border-style: solid; 
+}
+
+.greyButton{
+  background-color: #767373;
+  width:20%;
+  max-height: 15%;
+  border-color: #767373;
+  border-width: 5%;
+  border-style: solid; 
 }
 
 .memeStuff{
@@ -544,6 +574,13 @@
   height: 50%;
   position: relative;
   top: 25%;
+}
+
+.arrowsLit{
+  height: 50%;
+  position: relative;
+  top: 25%;
+  filter: invert(49%) sepia(94%) saturate(2189%) hue-rotate(187deg) brightness(89%) contrast(90%);
 }
 
 .user-profile {
