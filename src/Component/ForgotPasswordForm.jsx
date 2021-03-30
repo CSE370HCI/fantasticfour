@@ -16,7 +16,16 @@ class ForgotPasswordForm extends React.Component {
     render() {
         return (
             <div>
-                Forgot Password
+                <h1>Forgot your password?</h1>
+                <p>Enter your e-mail to reset your password</p>
+                <form onSubmit={this.submitHandler}>
+                    <label>
+                        E-mail
+                        <input type="email"/>
+                    </label>
+                    <br/>
+                    <input type="submit" value="Reset Password"/>
+                </form>
             </div>
         );
     }
