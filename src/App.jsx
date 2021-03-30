@@ -22,6 +22,7 @@ import {
 } from 'react-router-dom';
 import DeleteAccount from "./Component/DeleteAccount";
 import UserProfile from "./Component/UserProfile";
+import ForgotPasswordForm from "./Component/ForgotPasswordForm"
 import {Link} from 'react-router-dom';
 
 // toggleModal will both show and hide the modal dialog, depending on current state.  Note that the
@@ -143,6 +144,11 @@ class App extends React.Component {
             <Route path={["/login", "/signup"]}>
               <div>
                 <LoginForm refreshPosts={this.doRefreshPosts}/>
+              </div>
+            </Route>
+            <Route path="/forgot-password">
+              <div>
+                <ForgotPasswordForm/>
               </div>
             </Route>
             <Route path={["/postinglist", "/"]}>

@@ -5,6 +5,7 @@ import helpIcon from "../assets/delete.png";
 import commentIcon from "../assets/comment.svg";
 import upArrow from "../assets/UpArrow.svg";
 import downArrow from "../assets/DownArrow.svg";
+import { parseConfigFileTextToJson } from "typescript";
 
 export default class Post extends React.Component {
   constructor(props) {
@@ -22,182 +23,175 @@ export default class Post extends React.Component {
   }
 
   componentDidMount() {
-    this.getReputation()
+    this.getUserReaction()
   }
 
-  //SETTING THE USER REACTION IS FAULTY, MIGHT TAKE A FEW CLICKS
-  getReputation(){
-    fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id+"&name=upvote&type=reaction", {
+  getUserReaction(){
+    console.log("Check1")
+    fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&type=reaction", {
       method: "GET",
       headers: {
         'Authorization': 'Bearer '+sessionStorage.getItem("token")
       }
-    }).then(res => res.json()
+    }).then(result => result.json()
     ).then(
         result => {
+          console.log(result)
+          if(result[1] === 0){
+            console.log("Found reactions: ", result[1])
             this.setState({
-              likes: result[1]
+              userreaction: 0
             })
+          }else if(result[0][0].name === "upvote"){
+            this.setState({
+              userreaction: 1
+            })
+          }else {
+            console.log("Else: ", result[0][0].name)
+            this.setState({
+              userreaction: -1
+            })
+          }
         }
     )
-    fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id+"&name=downvote&type=reaction", {
-      method: "GET",
-      headers: {
-        'Authorization': 'Bearer '+sessionStorage.getItem("token")
-      }
-    }).then(res => res.json()
-    ).then(
-        result => {
-            this.setState({
-              dislikes: result[1]
-            })
-        }
-    )
+  }
+
+  like(event) {
+    console.log("postid??"+this.props.post.id);
     fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&name=upvote&type=reaction", {
       method: "GET",
       headers: {
+        'Content-Type': 'application/json',
         'Authorization': 'Bearer '+sessionStorage.getItem("token")
       }
     }).then(res => res.json()
     ).then(
-        result => {
-            var status = 0;
-            if(result[1] === 1){
-              status = 1;
-              console.log("Check1:"+status);
-            }else{
+      result => {
+        if(result[1] === 0){
+          fetch(process.env.REACT_APP_API_PATH+"/post-tags", {
+              method: "POST",
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+sessionStorage.getItem("token")
+              },
+              body: JSON.stringify({
+                  postID: this.props.post.id,
+                  userID: sessionStorage.getItem("user"),
+                  name: "upvote",
+                  type: "reaction"
+              })
+            }).then(
+                res => res.json()
+            ).then(
               fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&name=downvote&type=reaction", {
                 method: "GET",
                 headers: {
+                  'Content-Type': 'application/json',
                   'Authorization': 'Bearer '+sessionStorage.getItem("token")
                 }
               }).then(res => res.json()
               ).then(
                   result => {
                       if(result[1] === 1){
-                        status = -1;
-                        console.log("Check2:"+status);
-                      }else{
-                        status = 0;
-                        console.log("Check3:"+status);
+                        fetch(process.env.REACT_APP_API_PATH+"/post-tags/"+result[0][0].id, {
+                            method: "DELETE",
+                            headers: {
+                              'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                            }
+                          })
                       }
                   }
               )
+            ).then(
+              this.setState({
+                userreaction: 1
+              })
+            )
+        }else{
+          fetch(process.env.REACT_APP_API_PATH+"/post-tags/"+result[0][0].id, {
+            method: "DELETE",
+            headers: {
+              'Authorization': 'Bearer '+sessionStorage.getItem("token")
             }
+          }).then(
             this.setState({
-              userreaction: status
-            });
-            console.log("Reputation given by user: " + this.state.userreaction);
+              userreaction: 0
+            })
+          )
         }
-    )
-  }
-
-
-  like(event) {
-    console.log("postid??"+event.target.id);
-    fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&name=upvote&type=reaction", {
-      method: "GET",
-      headers: {
-        'Authorization': 'Bearer '+sessionStorage.getItem("token")
       }
-    }).then(res => res.json()
-    ).then(
-        result => {
-            if(result[1] === 0){
-              fetch(process.env.REACT_APP_API_PATH+"/post-tags", {
-                  method: "POST",
-                  headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer '+sessionStorage.getItem("token")
-                  },
-                  body: JSON.stringify({
-                      postID: this.props.post.id,
-                      userID: sessionStorage.getItem("user"),
-                      name: "upvote",
-                      type: "reaction"
-                  })
-                }).then(
-                    res => res.json()
-                ).then(
-                    result =>{
-                        console.log("Sent reaction: " + result.name)
-                    }
-                )
-            }
-        }
     )
-    fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&name=downvote&type=reaction", {
-      method: "GET",
-      headers: {
-        'Authorization': 'Bearer '+sessionStorage.getItem("token")
-      }
-    }).then(res => res.json()
-    ).then(
-        result => {
-            if(result[1] === 1){
-              fetch(process.env.REACT_APP_API_PATH+"/post-tags/"+result[0][0].id, {
-                  method: "DELETE",
-                  headers: {
-                    'Authorization': 'Bearer '+sessionStorage.getItem("token")
-                  }
-                })
-            }
-        }
-    )
-    this.getReputation()
+    //THIS PRINT CONSOLE LINE DOESN'T GIVE CORRECT USERREACTION
+    //console.log("Reputation given by user on post ", this.props.post.id, " is: ", this.state.userreaction)
   }
 
   dislike(event){
+    console.log("postid??"+this.props.post.id);
     fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&name=downvote&type=reaction", {
       method: "GET",
       headers: {
+        'Content-Type': 'application/json',
         'Authorization': 'Bearer '+sessionStorage.getItem("token")
       }
     }).then(res => res.json()
     ).then(
-        result => {
-            if(result[1] === 0){
-              fetch(process.env.REACT_APP_API_PATH+"/post-tags", {
-                  method: "POST",
-                  headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer '+sessionStorage.getItem("token")
-                  },
-                  body: JSON.stringify({
-                      postID: this.props.post.id,
-                      userID: sessionStorage.getItem("user"),
-                      name: "downvote",
-                      type: "reaction"
-                  })
-                }).then(
-                    res => res.json()
-                ).then(
-                    result =>{
-                        console.log("Sent reaction: " + result.name)
-                    }
-                )
+      result => {
+        if(result[1] === 0){
+          fetch(process.env.REACT_APP_API_PATH+"/post-tags", {
+              method: "POST",
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+sessionStorage.getItem("token")
+              },
+              body: JSON.stringify({
+                  postID: this.props.post.id,
+                  userID: sessionStorage.getItem("user"),
+                  name: "downvote",
+                  type: "reaction"
+              })
+          }).then(
+              res => res.json()
+          ).then(
+            fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&name=upvote&type=reaction", {
+              method: "GET",
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+sessionStorage.getItem("token")
+              }
+            }).then(res => res.json()
+            ).then(
+              result => {
+                if(result[1] === 1){
+                  fetch(process.env.REACT_APP_API_PATH+"/post-tags/"+result[0][0].id, {
+                      method: "DELETE",
+                      headers: {
+                        'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                      }
+                    })
+                }
+              }
+            )
+          ).then(
+            this.setState({
+              userreaction: -1
+            })
+          )
+        }else{
+          fetch(process.env.REACT_APP_API_PATH+"/post-tags/"+result[0][0].id, {
+            method: "DELETE",
+            headers: {
+              'Authorization': 'Bearer '+sessionStorage.getItem("token")
             }
+          }).then(
+            this.setState({
+              userreaction: 0
+            })
+          )
         }
-    )
-    fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&name=upvote&type=reaction", {
-      method: "GET",
-      headers: {
-        'Authorization': 'Bearer '+sessionStorage.getItem("token")
       }
-    }).then(res => res.json()
-    ).then(
-        result => {
-            if(result[1] === 1){
-              fetch(process.env.REACT_APP_API_PATH+"/post-tags/"+result[0][0].id, {
-                  method: "DELETE",
-                  headers: {
-                    'Authorization': 'Bearer '+sessionStorage.getItem("token")
-                  }
-                })
-            }
-        }
     )
-    this.getReputation()
+    //THIS PRINT CONSOLE LINE DOESN'T GIVE CORRECT USERREACTION
+    //console.log("Reputation given by user on post ", this.props.post.id, " is: ", this.state.userreaction)
   }
 
   showModal = e => {
@@ -296,23 +290,44 @@ export default class Post extends React.Component {
     return "";
   }
 
+  isUp(){
+    if(this.state.userreaction === 1){
+      return "upButtonLit"
+    }else if(this.state.userreaction === 0){
+      return "upButton"
+    }else{
+      return "greyButton"
+    }
+  }
+
+  isDown(){
+    if(this.state.userreaction === -1){
+      return "downButtonLit"
+    }else if(this.state.userreaction === 0){
+      return "downButton"
+    }else{
+      return "greyButton"
+    }
+  }
+
   render() {
     return (
       <div className="post-comment-block">
         <div className="meme-side">
           <div>
-            <img src={this.props.post.thumbnailURL} className="meme"/>
+            <img src={this.props.post.thumbnailURL} className="meme" alt=""/>
           </div>
           <div className="memeStuff">
             <div>
               <h1 className="meme-name">{this.props.post.content}</h1><br/>
             </div>
             <div className="postInterations">
-              <div className="upButton">
-                <img src={upArrow} className="arrows" onClick={event => this.like(event)}/>
+              <div className={this.isUp()}>
+                {this.state.userreaction}
+                <img src={upArrow} className={(this.state.userreaction === 1) ? 'arrowsLit' : 'arrows'} onClick={event => this.like(event)} alt={this.state.userreaction}/>
               </div>
-              <div className="downButton">
-                <img src={downArrow} className="arrows" onClick={event => this.dislike(event)}/>
+              <div className={this.isDown(0)}>
+                <img src={downArrow} className={(this.state.userreaction === -1) ? 'arrowsLit' : 'arrows'} onClick={event => this.dislike(event)} alt={this.state.userreaction}/>
               </div>
               <div className="poster-block">
                 <h1 className="meme-poster">{this.props.post.author.username}</h1>
