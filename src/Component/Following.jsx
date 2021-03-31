@@ -11,14 +11,72 @@ export default class Following extends React.Component {
             responseMessage: "",
             users: [],
             connections: [],
-            following: [],
-            canIAdd: false
+            following: []
+
         };
         this.fieldChangeHandler.bind(this);
     }
 
-    loadProfilePictures() {
+    componentDidMount() {
+        this.loadUserList();
+    }
+
+    loadUserList = () => {
+        //make the api call to the user API to get the user with all of their attached preferences
+        fetch(process.env.REACT_APP_API_PATH+"/users/", {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+sessionStorage.getItem("token")
+            }
+        })
+            .then(res => res.json())
+            .then(
+                result => {
+                    if (result) {
+                        let names = [];
+                        result[0].forEach(element => {if (element.username){names.push(element)}});
+                        this.setState({
+                            users: names,
+                            responseMessage: result.Status
+                        });
+                        console.log(names);
+                        this.loadFollowers();
+                    }
+                }
+            );
+    }
+
+    loadFollowers() {
         let tempIDList = []
+        fetch(process.env.REACT_APP_API_PATH+"/connections?userID="+sessionStorage.getItem("user"), {
+            method: "get",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+sessionStorage.getItem("token")
+            }
+        })
+            .then(res => res.json())
+            .then(
+                result => {
+                    if (result) {
+                        for (let i = 0; i < result[1]; i++) {
+                            tempIDList.push(result[0][i]["connectedUser"]["id"])
+                        }
+                        this.setState({
+                            isLoaded: true,
+                            connections: result[0],
+                            following: tempIDList
+                        });
+                        this.loadProfilePictures();
+                        this.filterUsers();
+                    }
+                }
+            );
+
+    }
+
+    loadProfilePictures() {
         for (let i = 0; i < this.state.connections.length; i++) {
             let user = this.state.connections
             fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?ownerID=" + user[i]["connectedUser"]["id"] + "&category=profile_picture", {
@@ -31,43 +89,27 @@ export default class Following extends React.Component {
                 .then(res => res.json())
                 .then(
                     result => {
-                        tempIDList.push(user[i]["connectedUser"]["id"])
                         user[i]["connectedUser"]["photo"]  = result[0][0]["url"]
                         this.setState({
-                            connections: user,
-                            following: tempIDList
+                            connections: user
                         });
+
                     }
                 )
         }
     }
 
-    loadFollowers() {
-        fetch(process.env.REACT_APP_API_PATH+"/connections?userID="+sessionStorage.getItem("user"), {
-            method: "get",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer '+sessionStorage.getItem("token")
+    filterUsers() {
+        let tempUsers = this.state.users
+        for (let i = tempUsers.length - 1; i != -1; i--) {
+            if (tempUsers[i]["id"] == sessionStorage.getItem("user")
+                || this.state.following.includes(tempUsers[i]["id"])) {
+                tempUsers.splice(i, 1);
             }
-        })
-            .then(res => res.json())
-            .then(
-                result => {
-                    if (result) {
-                        this.setState({
-                            isLoaded: true,
-                            connections: result[0]
-                        });
-                        this.loadProfilePictures();
-                    }
-                },
-                error => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
-            );
+        }
+        this.setState({
+            users: tempUsers
+        });
     }
 
     fieldChangeHandler(field, e) {
@@ -84,70 +126,6 @@ export default class Following extends React.Component {
         console.log("Set Friend ID to "+friendID)
     }
 
-    checkInput = () => {
-        if (this.state.friendid === "") {
-            alert("You did not make a selection");
-            return;
-        }
-        else if (this.state.friendid === sessionStorage.getItem("user")) {
-            alert("You cannot follow yourself");
-            return;
-        }
-        fetch(process.env.REACT_APP_API_PATH+"/connections?userID=" + sessionStorage.getItem("user") + "&connectedUserID=" + this.state.friendid, {
-            method: "get",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer '+sessionStorage.getItem("token")
-            }
-        })
-            .then(res => res.json())
-            .then(
-                result => {
-                    if (result[1] > 0) {
-                        alert("You are already following this person");
-                        return;
-                    } else{
-                        this.setState({
-                            canIAdd: true,
-                        });
-                    }
-
-                },
-            );
-    };
-
-    componentDidMount() {
-        this.loadFollowers();
-        //make the api call to the user API to get the user with all of their attached preferences
-        fetch(process.env.REACT_APP_API_PATH+"/users/", {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer '+sessionStorage.getItem("token")
-            }
-
-        })
-            .then(res => res.json())
-            .then(
-                result => {
-                    if (result) {
-                        let names = [];
-
-                        result[0].forEach(element => {if (element.username){names.push(element)}});
-
-                        this.setState({
-                            users: names,
-                            responseMessage: result.Status
-                        });
-                        console.log(names);
-                    }
-                },
-                error => {
-                    alert("error!");
-                }
-            );
-    }
-
     clearForm() {
         this.state.friendid = ""
         this.state.friendname = ""
@@ -156,46 +134,42 @@ export default class Following extends React.Component {
     submitHandler = event => {
         //keep the form from actually submitting
         event.preventDefault();
-        this.checkInput()
-
+        if (this.state.friendid === "") {
+            alert("You did not make a selection");
+            return;
+        }
         console.log("friend is ");
         console.log(this.state.friendid);
-
-
-        if (this.state.canIAdd){
-            //make the api call to the user controller
-            fetch(process.env.REACT_APP_API_PATH+"/connections", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer '+sessionStorage.getItem("token")
-                },
-                body: JSON.stringify({
-                    connectedUserID: this.state.friendid,
-                    userID: sessionStorage.getItem("user"),
-                    type:"friend",
-                    status:"active"
-                })
+        //make the api call to the user controller
+        fetch(process.env.REACT_APP_API_PATH+"/connections", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+sessionStorage.getItem("token")
+            },
+            body: JSON.stringify({
+                connectedUserID: this.state.friendid,
+                userID: sessionStorage.getItem("user"),
+                type:"friend",
+                status:"active"
             })
-                .then(res => res.json())
-                .then(
-                    result => {
-                        this.setState({
-                            responseMessage: result.Status,
-                            canIadd: false
-                        });
-                        this.loadFollowers();
-                        this.clearForm()
-                        // window.location.href = "following";
-                    }
-                );
-        }
+        })
+            .then(res => res.json())
+            .then(
+                result => {
+                    this.setState({
+                        responseMessage: result.Status
+                    });
+                    // this.loadFollowers();
+                    // this.clearForm()
+                    window.location.href = "following";
+                }
+            );
     };
 
 
     render() {
-        console.log(this.state.canIAdd)
-        const {error, isLoaded, connections} = this.state;
+        const {error, isLoaded} = this.state;
         if (error) {
             return <div> Error: {error.message} </div>;
         } else if (!isLoaded) {
@@ -230,6 +204,5 @@ export default class Following extends React.Component {
 
             );
         }
-
     }
 }
