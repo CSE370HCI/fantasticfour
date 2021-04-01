@@ -193,8 +193,8 @@ export default class Following extends React.Component {
                             {this.state.connections.map(connection => (
                                 <div key={connection.id} className="follower-list">
                                     <img src={connection["connectedUser"]["photo"]} alt="profile picture"/>
-                                    &nbsp;&nbsp;&nbsp;{connection.connectedUser.username}&nbsp;&nbsp;&nbsp;
-                                    <input type="button" className="edit-button" onClick={() => {this.unfollowUser(connection.id)}} value="Unfollow"/>
+                                    &nbsp;&nbsp;{connection.connectedUser.username}&nbsp;&nbsp;
+                                    <input type="button" className="unfollow-button" onClick={() => {this.unfollowUser(connection.id)}} value="Unfollow"/>
                                 </div>
                             ))}
                         </ul>
@@ -208,6 +208,7 @@ export default class Following extends React.Component {
                                     <Autocomplete suggestions={this.state.users} selectAutocomplete={e => this.selectAutocomplete(e)} />
                                 </div>
                             </label>
+                            <br/>
                             <input className="follow-button" type="submit" value="Follow" />
                             {this.state.responseMessage}
                         </form>
