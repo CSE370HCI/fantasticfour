@@ -136,7 +136,7 @@ class App extends React.Component {
               </div>
             </Route>
             <Route path="/styleguide">
-              <div>
+              <div className="styleGuide">
                 <br/>
                 <p>Style Guide</p>
                 <StyleGuide/>

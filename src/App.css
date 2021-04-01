@@ -164,6 +164,10 @@
   height:fit-content;
 }
 
+.styleGuide{
+    width: 100%;
+}
+
 .posts{
     display:flex;
     flex-direction: column;
