@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from 'react-router-dom';
 
 import "../App.css";
 
@@ -59,8 +60,8 @@ export default class LoginForm extends React.Component {
     //keep the form from actually submitting
     event.preventDefault();
 
-    // in signup mode
-    if (this.state.signup) {
+    // in signup mode and passwords match
+    if (this.state.signup && !this.state.passwordmismatch) {
       // make the api call to the signup page
       fetch(process.env.REACT_APP_API_PATH+"/auth/signup", {
         method: "post",
@@ -135,7 +136,7 @@ export default class LoginForm extends React.Component {
         alert(error);
       });
     }
-    else {
+    else if (!this.state.signup) {
       // make the api call to the login page
       fetch(process.env.REACT_APP_API_PATH+"/auth/login", {
         method: "post",
@@ -244,6 +245,7 @@ export default class LoginForm extends React.Component {
             <label>
               Password
               <input type="password" onChange={this.passwordChangeHandler} />
+              <Link to="/forgot-password">Forgot password?</Link>
             </label>
             <br />
 
@@ -287,7 +289,7 @@ export default class LoginForm extends React.Component {
       if (this.state.username) {
         return <p>Welcome, {this.state.username}</p>;
       } else {
-        return <p>{this.state.alanmessage}</p>;
+        return <p>Welcome!</p>;
       }
     }
   }
