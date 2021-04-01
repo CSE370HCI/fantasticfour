@@ -52,18 +52,18 @@
 }
 
 .no-suggestions {
-  color: #999;
+  color: white;
   padding: 0.5rem;
 
 }
 
 .autocomplete input {
-    width: calc(300px + 1rem);
+    width: 75%;
 }
 
-.autocomplete{
-    min-height: 165px;
-}
+/*.autocomplete{*/
+/*    min-height: 165px;*/
+/*}*/
 
 .suggestions {
   border: 1px solid #999;
@@ -73,7 +73,7 @@
   max-height: 143px;
   overflow-y: auto;
   padding-left: 0;
-  width: calc(300px + 1rem);
+  width: 75%;
 
   display:inline-block;
   position:relative;
@@ -86,8 +86,8 @@
 
 .suggestion-active,
 .suggestions li:hover {
-  background-color: #008f68;
-  color: #fae042;
+  background-color: #2D86D8;
+  color: white;
   cursor: pointer;
   font-weight: 700;
 }
@@ -123,16 +123,6 @@
   margin: 0 auto;
 
   /*margin-bottom:15px;*/
-}
-
-.userlist {
-  text-align: left;
-  background: blue;
-  border-radius: 20px;
-  padding:30px;
-  margin:10px;
-  width:60%;
-  display: inline-flex;
 }
 
 .comments{
@@ -351,25 +341,6 @@
 /*  resize: none;*/
 /*}*/
 
-/*input[type="submit"] {*/
-/*  background-color:#2D86D8;*/
-/*  color: white;*/
-/*  border-radius:42px;*/
-/*  border: none;*/
-/*  font-size:15px;*/
-/*  padding:10px 50px;*/
-/*  !*text-decoration:none;*!*/
-/*}*/
-
-.upload {
-  color: black;
-  background: white;
-  padding-bottom: 25px;
-  box-sizing: content-box;
-  margin-left: 25%;
-  width: 50%;
-}
-
 .upload-input {
   border-radius:7px;
   width: 75%;
@@ -379,15 +350,6 @@
   font-size: 40px;
 }
 
-.deleteAccount {
-  color: black;
-  background: white;
-  padding-bottom: 25px;
-  box-sizing: content-box;
-  padding: 50px;
-  margin-left: 25%;
-  width: 50%;
-}
 .posting-block {
   position:absolute;
   left: 0px;
@@ -642,6 +604,7 @@
   border: none;
   font-size:15px;
   padding:10px 30px;
+  cursor: pointer;
 }
 
 /* styling for the style guide page */
@@ -880,4 +843,49 @@ heading{
     background-color: #ddd;
     justify-content: center;
     flex-grow: 1;
+}
+
+.profile-followers {
+  cursor: pointer;
+  color: dodgerblue;
+}
+
+.page-template {
+  color: black;
+  background: white;
+  box-sizing: content-box;
+  margin-left:auto;
+  margin-right:auto;
+  padding-bottom: 2%;
+  padding-right: 1%;
+  padding-left: 1%;
+  width: 40%;
+}
+
+.follower-list {
+  color: black;
+  text-align: left;
+  margin:2%;
+  display: flex;
+  align-items:center;
+}
+
+.follower-list img {
+  object-fit: cover;
+  padding-right:5px;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+}
+
+.follower-column {
+  float: left;
+}
+
+.left {
+  width: 60%;
+}
+
+.right {
+  width: 40%;
 }

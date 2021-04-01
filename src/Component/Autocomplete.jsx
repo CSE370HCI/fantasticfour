@@ -131,7 +131,7 @@ class Autocomplete extends Component {
       } else {
         suggestionsListComponent = (
           <div className="autocomplete">
-            <em>No suggestions, you're on your own!</em>
+            {/*<em>No suggestions, you're on your own!</em>*/}
           </div>
         );
       }
