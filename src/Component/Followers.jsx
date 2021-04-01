@@ -20,7 +20,7 @@ export default class Followers extends React.Component {
     loadProfilePictures() {
         for (let i = 0; i < this.state.connections.length; i++) {
             let user = this.state.connections
-            fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?ownerID=" + user[i]["connectedUser"]["id"] + "&category=profile_picture", {
+            fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?ownerID=" + user[i]["user"]["id"] + "&category=profile_picture", {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ export default class Followers extends React.Component {
                 .then(res => res.json())
                 .then(
                     result => {
-                        user[i]["connectedUser"]["photo"]  = result[0][0]["url"]
+                        user[i]["user"]["photo"]  = result[0][0]["url"]
                         this.setState({
                             connections: user
                         });
@@ -69,7 +69,7 @@ export default class Followers extends React.Component {
     }
 
     render() {
-        const {error, isLoaded, connections} = this.state;
+        const {error, isLoaded} = this.state;
         if (error) {
             return <div> Error: {error.message} </div>;
         } else if (!isLoaded) {
@@ -79,8 +79,8 @@ export default class Followers extends React.Component {
                 <ul>
                     {this.state.connections.map(connection => (
                         <div key={connection.id} className="follower-list">
-                            <img src={connection["connectedUser"]["photo"]} alt="profile picture"/>
-                            &nbsp;&nbsp;&nbsp;{connection.connectedUser.username}
+                            <img src={connection.user.photo} alt="profile picture"/>
+                            &nbsp;&nbsp;&nbsp;{connection.user.username}
                         </div>
                     ))}
                 </ul>

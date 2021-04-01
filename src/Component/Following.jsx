@@ -131,6 +131,17 @@ export default class Following extends React.Component {
         this.state.friendname = ""
     }
 
+    unfollowUser(connectionID) {
+        fetch(process.env.REACT_APP_API_PATH+"/connections/" + connectionID, {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+sessionStorage.getItem("token")
+            }
+        })
+        this.loadUserList()
+    }
+
     submitHandler = event => {
         //keep the form from actually submitting
         event.preventDefault();
@@ -176,13 +187,14 @@ export default class Following extends React.Component {
             return <div> Loading... </div>;
         } else {
             return (
-                <div className="row">
+                <div className="follower-row">
                     <div className="follower-column left">
                         <ul>
                             {this.state.connections.map(connection => (
                                 <div key={connection.id} className="follower-list">
                                     <img src={connection["connectedUser"]["photo"]} alt="profile picture"/>
-                                    &nbsp;&nbsp;&nbsp;{connection.connectedUser.username}
+                                    &nbsp;&nbsp;{connection.connectedUser.username}&nbsp;&nbsp;
+                                    <input type="button" className="unfollow-button" onClick={() => {this.unfollowUser(connection.id)}} value="Unfollow"/>
                                 </div>
                             ))}
                         </ul>
@@ -196,7 +208,8 @@ export default class Following extends React.Component {
                                     <Autocomplete suggestions={this.state.users} selectAutocomplete={e => this.selectAutocomplete(e)} />
                                 </div>
                             </label>
-                            <input type="submit" value="Follow" />
+                            <br/>
+                            <input className="follow-button" type="submit" value="Follow" />
                             {this.state.responseMessage}
                         </form>
                     </div>
