@@ -124,20 +124,24 @@ export default class Upload extends React.Component {
         <form onSubmit={this.submitHandler}>
           <label>
             <br/>
-              Title*<br/>
+            Title*
+            <br/>
             <input type="text" cols="70" className="upload-input" onChange={this.updateTitle} />
-            <br /><br />
-            Upload Photo (URL)* <br/>
+            <br/>
+            <br/>
+            Upload Photo (URL)*
+            <br/>
             <input type="text" rows="1" cols="70" className="upload-input" onChange={this.updateURL} />
-            <br /><br />
-            Communities <br/>
+            <br/>
+            <br/>
+            Communities
+            <br/>
             <input type="text" cols="70" className="upload-input" onChange={this.updateTag} />
           </label>
-          <br />
-          <br />
-
-          <input type="submit" value="submit" />
-          <br />
+          <br/>
+          <br/>
+          <input className="submit-button" type="submit" value="submit" />
+          <br/>
           {this.state.post_message}
         </form>
       </div>

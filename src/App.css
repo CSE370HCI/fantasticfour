@@ -18,7 +18,7 @@
   align-items: flex-center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: black;
+  color: white;
   height:fit-content;
 }
 
@@ -52,18 +52,18 @@
 }
 
 .no-suggestions {
-  color: #999;
+  color: white;
   padding: 0.5rem;
 
 }
 
 .autocomplete input {
-    width: calc(300px + 1rem);
+    width: 75%;
 }
 
-.autocomplete{
-    min-height: 165px;
-}
+/*.autocomplete{*/
+/*    min-height: 165px;*/
+/*}*/
 
 .suggestions {
   border: 1px solid #999;
@@ -73,7 +73,7 @@
   max-height: 143px;
   overflow-y: auto;
   padding-left: 0;
-  width: calc(300px + 1rem);
+  width: 75%;
 
   display:inline-block;
   position:relative;
@@ -86,8 +86,8 @@
 
 .suggestion-active,
 .suggestions li:hover {
-  background-color: #008f68;
-  color: #fae042;
+  background-color: #2D86D8;
+  color: white;
   cursor: pointer;
   font-weight: 700;
 }
@@ -123,16 +123,6 @@
   margin: 0 auto;
 
   /*margin-bottom:15px;*/
-}
-
-.userlist {
-  text-align: left;
-  background: blue;
-  border-radius: 20px;
-  padding:30px;
-  margin:10px;
-  width:60%;
-  display: inline-flex;
 }
 
 .comments{
@@ -172,6 +162,10 @@
   margin-top:70px;
   flex-grow: 1;
   height:fit-content;
+}
+
+.styleGuide{
+    width: 100%;
 }
 
 .posts{
@@ -351,43 +345,18 @@
 /*  resize: none;*/
 /*}*/
 
-/*input[type="submit"] {*/
-/*  background-color:#2D86D8;*/
-/*  color: white;*/
-/*  border-radius:42px;*/
-/*  border: none;*/
-/*  font-size:15px;*/
-/*  padding:10px 50px;*/
-/*  !*text-decoration:none;*!*/
-/*}*/
-
-.upload {
-  color: black;
-  background: white;
-  padding-bottom: 25px;
-  box-sizing: content-box;
-  margin-left: 25%;
-  width: 50%;
-}
-
 .upload-input {
-  border-radius:7px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
   width: 75%;
 }
 
 .page-title {
-  font-size: 40px;
+  font-family: 'Roboto bold', sans-serif;
+  font-size: 24px;
 }
 
-.deleteAccount {
-  color: black;
-  background: white;
-  padding-bottom: 25px;
-  box-sizing: content-box;
-  padding: 50px;
-  margin-left: 25%;
-  width: 50%;
-}
 .posting-block {
   position:absolute;
   left: 0px;
@@ -627,14 +596,24 @@
   height: 300px;
   border-radius: 50%;
 }
- 
+
+.small-profile-picture {
+  object-fit: cover;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+
 .edit-button {
-  background-color:#2D86D8;
-  color: white;
-  border-radius:42px;
+  width: 78%;
+  height: 30px;
+  background: #2D86D8;
+  padding: 0;
   border: none;
-  font-size:15px;
-  padding:10px 30px;
+  color: #FFFFFF;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  cursor: pointer;
 }
 
 /* styling for the style guide page */
@@ -878,4 +857,93 @@ heading{
     background-color: #ddd;
     justify-content: center;
     flex-grow: 1;
+}
+
+.profile-followers {
+  cursor: pointer;
+  color: dodgerblue;
+}
+
+.page-template {
+  color: black;
+  background: white;
+  box-sizing: content-box;
+  margin-left:auto;
+  margin-right:auto;
+  padding-bottom: 2%;
+  padding-right: 1%;
+  padding-left: 1%;
+  width: 40%;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+}
+
+.follower-list {
+  color: black;
+  text-align: left;
+  margin:2%;
+  display: flex;
+  align-items:center;
+}
+
+.follower-list img {
+  object-fit: cover;
+  padding-right:5px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.follower-column {
+  float: left;
+}
+
+.left {
+  width: 60%;
+}
+
+.right {
+  width: 40%;
+}
+
+@media screen and (max-width: 1280px) {
+  .follower-column {
+    width: 100%;
+  }
+}
+
+.follow-button {
+  width: 78%;
+  height: 30px;
+  background: #30D82D;
+  padding: 0;
+  border: none;
+  color: #FFFFFF;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.unfollow-button {
+  width: 40%;
+  height: 30px;
+  background: #FF5959;
+  padding: 0;
+  border: none;
+  color: #FFFFFF;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.submit-button {
+  width: 75%;
+  height: 30px;
+  background: #30D82D;
+  padding: 0;
+  border: none;
+  color: #FFFFFF;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  cursor: pointer;
 }

@@ -9,13 +9,23 @@ export default class UserProfile extends React.Component {
     this.state = {
       profile_picture: "",
       username: "",
-      email: ""
+      email: "",
+      followers: "",
+      following: ""
     };
     this.postListing = React.createRef();
   }
 
-    redirect = () => {
+    toSettings = () => {
         window.location.href = "settings";
+    };
+
+    toFollowers = () => {
+        window.location.href = "followers";
+    };
+
+    toFollowing = () => {
+        window.location.href = "following";
     };
 
   componentDidMount() {
@@ -29,9 +39,11 @@ export default class UserProfile extends React.Component {
           .then(res => res.json())
           .then(
               result => {
-                  this.setState({
-                      profile_picture: result[0][0]["url"]
-                  });
+                  if(sessionStorage.getItem("user") != null){
+                    this.setState({
+                        profile_picture: result[0][0]["url"]
+                    });
+                  }
               }
           );
       fetch(process.env.REACT_APP_API_PATH+"/users/" + sessionStorage.getItem("user"), {
@@ -50,6 +62,36 @@ export default class UserProfile extends React.Component {
                   });
               }
           );
+      fetch(process.env.REACT_APP_API_PATH+"/connections?userID=" + sessionStorage.getItem("user"), {
+          method: "GET",
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+sessionStorage.getItem("token")
+          }
+      })
+          .then(res => res.json())
+          .then(
+              result => {
+                  this.setState({
+                      following: result[1]
+                  });
+              }
+          );
+      fetch(process.env.REACT_APP_API_PATH+"/connections?connectedUserID=" + sessionStorage.getItem("user"), {
+          method: "GET",
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+sessionStorage.getItem("token")
+          }
+      })
+          .then(res => res.json())
+          .then(
+              result => {
+                  this.setState({
+                      followers: result[1]
+                  });
+              }
+          );
   }
 
   render() {
@@ -57,6 +99,14 @@ export default class UserProfile extends React.Component {
         <div>
           <img src={this.state.profile_picture} alt="profile picture" className="user-profile-picture"/>
           <br/><br/>
+            <a onClick={this.toFollowers} className="profile-followers">
+                Followers: {this.state.followers}
+            </a>
+          <br/>
+            <a onClick={this.toFollowing}className="profile-followers">
+                Following: {this.state.following}
+            </a>
+          <br/>
           Username: {this.state.username}
           <br/>
           Email: {this.state.email}
@@ -64,7 +114,7 @@ export default class UserProfile extends React.Component {
             <input
                 type="button"
                 className="edit-button"
-                onClick={this.redirect}
+                onClick={this.toSettings}
                 value="Edit"
             />
         </div>
