@@ -44,7 +44,7 @@ export default class StyleGuide extends React.Component {
               </div>
               <div className="color-secondary block">
                 <code>#2D86D8</code>
-                <p>Buttons that edit</p>
+                <p>Buttons that note a change</p>
               </div>
               <div className="color-confirm block">
                 <code>#30D82D</code>

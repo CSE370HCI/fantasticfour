@@ -655,22 +655,27 @@
 
 .color-primary {
     background-color: #FFFFFF;
+    width: 15%;
 }
 
 .color-secondary {
     background-color: #2D86D8;
+    width: 15%;
 }
 
 .color-confirm {
     background-color: #30D82D;
+    width: 15%;
 }
 
 .color-decline {
     background-color: #FF5959;
+    width: 15%;
 }
 
 .color-main-background {
     background-color: #C4C4C4;
+    width: 15%;
 }
 
 /* Fonts */
