@@ -27,7 +27,6 @@ export default class Post extends React.Component {
   }
 
   getUserReaction(){
-    console.log("Check1")
     fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&type=reaction", {
       method: "GET",
       headers: {
@@ -36,9 +35,7 @@ export default class Post extends React.Component {
     }).then(result => result.json()
     ).then(
         result => {
-          console.log(result)
           if(result[1] === 0){
-            console.log("Found reactions: ", result[1])
             this.setState({
               userreaction: 0
             })
@@ -47,7 +44,6 @@ export default class Post extends React.Component {
               userreaction: 1
             })
           }else {
-            console.log("Else: ", result[0][0].name)
             this.setState({
               userreaction: -1
             })
@@ -57,7 +53,6 @@ export default class Post extends React.Component {
   }
 
   like(event) {
-    console.log("postid??"+this.props.post.id);
     fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&name=upvote&type=reaction", {
       method: "GET",
       headers: {
@@ -126,7 +121,6 @@ export default class Post extends React.Component {
   }
 
   dislike(event){
-    console.log("postid??"+this.props.post.id);
     fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&name=downvote&type=reaction", {
       method: "GET",
       headers: {
@@ -310,6 +304,29 @@ export default class Post extends React.Component {
     }
   }
 
+  getComments(parentID) {
+    fetch(process.env.REACT_APP_API_PATH+"/posts?sort=newest&parentID="+parentID, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '+sessionStorage.getItem("token")
+      },
+    }).then(res => res.json()
+    ).then(
+        result => {
+          if (result[1] === 0){
+            console.log("No comments for post "+parentID)
+            return <div>No Comments were found.</div>
+          }else{
+            console.log("Comments for post "+parentID)
+            var elements = result[0].map(data => <div className="comment">{data.content}</div>)
+            console.log("Post "+parentID+": "+JSON.stringify(elements))
+            return elements;
+          }
+        }
+      )
+  }
+
   render() {
     return (
       <div className="post-comment-block">
@@ -326,7 +343,7 @@ export default class Post extends React.Component {
                 {this.state.userreaction}
                 <img src={upArrow} className={(this.state.userreaction === 1) ? 'arrowsLit' : 'arrows'} onClick={event => this.like(event)} alt={this.state.userreaction}/>
               </div>
-              <div className={this.isDown(0)}>
+              <div className={this.isDown()}>
                 <img src={downArrow} className={(this.state.userreaction === -1) ? 'arrowsLit' : 'arrows'} onClick={event => this.dislike(event)} alt={this.state.userreaction}/>
               </div>
               <div className="poster-block">
@@ -335,12 +352,14 @@ export default class Post extends React.Component {
             </div>
           </div>
         </div>
-
         <div  className="comment-side">
           <div className="">
             {this.showDelete()}
           </div>
-          {this.conditionalDisplay()}
+            {this.conditionalDisplay()}
+          <div>
+            {this.getComments(this.props.post.id)}
+          </div>
         </div>
       </div>
     );

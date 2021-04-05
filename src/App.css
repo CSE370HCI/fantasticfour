@@ -947,3 +947,13 @@ heading{
   font-size: 18px;
   cursor: pointer;
 }
+
+.commentArea {
+  max-width: 95%;
+  min-width: 50%;
+  min-height: 100px;
+}
+
+.comment {
+  color: white;
+}
