@@ -29,6 +29,10 @@ class Navbar extends React.Component {
   }
 
   componentDidMount() {
+    this.getProfilePicture();
+  }
+
+  getProfilePicture = () => {
         fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?ownerID=" + sessionStorage.getItem("user") + "&category=profile_picture", {
             method: "GET",
             headers: {
@@ -66,7 +70,9 @@ class Navbar extends React.Component {
 
   render() {
     if(sessionStorage.getItem("user") != null){
-    this.componentDidMount();
+      if(this.state.profile_picture == ""){
+        this.getProfilePicture();
+      }
     return (
     <div id="sidenav" className="topNav">
       <iconbar id="logobar" className="logobar">
@@ -112,7 +118,7 @@ class Navbar extends React.Component {
             </Link>
           </li>
           <li className="signupbar">
-            <Link to="/profile" title={sessionStorage.getItem("user")}>
+            <Link to="/profile" title={sessionStorage.getItem("user")} style={{textDecoration: 'none', color: 'black'}}>
               <img src={this.state.profile_picture} alt="profile picture" className="small-profile-picture"/>
             </Link>
           </li>

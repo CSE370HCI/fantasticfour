@@ -27,6 +27,7 @@ export default class Post extends React.Component {
   }
 
   getUserReaction(){
+  if(sessionStorage.getItem("user") != null){
     console.log("Check1")
     fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&type=reaction", {
       method: "GET",
@@ -54,9 +55,11 @@ export default class Post extends React.Component {
           }
         }
     )
+    }
   }
 
   like(event) {
+  if(sessionStorage.getItem("user") != null){
     console.log("postid??"+this.props.post.id);
     fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&name=upvote&type=reaction", {
       method: "GET",
@@ -124,8 +127,10 @@ export default class Post extends React.Component {
     //THIS PRINT CONSOLE LINE DOESN'T GIVE CORRECT USERREACTION
     //console.log("Reputation given by user on post ", this.props.post.id, " is: ", this.state.userreaction)
   }
+  }
 
   dislike(event){
+  if(sessionStorage.getItem("user") != null){
     console.log("postid??"+this.props.post.id);
     fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&name=downvote&type=reaction", {
       method: "GET",
@@ -193,6 +198,7 @@ export default class Post extends React.Component {
     //THIS PRINT CONSOLE LINE DOESN'T GIVE CORRECT USERREACTION
     //console.log("Reputation given by user on post ", this.props.post.id, " is: ", this.state.userreaction)
   }
+  }
 
   showModal = e => {
     this.setState({
@@ -221,6 +227,7 @@ export default class Post extends React.Component {
   }
 
   deletePost(postID) {
+  if(sessionStorage.getItem("user") != null){
     //make the api call to post
     fetch(process.env.REACT_APP_API_PATH+"/posts/"+postID, {
       method: "DELETE",
@@ -237,6 +244,7 @@ export default class Post extends React.Component {
           alert("error!"+error);
         }
       );
+      }
   }
 
 
@@ -245,7 +253,7 @@ export default class Post extends React.Component {
     //if (this.props.post.commentCount <= 0) {
     //  return "";
     //  }
-
+    if(sessionStorage.getItem("user") != null){
     //else {
       return (
         <div className="comment-block">
@@ -270,7 +278,7 @@ export default class Post extends React.Component {
         </div>
       );
     //}
-
+    }
   }
 
   // we only want to expose the delete post functionality if the user is
@@ -291,6 +299,7 @@ export default class Post extends React.Component {
   }
 
   isUp(){
+  if(sessionStorage.getItem("user") != null){
     if(this.state.userreaction === 1){
       return "upButtonLit"
     }else if(this.state.userreaction === 0){
@@ -298,15 +307,18 @@ export default class Post extends React.Component {
     }else{
       return "greyButton"
     }
+    }
   }
 
   isDown(){
+  if(sessionStorage.getItem("user") != null){
     if(this.state.userreaction === -1){
       return "downButtonLit"
     }else if(this.state.userreaction === 0){
       return "downButton"
     }else{
       return "greyButton"
+    }
     }
   }
 

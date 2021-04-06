@@ -338,6 +338,7 @@
   border: 1px solid #888;
   width: 30%; /* Could be more or less, depending on screen size */
   height: 50%;
+  color: black;
 }
 
 /* Made it so text boxes cannot be resized */

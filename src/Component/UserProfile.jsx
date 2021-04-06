@@ -20,6 +20,10 @@ export default class UserProfile extends React.Component {
         window.location.href = "settings";
     };
 
+    toChangePicture = () => {
+        window.location.href = "changepicture";
+    };
+
     toFollowers = () => {
         window.location.href = "followers";
     };
@@ -98,7 +102,12 @@ export default class UserProfile extends React.Component {
     return (
         <div>
           <img src={this.state.profile_picture} alt="profile picture" className="user-profile-picture"/>
-          <br/><br/>
+          <br/>
+          <a onClick={this.toChangePicture} className="profile-followers">
+                Change Profile Picture
+          </a>
+          <br/>
+          <br/>
             <a onClick={this.toFollowers} className="profile-followers">
                 Followers: {this.state.followers}
             </a>
