@@ -3,12 +3,20 @@ import "../App.css";
 import {
    Link
 } from 'react-router-dom';
+import back from "../assets/back.png";
+import upvote_enabled from "../assets/upvote-enabled.png";
+import downvote_enabled from "../assets/downvote-enabled.png";
+import upvote_selected from "../assets/upvote-selected.png";
+import downvote_selected from "../assets/downvote-selected.png";
+import upvote_disabled from "../assets/upvote-disabled.png";
+import downvote_disabled from "../assets/downvote-disabled.png";
+import createpost from "../assets/createpost.png";
 
 export default class StyleGuide extends React.Component {
 
   render() {
     return (
-      <div id="styleguide" className="styleGuide maincontent">
+      <div id="styleguide" className="styleGuide stylepage">
         <heading>
           Branding
           <br/>
@@ -54,7 +62,7 @@ export default class StyleGuide extends React.Component {
               </div>
             </div>
           </content>
-          
+
         </heading>
         <br/>
         <br/>
@@ -96,10 +104,14 @@ export default class StyleGuide extends React.Component {
           <br/>
           <content>
             Confirmation Button (Edit)
+            <br/>
+            <button class="desktop-confirm"><span>Confirm</span></button>
           </content>
           <br/>
           <content>
             Confirmation Button (Delete)
+            <br/>
+            <button class="desktop-delete"><span>Delete</span></button>
           </content>
         </heading>
         <br/>
@@ -109,7 +121,8 @@ export default class StyleGuide extends React.Component {
           <br/>
           <content>
             Create Post Button
-            <div className="button-create-post"></div>
+            <br/>
+            <img src={createpost}/>
           </content>
           <br/>
           <content>
@@ -125,35 +138,62 @@ export default class StyleGuide extends React.Component {
         <br/>
         <br/>
         <heading>
-          Upvote Post Icons (Desktop)
+          Post Voting Icons
           <br/>
           <content>
             Upvote / Downvote (Not Selected)
+            <br/>
+            <img src={upvote_enabled}/>
+            <img src={downvote_enabled}/>
+            <br/>
           </content>
           <br/>
           <content>
             Upvote (Selected)
+            <br/>
+            <img src={upvote_selected}/>
+            <img src={downvote_disabled}/>
+            <br/>
           </content>
           <br/>
           <content>
             Downvote (Selected)
+            <br/>
+            <img src={upvote_disabled}/>
+            <img src={downvote_selected}/>
+            <br/>
           </content>
         </heading>
         <br/>
+        <heading>
+          Tags
+          <br/>
+          <content>
+            Desktop
+            <br/>
+            <button class="desktop-tag"><span>#tag</span></button>
+          </content>
+          <br/>
+          <content>
+            Mobile
+            <br/>
+            <button class="mobile-tag"><span>#tag</span></button>
+          </content>
+        </heading>
         <br/>
         <heading>
-          Upvote Post Icons (Mobile)
+          Navigation Buttons
           <br/>
           <content>
-            Upvote / Downvote (Not Selected)
+            Back (Desktop)
+            <br/>
+            <Link className="desktop-back" style={{textDecoration: 'none'}}>&times;</Link>
           </content>
           <br/>
           <content>
-            Upvote (Selected)
-          </content>
-          <br/>
-          <content>
-            Downvote (Selected)
+            Back (Mobile)
+            <br/>
+            <Link><img src={back}/></Link>
           </content>
         </heading>
       </div>

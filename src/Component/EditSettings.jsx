@@ -87,7 +87,7 @@ export default class EditSettings extends React.Component {
             alert("Username must contain 4-20 characters.");
             event.preventDefault();
     }
-    if (!this.state.username == "" && this.state.email.length < 5 && (!this.state.email.includes("@") || !this.state.email.includes("."))){
+    if (!this.state.email == "" && this.state.email.length < 5 && (!this.state.email.includes("@") || !this.state.email.includes("."))){
             alert("Please provide a valid email address.");
             event.preventDefault();
     }
@@ -151,16 +151,24 @@ export default class EditSettings extends React.Component {
 
   };
 
+    redirect = () => {
+        window.location.href = "delete";
+    };
+
+    onClose = () => {
+            window.location.href = "profile";
+        };
+
   render() {
     return (
     <div id="myModal" className="editProfile">
-            <div className="modal-content">
+            <div className="settings-content">
               <span className="close" onClick={this.onClose}>
                 &times;
               </span>
               <br/>
               Edit Personal Information
-                 <form onSubmit={this.submitHandler} className="profileform" >
+                 <form onSubmit={this.submitHandler} style={{'font-size': '15px'}}>
                     <br/>
                     <label>
                         Username
@@ -214,9 +222,11 @@ export default class EditSettings extends React.Component {
                     <br/>
                     <br/>
                     <br/>
-                    <button onclick="">
-                    Delete Account
-                    </button>
+                     <input
+                         type="button"
+                         onClick={this.redirect}
+                         value="Delete Account"
+                     />
                   </form>
             </div>
     </div>
