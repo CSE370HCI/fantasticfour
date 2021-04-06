@@ -1,5 +1,6 @@
 import React from "react";
 import "../App.css";
+import "./styles/FriendList.css";
 import blockIcon from "../assets/block_white_216x216.png";
 import unblockIcon from "../assets/thumbsup.jpg";
 

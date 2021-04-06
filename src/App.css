@@ -22,10 +22,6 @@
   height:fit-content;
 }
 
-.deletePost{
-  width:100%;
-
-}
 .deleteIcon{
   float:right;
 }
@@ -65,37 +61,6 @@
 /*    min-height: 165px;*/
 /*}*/
 
-.suggestions {
-  border: 1px solid #999;
-  border-top-width: 0;
-  list-style: none;
-  margin-top: 0;
-  max-height: 143px;
-  overflow-y: auto;
-  padding-left: 0;
-  width: 75%;
-
-  display:inline-block;
-  position:relative;
-
-}
-
-.suggestions li {
-  padding: 0.5rem;
-}
-
-.suggestion-active,
-.suggestions li:hover {
-  background-color: #2D86D8;
-  color: white;
-  cursor: pointer;
-  font-weight: 700;
-}
-
-.suggestions li:not(:last-of-type) {
-  border-bottom: 1px solid #999;
-}
-
 .profileform label{
    display:block;
 
@@ -105,7 +70,7 @@
   color: #09d3ac;
 }
 
-.postlist {
+/* .postlist {
   text-align: left;
   background: blue;
   border-radius: 20px;
@@ -114,7 +79,7 @@
 
   width:60%;
   display: inline-flex;
-}
+} */
 
 .post-image{
   width:250px;
@@ -168,52 +133,12 @@
     width: 100%;
 }
 
-.posts{
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-}
-
 .postbody{
   width:100%;
   display:flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-}
-
-.comment-block{
-  width:100%;
-  display:flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-}
-
-.sidenav{
-  /* need to specify some position other than static, so height can apply.
-     Fixed works since it will stay fixed to the side - 0 from both left and top. */
-  position:fixed;
-  left:0px;
-  top:0px;
-  height:100%;
-  width:100px;
-
-  /* internally to this container, we want to use flex positioning of the menu elements */
-  display:flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-
-  background-color: blue;
-}
-
-.sidenav ul{
-   list-style-type: none;
-   padding:10px;
-   margin:0px;
-   margin-top: 40px;
 }
 
 .sidenav-icon{
@@ -223,94 +148,8 @@
   margin-bottom:15px;
 }
 
-.topnav{
-  /* need to specify some position other than static, so height can apply.
-     Fixed works since it will stay fixed to the side - 0 from both left and top. */
-  position: fixed;
-  left:0px;
-  top:0px;
-  height:70px;
-  width:100%;
-
-  /* internally to this container, we want to use flex positioning of the menu elements */
-
-  background-color: blue;
-}
-
-.topnav ul{
-
-  display:flex;
-  list-style-type: none;
-
-  margin-top:15px;
-}
-
-.topnav-button {
-  margin-right: 30px;
-}
-
-.topnav-button-right {
-  position: absolute;
-  right: 30px;
-}
-
-.topnav-home-button {
-  height: 40px;
-}
-
-.comment-indicator{
-  text-align:right;
-  width:100%;
-  display:block;
-  float:right;
-  margin-top: 10px;
-}
-
-.comment-icon{
-  width:40px;
-  height:40px;
-  float:right;
-}
-
-.comment-indicator-text{
-  background-color: lightblue;
-  color: black;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: bold;
-  width:120px;
-  padding:5px;
-  float:right;
-  margin-left:10px;
-  text-align: center;
-}
-
 .hide{
   display:none;
-}
-
-/* The Modal (background) */
-.modal {
-  display: block;
-  position: fixed; /* Stay in place */
-  z-index: 0; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content/Box */
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 1px 10px 20px 20px;
-  border: 1px solid #888;
-  width: 50%; /* Could be more or less, depending on screen size */
-  height: 200px;
 }
 
 /* The Close Button */
@@ -327,17 +166,6 @@
   color: black;
   text-decoration: none;
   cursor: pointer;
-}
-
-/* Settings Content/Box */
-.settings-content {
-  text-align: center;
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 1px 10px 20px 20px;
-  border: 1px solid #888;
-  width: 30%; /* Could be more or less, depending on screen size */
-  height: 50%;
 }
 
 /* Made it so text boxes cannot be resized */
@@ -366,11 +194,6 @@
   overflow: hidden;
 }
 
-.temp-login-form {
-  float:right;
-  height:fit-content;
-}
-
 .temp-login {
   left: 0px;
 }
@@ -390,7 +213,6 @@
   text-decoration-color: blue;
 }
 
-
 .tagBlock {
   background-color: white;
   height: 100%;
@@ -401,26 +223,12 @@
   position: fixed;
 }
 
-.tags {
-  background-color: white;
-  margin:10px;
-  border-style: double;
-  border-radius: 10px;
-  border-color: black;
-  min-height: 100px;
-}
-
 .column-view {
   position:fixed;
   left:75%;
   display: flex;
   flex-direction: column;
   width:25%
-}
-
-.tag-header {
-  color: black;
-  height: fit-content;
 }
 
 .black-text {
@@ -431,60 +239,9 @@
 
 }
 
-.addTag{
-  border:none;
-  border-radius:5px;
-  background-color:lightgray;
-}
-
-.post-comment-block{
-  background-color: black;
-  display:flex;
-  flex-direction: row;
-  width: 96%;
-  margin-top: 20px;
-}
-
-.meme-side{
-  position:relative;
-  left: 0px;
-  top: 0%;
-  width: 48%;
-}
-
-.comment-side{
-  position: relative;
-  left: 4%;
-  width:48%;
-
-}
-
-.meme{
-  width:100%
-}
-
 .name-block{
   margin-left:2%;
   width:50%;
-}
-
-.meme-name{
-  left:0px;
-  font-size: 20px;
-  text-align:left;
-  color: white;
-}
-
-.poster-block{
-  margin-left:2%;
-  width:30%;
-}
-
-.meme-poster{
-  right:0px;
-  font-size: 20px;
-  text-align:left;
-  color: white;
 }
 
 .upButton{
@@ -529,29 +286,6 @@
   border-style: solid; 
 }
 
-.memeStuff{
-  display: flex;
-  flex-direction:column;
-}
-
-.postInterations{
-  display: flex;
-  flex-direction:row;
-}
-
-.arrows{
-  height: 50%;
-  position: relative;
-  top: 25%;
-}
-
-.arrowsLit{
-  height: 50%;
-  position: relative;
-  top: 25%;
-  filter: invert(49%) sepia(94%) saturate(2189%) hue-rotate(187deg) brightness(89%) contrast(90%);
-}
-
 .user-profile {
   color: black;
   background: white;
@@ -562,58 +296,11 @@
   width: 50%;
 }
 
-.danger-button-blocked {
-  background-color:#FF5959;
-  color: white;
-  opacity: 0.2;
-  border-radius:42px;
-  border: none;
-  font-size:15px;
-  padding:10px 50px;
-  /*text-decoration:none;*/
-}
-
-.danger-button-unblocked {
-  background-color:#FF5959;
-  color: white;
-  opacity: 1;
-  border-radius:42px;
-  border: none;
-  font-size:15px;
-  padding:10px 50px;
-  /*text-decoration:none;*/
-}
-
-.cancel-button {
-  background-color:#7E7E7E;
-  color: white;
-  opacity: 1;
-}
-  
-.user-profile-picture {
-  object-fit: cover;
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-}
-
 .small-profile-picture {
   object-fit: cover;
   width: 45px;
   height: 45px;
   border-radius: 50%;
-}
-
-.edit-button {
-  width: 78%;
-  height: 30px;
-  background: #2D86D8;
-  padding: 0;
-  border: none;
-  color: #FFFFFF;
-  font-family: 'Roboto', sans-serif;
-  font-size: 18px;
-  cursor: pointer;
 }
 
 /* styling for the style guide page */
@@ -785,53 +472,6 @@ heading{
    color:black;
 }
 
-.topNav{
-  /* need to specify some position other than static, so height can apply.
-     Fixed works since it will stay fixed to the side - 0 from both left and top. */
-  position:fixed;
-  left:0px;
-  top:0px;
-  height:50px;
-  width:100%;
-
-  /* internally to this container, we want to use flex positioning of the menu elements */
-  display:flex;
-  flex-direction: row;
-  background-color: #FFFFFF;
-}
-
-.topNav ul{
-   display:flex;
-   flex-direction: row;
-   align-items: center;
-   justify-content: center;
-   font-size: 20px;
-   list-style-type: none;
-   margin-right: auto;
-   margin-left: auto;
-   gap: 30px;
-}
-
-.topNav loginbar{
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    list-style-type: none;
-    margin-right: 5px;
-    margin-left: auto;
-    gap: 30px;
-}
-
-.topNav iconbar{
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    list-style-type: none;
-    margin-right: auto;
-    margin-left: 5px;
-}
-
 .desktop-back {
   color: #aaa;
   line-height: 42px;
@@ -852,11 +492,6 @@ heading{
     background-color: #ddd;
     justify-content: center;
     flex-grow: 1;
-}
-
-.profile-followers {
-  cursor: pointer;
-  color: dodgerblue;
 }
 
 .page-template {
@@ -889,56 +524,9 @@ heading{
   border-radius: 50%;
 }
 
-.follower-column {
-  float: left;
-}
-
-.left {
-  width: 60%;
-}
-
-.right {
-  width: 40%;
-}
 
 @media screen and (max-width: 1280px) {
   .follower-column {
     width: 100%;
   }
-}
-
-.follow-button {
-  width: 78%;
-  height: 30px;
-  background: #30D82D;
-  padding: 0;
-  border: none;
-  color: #FFFFFF;
-  font-family: 'Roboto', sans-serif;
-  font-size: 18px;
-  cursor: pointer;
-}
-
-.unfollow-button {
-  width: 40%;
-  height: 30px;
-  background: #FF5959;
-  padding: 0;
-  border: none;
-  color: #FFFFFF;
-  font-family: 'Roboto', sans-serif;
-  font-size: 18px;
-  cursor: pointer;
-}
-
-.submit-button {
-  width: 75%;
-  height: 30px;
-  background: #30D82D;
-  padding: 0;
-  border: none;
-  color: #FFFFFF;
-  font-family: 'Roboto', sans-serif;
-  font-size: 18px;
-  cursor: pointer;
 }
