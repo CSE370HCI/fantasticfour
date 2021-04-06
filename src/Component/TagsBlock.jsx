@@ -1,6 +1,7 @@
 import React from "react";
 
 import "../App.css";
+import "./styles/TagsBlock.css";
 
 export default class TagsBlock extends React.Component {
 

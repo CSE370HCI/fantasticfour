@@ -1,5 +1,6 @@
 import React from "react";
 import "../App.css";
+import "./styles/EditSettings.css";
 import Modal from "./Modal.jsx";
 import {Link} from 'react-router-dom';
 

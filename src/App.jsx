@@ -156,12 +156,14 @@ class App extends React.Component {
               </div>
             </Route>
             <Route path={["/login", "/signup"]}>
-              <div>
+              <div className="page-template">
+                <p className="page-title">Login / Signup</p>
                 <LoginForm refreshPosts={this.doRefreshPosts}/>
               </div>
             </Route>
             <Route path="/forgot-password">
-              <div>
+              <div className="page-template">
+                <p className="page-title">Forgot Your Password?</p>
                 <ForgotPasswordForm/>
               </div>
             </Route>

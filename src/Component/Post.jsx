@@ -1,5 +1,6 @@
 import React from "react";
 import "../App.css";
+import "./styles/Post.css"
 import CommentForm from "./CommentForm.jsx";
 import helpIcon from "../assets/delete.png";
 import commentIcon from "../assets/comment.svg";
