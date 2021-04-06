@@ -2,6 +2,7 @@ import React from "react";
 import {Link} from 'react-router-dom';
 
 import "../App.css";
+import "./styles/LoginForm.css"
 
 // the login form will display if there is no session token stored.  This will display
 // the login form, and call the API to authenticate the user and store the token in
@@ -245,7 +246,7 @@ export default class LoginForm extends React.Component {
             <label>
               Password
               <input type="password" onChange={this.passwordChangeHandler} />
-              <Link to="/forgot-password">Forgot password?</Link>
+              {!this.state.signup ? <Link to="/forgot-password">Forgot password?</Link> : ""}
             </label>
             <br />
 

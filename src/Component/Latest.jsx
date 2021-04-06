@@ -1,5 +1,6 @@
 import React from "react";
 import "../App.css";
+import "./styles/Latest.css"
 import {
    Link
 } from 'react-router-dom';

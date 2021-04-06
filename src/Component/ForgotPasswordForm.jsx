@@ -2,6 +2,7 @@ import React from "react";
 import {Link} from 'react-router-dom';
 
 import "../App.css";
+import "./styles/ForgotPasswordForm.css";
 
 class ForgotPasswordForm extends React.Component {
     constructor(props) {
@@ -122,7 +123,6 @@ class ForgotPasswordForm extends React.Component {
         if (!this.state.tokensent) {
             return (
                 <div>
-                    <h1>Forgot your password?</h1>
                     <p>Enter your e-mail to reset your password</p>
                     <form onSubmit={this.submitHandler}>
                         <label>

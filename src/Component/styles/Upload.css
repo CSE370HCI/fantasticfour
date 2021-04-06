@@ -1,0 +1,11 @@
+.submit-button {
+  width: 75%;
+  height: 30px;
+  background: #30D82D;
+  padding: 0;
+  border: none;
+  color: #FFFFFF;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  cursor: pointer;
+}
