@@ -13,6 +13,7 @@ export default class CommentForm extends React.Component {
   }
 
   submitHandler = event => {
+  if(sessionStorage.getItem("user") != null){
     //keep the form from actually submitting
     event.preventDefault();
 
@@ -43,6 +44,7 @@ export default class CommentForm extends React.Component {
           alert("error!");
         }
       );
+      }
   };
 
   myChangeHandler = event => {
@@ -52,6 +54,7 @@ export default class CommentForm extends React.Component {
   };
 
   render() {
+  if(sessionStorage.getItem("user") != null){
     return (
       <div>
         <form onSubmit={this.submitHandler}>
@@ -69,5 +72,10 @@ export default class CommentForm extends React.Component {
         
       </div>
     );
+    } else {
+    return (
+      <div/>
+    );
+    }
   }
 }

@@ -21,6 +21,7 @@ import {
   BrowserRouter as Router, Route, Switch
 } from 'react-router-dom';
 import DeleteAccount from "./Component/DeleteAccount";
+import ChangeProfilePicture from "./Component/ChangeProfilePicture";
 import UserProfile from "./Component/UserProfile";
 import ForgotPasswordForm from "./Component/ForgotPasswordForm"
 import {Link} from 'react-router-dom';
@@ -83,6 +84,12 @@ class App extends React.Component {
               <div className="page-template">
                 <p className='page-title'>My Profile</p>
                 <UserProfile userid={sessionStorage.getItem("user")} />
+              </div>
+            </Route>
+            <Route path="/changepicture">
+              <div className="page-template">
+                <p className='page-title'>Change Profile Picture</p>
+                <ChangeProfilePicture userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
               <Route path="/followers">
