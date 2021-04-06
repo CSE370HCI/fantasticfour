@@ -123,7 +123,6 @@ class ForgotPasswordForm extends React.Component {
         if (!this.state.tokensent) {
             return (
                 <div>
-                    <h1>Forgot your password?</h1>
                     <p>Enter your e-mail to reset your password</p>
                     <form onSubmit={this.submitHandler}>
                         <label>
