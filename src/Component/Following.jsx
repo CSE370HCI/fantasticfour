@@ -1,5 +1,6 @@
 import React from "react";
 import "../App.css";
+import "./styles/Following.css";
 import Autocomplete from "./Autocomplete.jsx";
 
 export default class Following extends React.Component {

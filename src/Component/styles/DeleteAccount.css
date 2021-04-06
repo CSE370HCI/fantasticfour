@@ -1,0 +1,27 @@
+.danger-button-blocked {
+    background-color:#FF5959;
+    color: white;
+    opacity: 0.2;
+    border-radius:42px;
+    border: none;
+    font-size:15px;
+    padding:10px 50px;
+    /*text-decoration:none;*/
+  }
+  
+  .danger-button-unblocked {
+    background-color:#FF5959;
+    color: white;
+    opacity: 1;
+    border-radius:42px;
+    border: none;
+    font-size:15px;
+    padding:10px 50px;
+    /*text-decoration:none;*/
+  }
+  
+  .cancel-button {
+    background-color:#7E7E7E;
+    color: white;
+    opacity: 1;
+  }

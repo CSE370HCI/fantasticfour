@@ -1,0 +1,35 @@
+.follower-column {
+  float: left;
+}
+
+.left {
+  width: 60%;
+}
+
+.unfollow-button {
+  width: 40%;
+  height: 30px;
+  background: #FF5959;
+  padding: 0;
+  border: none;
+  color: #FFFFFF;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.right {
+  width: 40%;
+}
+
+.follow-button {
+  width: 78%;
+  height: 30px;
+  background: #30D82D;
+  padding: 0;
+  border: none;
+  color: #FFFFFF;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  cursor: pointer;
+}

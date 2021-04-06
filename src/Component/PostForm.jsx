@@ -1,5 +1,6 @@
 import React from "react";
 import "../App.css";
+import "./styles/PostForm.css";
 import PostingList from "./PostingList.jsx";
 
 //The post form component holds both a form for posting, and also the list of current posts in your feed

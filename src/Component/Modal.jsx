@@ -1,5 +1,6 @@
 import React from "react";
 import "../App.css";
+import "./styles/Modal.css"
 import PropTypes from "prop-types";
 
 // This component is an example of a modal dialog.  The content can be swapped out for different uses, and
