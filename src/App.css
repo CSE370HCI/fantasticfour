@@ -270,6 +270,7 @@
   width:40px;
   height:40px;
   float:right;
+  filter: invert(100%);
 }
 
 .comment-indicator-text{
@@ -438,7 +439,7 @@
 }
 
 .post-comment-block{
-  background-color: black;
+  background-color: white;
   display:flex;
   flex-direction: row;
   width: 96%;
@@ -450,13 +451,14 @@
   left: 0px;
   top: 0%;
   width: 48%;
+  background-color: white;
 }
 
 .comment-side{
   position: relative;
   left: 4%;
   width:48%;
-
+  background-color: white;
 }
 
 .meme{
@@ -472,7 +474,7 @@
   left:0px;
   font-size: 20px;
   text-align:left;
-  color: white;
+  color: black;
 }
 
 .poster-block{
@@ -484,7 +486,7 @@
   right:0px;
   font-size: 20px;
   text-align:left;
-  color: white;
+  color: black;
 }
 
 .upButton{
@@ -954,6 +956,33 @@ heading{
   min-height: 100px;
 }
 
+.comment-text {
+  text-align: left;
+  color: black;
+  margin-left: 20px;
+  background-color: #c4c4c4;
+  min-height: 1em;
+}
+
+.comment-author {
+  text-align: left;
+  color: black;
+}
+
 .comment {
-  color: white;
+  display: flex;
+  flex-direction:row;
+  width:96%;
+  border-style: solid;
+  border-color: black;
+  border-radius: 5px;
+}
+
+.comment-author-text {
+  background-color: #c4c4c4;
+}
+
+.commentInterations{
+  display: flex;
+  flex-direction:column;
 }
