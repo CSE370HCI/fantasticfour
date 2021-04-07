@@ -31,10 +31,11 @@
   width:40px;
   height:40px;
   float:right;
+  filter: invert(100%)
 }
 
 .post-comment-block{
-  background-color: black;
+  background-color: white;
   display:flex;
   flex-direction: row;
   width: 96%;
@@ -61,7 +62,7 @@
   left:0px;
   font-size: 20px;
   text-align:left;
-  color: white;
+  color: black;
 }
 
 .postInterations{
@@ -91,7 +92,7 @@
   right:0px;
   font-size: 20px;
   text-align:left;
-  color: white;
+  color: black;
 }
 
 .comment-side{
@@ -136,4 +137,56 @@
 .commentInterations{
   display: flex;
   flex-direction:column;
+  max-width: 8%;
+}
+
+.upButtonC{
+  background-color: #00FF47;
+  border-color: #00FF47;
+  border-width: 5%;
+  border-style: solid; 
+}
+
+.upButtonLitC{
+  background-color: #00FF47;
+  max-height: 1.5em;
+  border-color: #2D86D8;
+  border-width: 5%;
+  border-style: solid; 
+}
+
+.downButtonC{
+  background-color: #FF8B8B;
+  border-color: #FF8B8B;
+  border-width: 5%;
+  border-style: solid; 
+}
+
+.downButtonLitC{
+  background-color: #FF8B8B;
+  max-height: 1.5em;
+  border-color: #2D86D8;
+  border-width: 5%;
+  border-style: solid; 
+}
+
+.greyButtonC{
+  background-color: #767373;
+  max-height: 1.5em;
+  border-color: #767373;
+  border-width: 5%;
+  border-style: solid; 
+}
+
+.arrowsLitC{
+  height: 70%;
+  top:15%;
+  position: relative;
+  filter: invert(49%) sepia(94%) saturate(2189%) hue-rotate(187deg) brightness(89%) contrast(90%);
+}
+
+.arrowsC{
+  height: 70%;
+  top:15%;
+  position: relative;
 }

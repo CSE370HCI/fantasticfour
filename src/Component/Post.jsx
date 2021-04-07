@@ -6,7 +6,7 @@ import helpIcon from "../assets/delete.png";
 import commentIcon from "../assets/comment.svg";
 import upArrow from "../assets/UpArrow.svg";
 import downArrow from "../assets/DownArrow.svg";
-import { parseConfigFileTextToJson } from "typescript";
+import { parseConfigFileTextToJson, resolveModuleName } from "typescript";
 
 export default class Post extends React.Component {
   constructor(props) {
@@ -18,7 +18,8 @@ export default class Post extends React.Component {
       dislikes: 0,
       tags: [],
       userreaction: 0,
-      comments: [0, []]
+      comments: [0, []], 
+      tempVal: 0
     };
     this.post = React.createRef();
 
@@ -31,7 +32,6 @@ export default class Post extends React.Component {
 
   getUserReaction(){
   if(sessionStorage.getItem("user") != null){
-    console.log("Check1")
     fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&type=reaction", {
       method: "GET",
       headers: {
@@ -59,33 +59,33 @@ export default class Post extends React.Component {
   }
 
   getCommentReaction(postID){
-    var rep = 0;
-    fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+postID +"&userID="+sessionStorage.getItem("user")+"&type=reaction", {
-      method: "GET",
-      headers: {
-        'Authorization': 'Bearer '+sessionStorage.getItem("token")
-      }
-    }).then(result => result.json()
-    ).then(
-        result => {
-          if(result[1] === 0){
-            console.log("postID"+postID+": "+0)
-          }else if(result[0][0].name === "upvote"){
-            console.log("postID"+postID+": "+1)
-          }else {
-            console.log("postID"+postID+": "+-1)
-          }
+    if(sessionStorage.getItem("user") != null){
+      fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+postID +"&userID="+sessionStorage.getItem("user")+"&type=reaction", {
+        method: "GET",
+        headers: {
+          'Authorization': 'Bearer '+sessionStorage.getItem("token")
         }
-    )
-    return 0;
+      }).then(res => res.json()
+      ).then(
+          result => {
+            if(result[1] === 0){
+              console.log("Value 0 for post "+postID)
+              return 0;
+            }else if(result[0][0].name === "upvote"){
+              console.log("Value 1 for post "+postID)
+              return 1;
+            }else {
+              console.log("Value -1 for post "+postID)
+              return -1;
+            }
+          }
+      )
+    }
   }
 
   like(event) {
-<<<<<<< HEAD
-=======
   if(sessionStorage.getItem("user") != null){
     console.log("postid??"+this.props.post.id);
->>>>>>> 5091bbf56b07f6d675a5752a89179fac87a00fb9
     fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&name=upvote&type=reaction", {
       method: "GET",
       headers: {
@@ -165,11 +165,7 @@ export default class Post extends React.Component {
   }
 
   dislike(event){
-<<<<<<< HEAD
-=======
   if(sessionStorage.getItem("user") != null){
-    console.log("postid??"+this.props.post.id);
->>>>>>> 5091bbf56b07f6d675a5752a89179fac87a00fb9
     fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&name=downvote&type=reaction", {
       method: "GET",
       headers: {
@@ -515,21 +511,21 @@ export default class Post extends React.Component {
 
   commentUp(rep){
     if(rep === 1){
-      return "upButtonLit"
+      return "upButtonLitC"
     }else if(rep === 0){
-      return "upButton"
+      return "upButtonC"
     }else{
-      return "greyButton"
+      return "greyButtonC"
     }
   }
 
   commentDown(rep){
     if(rep === -1){
-      return "downButtonLit"
+      return "downButtonLitC"
     }else if(rep === 0){
-      return "downButton"
+      return "downButtonC"
     }else{
-      return "greyButton"
+      return "greyButtonC"
     }
   }
 
@@ -546,16 +542,14 @@ export default class Post extends React.Component {
     ).then(
         result => {
           if (result[1] === 0){
-            //console.log("SAD"+parentID)
             return [0, []]
           }else{
-            //console.log("Comments for post "+parentID)
             var cList = []
             for(var x=0;x<result[1];x++){
-              const rep = this.getCommentReaction(result[0][x].id);
+              var rep = this.getCommentReaction(result[0][x].id)
+              console.log("After call on post "+parentID+"- rep="+rep)
               cList.push({comment: result[0][x].content, author: result[0][x].author.username, id: result[0][x].id, reputation: rep})
             }
-            console.log("CLIST"+this.props.post.id+": "+JSON.stringify([result[1], cList]))
             this.setState({
               comments: [result[1], cList]
             })
@@ -581,15 +575,15 @@ export default class Post extends React.Component {
       for(var x=0;x<comments[0];x++){
         const rep = comments[1][x].reputation;
         const postID = comments[1][x].id;
-        console.log("postID"+postID+"-rep"+rep)
+        //console.log("postID"+postID+"-rep"+rep)
         elementList.push(
           <div className="comment">
             <div className="commentInterations">
               <div className={this.commentUp(rep)}>
-                <img src={upArrow} className={(rep === 1) ? 'arrowsLit' : 'arrows'} onClick={event => this.likeComment(postID)} alt={rep}/>
+                <img src={upArrow} className={(rep === 1) ? 'arrowsLitC' : 'arrowsC'} onClick={event => this.likeComment(postID)} alt={rep}/>
               </div>
               <div className={this.commentDown(rep)}>
-                <img src={downArrow} className={(rep === -1) ? 'arrowsLit' : 'arrows'} onClick={event => this.dislikeComment(postID)} alt={rep}/>
+                <img src={downArrow} className={(rep === -1) ? 'arrowsLitC' : 'arrowsC'} onClick={event => this.dislikeComment(postID)} alt={rep}/>
               </div>
             </div>
             <div>
