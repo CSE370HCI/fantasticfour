@@ -1,6 +1,5 @@
 import React from "react";
 import "../App.css";
-import "./styles/DeleteAccount.css";
 
 //The post form component holds both a form for posting, and also the list of current posts in your feed
 export default class DeleteAccount extends React.Component {
@@ -15,9 +14,6 @@ export default class DeleteAccount extends React.Component {
         this.postListing = React.createRef();
     }
 
-    // the handler for submitting a new post.  This will call the API to create a new post.
-    // while the test harness does not use images, if you had an image URL you would pass it
-    // in the thumbnailURL field.
     submitHandler = (event) => {
         //keep the form from actually submitting via HTML - we want to handle it in react
         event.preventDefault();
@@ -40,34 +36,15 @@ export default class DeleteAccount extends React.Component {
             )
                 .then(
                     (result) => {
-                        fetch(process.env.REACT_APP_API_PATH + "/auth/logout", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                                Authorization: "Bearer " + sessionStorage.getItem("token"),
-                            },
-                        });
-                        this.redirect()
-                        fetch(process.env.REACT_APP_API_PATH + "/auth/verify", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                                Authorization: "Bearer " + sessionStorage.getItem("token"),
-                            },
-                        });
-                        fetch(process.env.REACT_APP_API_PATH + "/auth/verify", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                                Authorization: "Bearer " + sessionStorage.getItem("token"),
-                            },
-                        });
+                        sessionStorage.removeItem("token", null);
+                        sessionStorage.removeItem("user", null);
+                        window.location.href = "/login";
                     }
                 )
         } else if (this.state.delete_option == "PURGE") {
             fetch(
                 process.env.REACT_APP_API_PATH +
-                "/posts?sort=newest&authorID=" +
+                "/user-artifacts?ownerID=" +
                 sessionStorage.getItem("user"),
                 {
                     method: "GET",
@@ -102,22 +79,21 @@ export default class DeleteAccount extends React.Component {
                                 },
                             }
                         );
-                        this.redirect();
-                        fetch(process.env.REACT_APP_API_PATH + "/auth/verify", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                                Authorization: "Bearer " + sessionStorage.getItem("token"),
-                            },
-                        });
                     }
-                );
+                )
+                .then (
+                    (result) => {
+                        sessionStorage.removeItem("token", null);
+                        sessionStorage.removeItem("user", null);
+                        window.location.href = "/login";
+                    }
+                )
         }
-        //make the api call to post
+
     };
 
     redirect = () => {
-        window.location.href = "/";
+        window.location.href = "/settings";
     };
 
     // this method will keep the current post up to date as you type it,
