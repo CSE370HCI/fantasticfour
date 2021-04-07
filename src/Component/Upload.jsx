@@ -59,7 +59,7 @@ export default class Upload extends React.Component {
                 });
                 this.addTag(this.state.tag, result["id"])
                 // redirects users back to the posts screen
-                window.location.href = "posts";
+                window.location.href = "/";
               }
           );
     }

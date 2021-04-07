@@ -1,5 +1,6 @@
 import React from "react";
 import "../App.css";
+import "./styles/DeleteAccount.css";
 
 //The post form component holds both a form for posting, and also the list of current posts in your feed
 export default class DeleteAccount extends React.Component {
@@ -58,8 +59,9 @@ export default class DeleteAccount extends React.Component {
                 .then(
                     //deletes all posts
                     (result) => {
-                        for (const post of result[0]) {
-                            fetch(process.env.REACT_APP_API_PATH + "/posts/" + post["id"], {
+                        for (const artifact of result[0]) {
+                            console.log(artifact["id"])
+                            fetch(process.env.REACT_APP_API_PATH + "/user-artifacts/" + artifact["id"], {
                                 method: "DELETE",
                                 headers: {
                                     "Content-Type": "application/json",
@@ -146,6 +148,7 @@ export default class DeleteAccount extends React.Component {
                         onClick={this.redirect}
                         value="Cancel"
                     />
+                    &nbsp;&nbsp;
                     <input
                         type="submit"
                         disabled={this.state.button_disabled}
