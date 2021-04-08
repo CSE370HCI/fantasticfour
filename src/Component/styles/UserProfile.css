@@ -5,11 +5,6 @@
   border-radius: 50%;
 }
 
-.profile-followers {
-  cursor: pointer;
-  color: dodgerblue;
-}
-
 .edit-button {
   width: 78%;
   height: 30px;

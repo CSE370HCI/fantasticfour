@@ -283,7 +283,7 @@ export default class LoginForm extends React.Component {
             <label>
               Password
               <input type="password" onChange={this.passwordChangeHandler} />
-              {!this.state.signup ? <Link to="/forgot-password">Forgot password?</Link> : ""}
+              {!this.state.signup ? <Link to="/forgot-password" className="text-link">Forgot password?</Link> : ""}
             </label>
             <br />
 
@@ -304,17 +304,16 @@ export default class LoginForm extends React.Component {
               ) : ""
             }
 
-            
-
             <input type="submit" value="submit" />
+
             {
               this.state.signup ?
               (
-                <p>Already registered? <span className="link" href="#" onClick={this.toggleSignup}>Sign in</span></p>
+                <p>Already registered? <span className="text-link" href="#" onClick={this.toggleSignup}>Sign in</span></p>
               )
               :
               (
-                <p>Not a member? <span className="link" href="#" onClick={this.toggleSignup}>Sign Up</span></p>
+                <p>Not a member? <span className="text-link" href="#" onClick={this.toggleSignup}>Sign Up</span></p>
               )
 
             }
