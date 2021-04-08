@@ -64,6 +64,17 @@
 
 }
 
+label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+input {
+  width: 80%;
+  margin: 10px auto;
+}
+
 .autocomplete input {
     width: 75%;
 }
@@ -374,7 +385,9 @@
 }
 
 .desktop-confirm {
-    width: 426px;
+    display: inline-block;
+    max-width: 426px;
+    width: 80%;
     height: 47.41px;
     background: #30D82D;
     padding: 0;
@@ -382,6 +395,8 @@
     color: #FFFFFF;
     font-family: 'Roboto', sans-serif;
     font-size: 18px;
+    margin: 20px;
+    margin-top: 10%;
 }
 
 .desktop-confirm:hover {
