@@ -47,6 +47,17 @@
   outline:none;
 }
 
+/* text links look like this */
+.text-link {
+  color: rgb(48, 48, 226);
+  text-decoration: none;
+  cursor: pointer;
+}
+.text-link:hover {
+  color: rgb(74, 74, 255);
+
+}
+
 .no-suggestions {
   color: white;
   padding: 0.5rem;

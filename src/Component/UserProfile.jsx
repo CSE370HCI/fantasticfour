@@ -104,16 +104,16 @@ export default class UserProfile extends React.Component {
         <div>
           <img src={this.state.profile_picture} alt="profile picture" className="user-profile-picture"/>
           <br/>
-          <a onClick={this.toChangePicture} className="profile-followers">
+          <a onClick={this.toChangePicture} className="text-link">
                 Change Profile Picture
           </a>
           <br/>
           <br/>
-            <a onClick={this.toFollowers} className="profile-followers">
+            <a onClick={this.toFollowers} className="text-link">
                 Followers: {this.state.followers}
             </a>
           <br/>
-            <a onClick={this.toFollowing}className="profile-followers">
+            <a onClick={this.toFollowing}className="text-link">
                 Following: {this.state.following}
             </a>
           <br/>
