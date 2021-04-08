@@ -1,10 +1,15 @@
 /* Settings Content/Box */
 .settings-content {
-    text-align: center;
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 1px 10px 20px 20px;
-    border: 1px solid #888;
-    width: 30%; /* Could be more or less, depending on screen size */
-    height: 50%;
-  }
+  text-align: center;
+  background-color: #fefefe;
+  color: black;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 1px 10px 20px 20px;
+  border: 1px solid #888;
+  width: 30%; /* Could be more or less, depending on screen size */
+  height: 50%;
+}
+
+.settings-content .distancedbutton {
+  margin-top: 20%;
+}
