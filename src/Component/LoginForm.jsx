@@ -85,17 +85,42 @@ export default class LoginForm extends React.Component {
             alanmessage: result.token
           });
 
-          // add the username to the user account provided during signup
-          fetch(process.env.REACT_APP_API_PATH+`/users/${result.userID}`, {
-            method: "PATCH",
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization' : `Bearer ${result.token}`
-            },
-            body: JSON.stringify({
-              username: this.state.username
+          fetch(process.env.REACT_APP_API_PATH + "/users?username=" + this.state.username, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                },
             })
-          })
+            .then((res) => res.json())
+            .then((result) => {
+                if (result[1] != 0) {
+                    alert("This username already exists!");
+                }
+                else {
+                    return fetch(process.env.REACT_APP_API_PATH+`/users/${result.userID}`, {
+                        method: "PATCH",
+                        headers: {
+                          'Content-Type': 'application/json',
+                          'Authorization' : `Bearer ${result.token}`
+                        },
+                        body: JSON.stringify({
+                          username: this.state.username
+                        })
+                      })
+                }
+            })
+
+        //   // add the username to the user account provided during signup
+        //   fetch(process.env.REACT_APP_API_PATH+`/users/${result.userID}`, {
+        //     method: "PATCH",
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //       'Authorization' : `Bearer ${result.token}`
+        //     },
+        //     body: JSON.stringify({
+        //       username: this.state.username
+        //     })
+        //   })
           .then(res => res.json())
           .then(result => {
 
