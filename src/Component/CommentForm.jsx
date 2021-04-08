@@ -80,7 +80,9 @@ export default class CommentForm extends React.Component {
               <button onClick={this.onItalicsClick.bind(this)}>Italics</button>
               <button onClick={this.onUnderlineClick.bind(this)}>Underline</button>
           </div>
-          <Editor editorState={this.state.editorState} onChange={this.onChange} className="commentBox"/>
+          <div className="commentBox">
+            <Editor editorState={this.state.editorState} onChange={this.onChange} textAlignment='left' className="commentBox"/>
+          </div>
           <input type="submit" value="submit" />
           <br />
           {this.state.postmessage}

@@ -598,7 +598,7 @@ export default class Post extends React.Component {
                 <span className="comment-author-text">{comments[1][x].author}</span>
               </div>
               <div className="comment-text">
-                <Editor editorState={comment_text} readOnly="true"/>
+                <Editor editorState={comment_text} readOnly="true" className="editor-comment"/>
               </div>
             </div>
           </div>)
@@ -620,7 +620,6 @@ export default class Post extends React.Component {
             </div>
             <div className="postInterations">
               <div className={this.isUp()}>
-                {this.state.userreaction}
                 <img src={upArrow} className={(this.state.userreaction === 1) ? 'arrowsLit' : 'arrows'} onClick={event => this.like(event)} alt={this.state.userreaction}/>
               </div>
               <div className={this.isDown()}>

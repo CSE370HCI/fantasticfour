@@ -190,3 +190,11 @@
   top:15%;
   position: relative;
 }
+
+.editor-comment{
+  border-style: none;
+}
+
+div.DraftEditor-root {
+  border: none;
+}
