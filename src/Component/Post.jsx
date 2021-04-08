@@ -593,7 +593,7 @@ export default class Post extends React.Component {
                 <img src={downArrow} className={(rep === -1) ? 'arrowsLitC' : 'arrowsC'} onClick={event => this.dislikeComment(postID)} alt={rep}/>
               </div>
             </div>
-            <div>
+            <div className="comment-body">
               <div className="comment-author">
                 <span className="comment-author-text">{comments[1][x].author}</span>
               </div>
@@ -603,7 +603,7 @@ export default class Post extends React.Component {
             </div>
           </div>)
       }
-      return(<div>{elementList}</div>)
+      return(<div className="comments-all">{elementList}</div>)
     }
   }
 

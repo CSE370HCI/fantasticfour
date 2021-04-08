@@ -111,9 +111,11 @@
 .comment-text {
   text-align: left;
   color: black;
-  margin-left: 20px;
+  left: 4%;
   background-color: #c4c4c4;
   min-height: 1em;
+  width:95%;
+  max-width: 95%;
 }
 
 .comment-author {
@@ -193,8 +195,19 @@
 
 .editor-comment{
   border-style: none;
+
 }
 
 div.DraftEditor-root {
   border: none;
+  width:100%;
+}
+.comment-body {
+  width: 100%;
+  min-width: 35%;
+}
+
+.comments-all {
+  max-height: 480px;
+  overflow-y: scroll;
 }
