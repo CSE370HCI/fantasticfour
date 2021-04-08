@@ -135,7 +135,6 @@ export default class DeleteAccount extends React.Component {
                         <br />
                         <input
                             type="text"
-                            className="upload-input"
                             onChange={this.updateInput}
                         />
                     </label>
