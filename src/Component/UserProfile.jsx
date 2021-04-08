@@ -123,7 +123,7 @@ export default class UserProfile extends React.Component {
           <br/><br/>
             <input
                 type="button"
-                className="edit-button"
+                className="desktop-confirm edit-button"
                 onClick={this.toSettings}
                 value="Edit"
             />

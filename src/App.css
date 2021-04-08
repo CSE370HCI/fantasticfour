@@ -412,7 +412,8 @@ input {
 }
 
 .desktop-delete {
-    width: 426px;
+    max-width: 426px;
+    width: 80%;
     height: 47.41px;
     background: #FF5959;
     padding: 0;

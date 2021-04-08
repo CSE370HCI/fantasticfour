@@ -214,7 +214,7 @@ export default class EditSettings extends React.Component {
                     <input className="desktop-confirm" type="submit" value="Confirm" />
                     <br/>
                      <input
-                         className="distancedbutton"
+                         className="desktop-delete distancedbutton"
                          type="button"
                          onClick={this.redirect}
                          value="Delete Account"
