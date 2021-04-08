@@ -262,8 +262,8 @@ export default class LoginForm extends React.Component {
               <input type="email" onChange={this.emailChangeHandler} />
             </label>
             <br />
-
-            { // if in signup state, display the username input
+            {
+              // if in signup state, display the username input
               this.state.signup ?
               (
                 <label>
@@ -279,7 +279,6 @@ export default class LoginForm extends React.Component {
                 </label>
               ) : ""
             }
-
             <label>
               Password
               <input type="password" onChange={this.passwordChangeHandler} />
@@ -306,7 +305,7 @@ export default class LoginForm extends React.Component {
 
             
 
-            <input type="submit" value="submit" />
+            <input type="submit" value="submit" className="desktop-confirm"/>
             {
               this.state.signup ?
               (
