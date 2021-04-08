@@ -7,7 +7,8 @@ import commentIcon from "../assets/comment.svg";
 import upArrow from "../assets/UpArrow.svg";
 import downArrow from "../assets/DownArrow.svg";
 import { parseConfigFileTextToJson, resolveModuleName } from "typescript";
-
+import {stateFromMarkdown} from 'draft-js-import-markdown';
+import {convertToRaw, Editor, EditorState, RichUtils} from 'draft-js';
 
 export default class Post extends React.Component {
   constructor(props) {
@@ -464,6 +465,7 @@ export default class Post extends React.Component {
               onAddComment={this.setCommentCount}
               parent={this.props.post.id}
               commentCount={this.getCommentCount()}
+              
             />
           </div>
         </div>
@@ -579,6 +581,7 @@ export default class Post extends React.Component {
       for(var x=0;x<comments[0];x++){
         const rep = comments[1][x].reputation;
         const postID = comments[1][x].id;
+        const comment_text = EditorState.createWithContent(stateFromMarkdown(comments[1][x].comment))
         //console.log("postID"+postID+"-rep"+rep)
         elementList.push(
           <div className="comment" key={x}>
@@ -595,7 +598,7 @@ export default class Post extends React.Component {
                 <span className="comment-author-text">{comments[1][x].author}</span>
               </div>
               <div className="comment-text">
-                {comments[1][x].comment}
+                <Editor editorState={comment_text} readOnly="true"/>
               </div>
             </div>
           </div>)

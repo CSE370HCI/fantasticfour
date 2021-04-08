@@ -43,6 +43,7 @@ export default class CommentForm extends React.Component {
           // update the count in the UI manually, to avoid a database hit
           console.log("Sent and receive: "+result.content)
           this.props.onAddComment(this.props.commentCount + 1);
+          
         },
         error => {
           alert("error!");
