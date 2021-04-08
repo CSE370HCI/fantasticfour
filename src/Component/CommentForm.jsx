@@ -5,6 +5,15 @@ import {convertToRaw, Editor, EditorState, RichUtils} from 'draft-js';
 import { stateToMarkdown } from "draft-js-export-markdown";
 
 
+const styleMap = {
+  'STRIKETHROUGH': {
+    textDecoration: 'line-through',
+  },
+  'CLEAR': {
+    textDecoration: 'none',
+  }
+};
+
 export default class CommentForm extends React.Component {
   constructor(props) {
     super(props);
@@ -52,19 +61,36 @@ export default class CommentForm extends React.Component {
       );
   };
 
-  onBoldClick = (event) =>{
+  onBold = (event) =>{
     event.preventDefault();
     this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'BOLD'));
   }
 
-  onItalicsClick = (event) =>{
+  onItalics = (event) =>{
     event.preventDefault();
     this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'ITALIC'));
   }
 
-  onUnderlineClick = (event) =>{
+  onUnderline = (event) =>{
     event.preventDefault();
     this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'UNDERLINE'));
+  }
+
+  onCodify = (event) =>{
+    event.preventDefault();
+    //doesn't look like a code block, unused for now.
+    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'CODE'));
+  }
+
+  onStrike = (event) =>{
+    event.preventDefault();
+    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'STRIKETHROUGH'));
+  }
+
+  onClear = (event) =>{
+    event.preventDefault();
+    //doesn't work...
+    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'CLEAR'));
   }
 
   render() {
@@ -76,12 +102,13 @@ export default class CommentForm extends React.Component {
             Add A Comment to Post
           </label>
           <div>
-              <button onClick={this.onBoldClick.bind(this)}>Bold</button>
-              <button onClick={this.onItalicsClick.bind(this)}>Italics</button>
-              <button onClick={this.onUnderlineClick.bind(this)}>Underline</button>
+              <button onClick={this.onBold.bind(this)}>Bold</button>
+              <button onClick={this.onItalics.bind(this)}>Italics</button>
+              <button onClick={this.onUnderline.bind(this)}>Underline</button>
+              <button onClick={this.onStrike.bind(this)}>Strike</button>
           </div>
           <div className="commentBox">
-            <Editor editorState={this.state.editorState} onChange={this.onChange} textAlignment='left' className="commentBox"/>
+            <Editor editorState={this.state.editorState} onChange={this.onChange} customStyleMap={styleMap} textAlignment='left' className="commentBox"/>
           </div>
           <input type="submit" value="submit" />
           <br />
