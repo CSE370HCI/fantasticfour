@@ -397,6 +397,7 @@ input {
     font-size: 18px;
     margin: 20px;
     margin-top: 10%;
+    cursor: pointer;
 }
 
 .desktop-confirm:hover {
@@ -421,6 +422,7 @@ input {
     color: #FFFFFF;
     font-family: 'Roboto', sans-serif;
     font-size: 18px;
+    cursor: pointer;
 }
 
 .desktop-tag {
