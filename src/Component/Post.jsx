@@ -8,6 +8,7 @@ import upArrow from "../assets/UpArrow.svg";
 import downArrow from "../assets/DownArrow.svg";
 import { parseConfigFileTextToJson, resolveModuleName } from "typescript";
 
+
 export default class Post extends React.Component {
   constructor(props) {
     super(props);
@@ -78,6 +79,9 @@ export default class Post extends React.Component {
               console.log("Value -1 for post "+postID)
               return -1;
             }
+          },
+          error => {
+            console.log("Bad request received.")
           }
       )
     }
@@ -577,7 +581,7 @@ export default class Post extends React.Component {
         const postID = comments[1][x].id;
         //console.log("postID"+postID+"-rep"+rep)
         elementList.push(
-          <div className="comment">
+          <div className="comment" key={x}>
             <div className="commentInterations">
               <div className={this.commentUp(rep)}>
                 <img src={upArrow} className={(rep === 1) ? 'arrowsLitC' : 'arrowsC'} onClick={event => this.likeComment(postID)} alt={rep}/>

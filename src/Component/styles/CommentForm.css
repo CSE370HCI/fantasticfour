@@ -1,0 +1,12 @@
+.commentBox {
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+  }
+
+  div.DraftEditor-root {
+    border: 1px solid #000;
+    background-color: beige;
+    height: 3em;
+    overflow-y: auto;
+  }
