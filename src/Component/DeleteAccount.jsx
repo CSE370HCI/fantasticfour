@@ -81,13 +81,9 @@ export default class DeleteAccount extends React.Component {
                                 },
                             }
                         );
-                    }
-                )
-                .then (
-                    (result) => {
+                        window.location.href = "/login";
                         sessionStorage.removeItem("token", null);
                         sessionStorage.removeItem("user", null);
-                        window.location.href = "/login";
                     }
                 )
         }
