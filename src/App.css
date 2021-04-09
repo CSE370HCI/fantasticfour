@@ -112,16 +112,6 @@ input {
   /*margin-bottom:15px;*/
 }
 
-.comments{
-    background:white;
-    width:90%;
-    display:block;
-    border-radius: 20px;
-    padding:10px;
-    margin:10px;
-    color:black;
-}
-
 .commentlist {
   text-align: left;
   background: lightblue;
@@ -293,7 +283,6 @@ input {
 .downButtonLit{
   background-color: #FF8B8B;
   width:20%;
-  max-height: 15%;
   border-color: #2D86D8;
   border-width: 5%;
   border-style: solid;
@@ -302,7 +291,6 @@ input {
 .greyButton{
   background-color: #767373;
   width:20%;
-  max-height: 15%;
   border-color: #767373;
   border-width: 5%;
   border-style: solid;
