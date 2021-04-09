@@ -19,11 +19,22 @@
   border-radius: 10px;
   font-size: 16px;
   font-weight: bold;
-  width:120px;
-  padding:5px;
   float:right;
   margin-left:10px;
   text-align: center;
+  user-select: none;
+  vertical-align: center;
+}
+
+.comment-count-text{
+  color: black;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-left:50%;
+  text-align: center;
+  user-select: none;
+  vertical-align: center;
 }
 
 .comment-icon{
@@ -74,6 +85,7 @@
   display: flex;
   flex-direction:row;
   height: 48px;
+  width: 100%;
 }
 
 .arrowsLit{
@@ -144,6 +156,8 @@
   color: black;
   font-weight: bold;
   font-size: 24px;
+  max-height: 1.25em;
+  overflow: hidden;
 }
 
 .comment {
@@ -293,4 +307,9 @@ div.DraftEditor-root {
   margin-bottom: 15px;
   text-overflow: ellipsis;
   display: inline;
+  overflow-x: hidden;
+}
+
+.comment-invite{
+  color:black;
 }

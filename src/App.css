@@ -25,7 +25,8 @@
 
 .deleteIcon{
   float:right;
-  filter: invert(32%) sepia(80%) saturate(7228%) hue-rotate(355deg) brightness(96%) contrast(118%);
+  filter: invert(50%) sepia(99%) saturate(7496%) hue-rotate(3deg) brightness(94%) contrast(121%);
+  padding-left: 20px;
 }
 
 

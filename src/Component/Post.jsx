@@ -454,8 +454,8 @@ export default class Post extends React.Component {
       return (
         <div className="comment-block">
           <div className="comment-indicator">
-            <div className="comment-indicator-text">
-              {this.getCommentCount()} Comments
+            <div className="">
+              {this.showDelete()}
             </div>
             <img
               src={commentIcon}
@@ -463,6 +463,9 @@ export default class Post extends React.Component {
               onClick={e => this.showModal()}
               alt="View Comments"
             />
+            <div className="comment-indicator-text" onClick={e => this.showModal()}>
+                Make a comment!
+            </div>
           </div>
           <div className={this.showHideComments()}>
             <CommentForm
@@ -616,7 +619,7 @@ export default class Post extends React.Component {
     //console.log("comments"+this.props.post.id+": "+JSON.stringify(comments))
     if (comments[0] === 0){
       //console.log("SAD2-"+this.props.post.id)
-      return
+      return (<div className="comment-invite">Hello there, do you wish to talk? </div>)
     }else{
       if(sessionStorage.getItem("user") != null){
       var elementList = []
@@ -692,13 +695,13 @@ export default class Post extends React.Component {
               <div className={this.isDown()}>
                 <img src={downArrow} className={(this.state.userreaction === -1) ? 'arrowsLit' : 'arrows'} onClick={event => this.dislike(event)} alt={this.state.userreaction}/>
               </div>
+              <div className="comment-count-text">
+                {this.getCommentCount()} Comments
+            </div>
             </div>
           </div>
         </div>
         <div  className="comment-side">
-          <div className="">
-            {this.showDelete()}
-          </div>
             {this.conditionalDisplay()}
           <div>
             {this.renderComments(this.state.comments)}
