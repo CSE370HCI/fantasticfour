@@ -11,6 +11,7 @@
 }
 
 .App-header {
+  
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -235,12 +236,21 @@ input {
   position: fixed;
 }
 
+.right-background {
+  left: 72%;
+  position: fixed;
+  top: 0px;
+  background-color: #282c34;
+  height:100%;
+  width: 28%;
+}
+
 .column-view {
   position:fixed;
   left:75%;
   display: flex;
   flex-direction: column;
-  width:25%
+  width:25%;
 }
 
 .black-text {

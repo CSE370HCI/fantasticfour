@@ -172,6 +172,7 @@ class App extends React.Component {
               <div className="posting-block">
                 <PostingList refresh={this.state.refreshPosts}/>
               </div>
+              <div className="right-background"/>
               <div className="column-view">
                 <div className="upload-button">
                   <Link to="/upload" className="upload-button-text">
