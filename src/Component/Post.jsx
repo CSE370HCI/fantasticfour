@@ -59,6 +59,7 @@ export default class Post extends React.Component {
   }
 
   getCommentReaction(postID){
+    if(sessionStorage.getItem("user") != null){
     var rep = 0;
     fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+postID +"&userID="+sessionStorage.getItem("user")+"&type=reaction", {
       method: "GET",
@@ -77,15 +78,13 @@ export default class Post extends React.Component {
           }
         }
     )
+    }
     return 0;
   }
 
   like(event) {
-<<<<<<< HEAD
-=======
   if(sessionStorage.getItem("user") != null){
     console.log("postid??"+this.props.post.id);
->>>>>>> 5091bbf56b07f6d675a5752a89179fac87a00fb9
     fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&name=upvote&type=reaction", {
       method: "GET",
       headers: {
@@ -165,11 +164,8 @@ export default class Post extends React.Component {
   }
 
   dislike(event){
-<<<<<<< HEAD
-=======
   if(sessionStorage.getItem("user") != null){
     console.log("postid??"+this.props.post.id);
->>>>>>> 5091bbf56b07f6d675a5752a89179fac87a00fb9
     fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&name=downvote&type=reaction", {
       method: "GET",
       headers: {
@@ -296,6 +292,7 @@ export default class Post extends React.Component {
   }
 
   likeComment(postID) {
+    if(sessionStorage.getItem("user") != null){
     console.log("Tried to like comment "+postID)
     fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+postID +"&userID="+sessionStorage.getItem("user")+"&name=upvote&type=reaction", {
       method: "GET",
@@ -366,8 +363,10 @@ export default class Post extends React.Component {
     //THIS PRINT CONSOLE LINE DOESN'T GIVE CORRECT USERREACTION
     //console.log("Reputation given by user on post ", this.props.post.id, " is: ", this.state.userreaction)
   }
+  }
 
   dislikeComment(postID){
+    if(sessionStorage.getItem("user") != null){
     console.log("Tried to dislike comment "+postID)
     fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+postID +"&userID="+sessionStorage.getItem("user")+"&name=downvote&type=reaction", {
       method: "GET",
@@ -438,13 +437,13 @@ export default class Post extends React.Component {
     //THIS PRINT CONSOLE LINE DOESN'T GIVE CORRECT USERREACTION
     //console.log("Reputation given by user on post ", this.props.post.id, " is: ", this.state.userreaction)
   }
+  }
 
   // we only want to display comment information if this is a post that accepts comments
   conditionalDisplay() {
     //if (this.props.post.commentCount <= 0) {
     //  return "";
     //  }
-    if(sessionStorage.getItem("user") != null){
     //else {
       return (
         <div className="comment-block">
@@ -469,7 +468,6 @@ export default class Post extends React.Component {
         </div>
       );
     //}
-    }
   }
 
   // we only want to expose the delete post functionality if the user is
@@ -539,8 +537,7 @@ export default class Post extends React.Component {
     fetch(process.env.REACT_APP_API_PATH+"/posts?sort=newest&parentID="+parentID, {
       method: "GET",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer '+sessionStorage.getItem("token")
+
       },
     }).then(res => res.json()
     ).then(
@@ -577,6 +574,7 @@ export default class Post extends React.Component {
       //console.log("SAD2-"+this.props.post.id)
       return
     }else{
+      if(sessionStorage.getItem("user") != null){
       var elementList = []
       for(var x=0;x<comments[0];x++){
         const rep = comments[1][x].reputation;
@@ -603,10 +601,31 @@ export default class Post extends React.Component {
           </div>)
       }
       return(<div>{elementList}</div>)
+      } else {
+      var elementList = []
+            for(var x=0;x<comments[0];x++){
+              const rep = comments[1][x].reputation;
+              const postID = comments[1][x].id;
+              console.log("postID"+postID+"-rep"+rep)
+              elementList.push(
+                <div className="comment">
+                  <div>
+                    <div className="comment-author">
+                      <span className="comment-author-text">{comments[1][x].author}</span>
+                    </div>
+                    <div className="comment-text">
+                      {comments[1][x].comment}
+                    </div>
+                  </div>
+                </div>)
+            }
+            return(<div>{elementList}</div>)
+      }
     }
   }
 
   render() {
+    if(sessionStorage.getItem("user") != null){
     return (
       <div className="post-comment-block">
         <div className="meme-side">
@@ -614,8 +633,9 @@ export default class Post extends React.Component {
             <img src={this.props.post.thumbnailURL} className="meme" alt=""/>
           </div>
           <div className="memeStuff">
-            <div>
-              <h1 className="meme-name">{this.props.post.content}</h1><br/>
+            <div className="post-info-login">
+              <b className="meme-name">{this.props.post.content}</b>
+              <b className="meme-poster"> by {this.props.post.author.username}</b>
             </div>
             <div className="postInterations">
               <div className={this.isUp()}>
@@ -625,9 +645,6 @@ export default class Post extends React.Component {
               <div className={this.isDown()}>
                 <img src={downArrow} className={(this.state.userreaction === -1) ? 'arrowsLit' : 'arrows'} onClick={event => this.dislike(event)} alt={this.state.userreaction}/>
               </div>
-              <div className="poster-block">
-                <h1 className="meme-poster">{this.props.post.author.username}</h1>
-              </div>
             </div>
           </div>
         </div>
@@ -636,12 +653,36 @@ export default class Post extends React.Component {
             {this.showDelete()}
           </div>
             {this.conditionalDisplay()}
-          <div>
+          <div className="comment-list">
             {this.renderComments(this.state.comments)}
           </div>
         </div>
       </div>
     );
+    } else {
+    return (
+          <div className="post-comment-block">
+            <div className="meme-side">
+              <div>
+                <img src={this.props.post.thumbnailURL} className="meme" alt=""/>
+              </div>
+              <div className="memeStuff">
+                <li className="post-info">
+                    <b className="meme-name">{this.props.post.content}</b>
+                    <b className="meme-poster"> by {this.props.post.author.username}</b>
+                </li>
+              </div>
+            </div>
+            <div  className="comment-side">
+              <div className="comment-indicator-text">
+                {this.getCommentCount()} Comments
+              </div>
+              <div className="comment-list">
+                {this.renderComments(this.state.comments)}
+              </div>
+            </div>
+          </div>
+    )}
   }
   //note: time removed from render because time is irrelevant, memes are timeless
 }

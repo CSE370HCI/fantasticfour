@@ -249,7 +249,7 @@
   width:20%;
   border-color: #00FF47;
   border-width: 5%;
-  border-style: solid; 
+  border-style: solid;
 }
 
 .upButtonLit{
@@ -257,7 +257,7 @@
   width:20%;
   border-color: #2D86D8;
   border-width: 5%;
-  border-style: solid; 
+  border-style: solid;
 }
 
 .downButton{
@@ -265,7 +265,7 @@
   width:20%;
   border-color: #FF8B8B;
   border-width: 5%;
-  border-style: solid; 
+  border-style: solid;
 }
 
 .downButtonLit{
@@ -274,7 +274,7 @@
   max-height: 15%;
   border-color: #2D86D8;
   border-width: 5%;
-  border-style: solid; 
+  border-style: solid;
 }
 
 .greyButton{
@@ -283,7 +283,7 @@
   max-height: 15%;
   border-color: #767373;
   border-width: 5%;
-  border-style: solid; 
+  border-style: solid;
 }
 
 .user-profile {
@@ -534,41 +534,4 @@ heading{
   .follower-column {
     width: 100%;
   }
-}
-
-.commentArea {
-  max-width: 95%;
-  min-width: 50%;
-  min-height: 100px;
-}
-
-.comment-text {
-  text-align: left;
-  color: black;
-  margin-left: 20px;
-  background-color: #c4c4c4;
-  min-height: 1em;
-}
-
-.comment-author {
-  text-align: left;
-  color: black;
-}
-
-.comment {
-  display: flex;
-  flex-direction:row;
-  width:96%;
-  border-style: solid;
-  border-color: black;
-  border-radius: 5px;
-}
-
-.comment-author-text {
-  background-color: #c4c4c4;
-}
-
-.commentInterations{
-  display: flex;
-  flex-direction:column;
 }

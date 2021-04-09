@@ -137,11 +137,6 @@ class Navbar extends React.Component {
         </li>
       </iconbar>
       <ul id="side-menu-items">
-        <li className="home">
-          <Link to="/" style={{textDecoration: 'none', color: 'black'}}>
-            Home
-          </Link>
-        </li>
         <li className="latest">
           <Link to="/latest" style={{textDecoration: 'none', color: 'black'}}>
             Latest

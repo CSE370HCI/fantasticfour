@@ -144,7 +144,6 @@ class App extends React.Component {
             </Route>
             <Route path="/styleguide">
               <div className="styleGuide">
-                <br/>
                 <p>Style Guide</p>
                 <StyleGuide/>
               </div>
@@ -153,13 +152,6 @@ class App extends React.Component {
               <div className="page-template">
                 <p className='page-title'>Create a New Post</p>
                 <Upload userid={sessionStorage.getItem("user")} />
-              </div>
-            </Route>
-            <Route path={["/posts"]}>
-              <div>
-                <p>Posts</p>
-                <LoginForm refreshPosts={this.doRefreshPosts}  />
-                <PostForm refresh={this.state.refreshPosts}/>
               </div>
             </Route>
             <Route path={["/login", "/signup"]}>
@@ -175,10 +167,10 @@ class App extends React.Component {
               </div>
             </Route>
             <Route path={["/postinglist", "/"]}>
+                <p>Latest</p>
+              <div className="post-feed">
               <div className="posting-block">
                 <PostingList refresh={this.state.refreshPosts}/>
-              </div>
-              <div className="left-background">
               </div>
               <div className="column-view">
                 <div className="upload-button">
@@ -189,6 +181,7 @@ class App extends React.Component {
                 <div className="tagBlock">
                   <TagsBlock />
                 </div>
+              </div>
               </div>
             </Route>
             </Switch>

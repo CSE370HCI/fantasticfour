@@ -1,10 +1,4 @@
-.comment-block{
-  width:100%;
-  display:flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-}
+
 
 .comment-indicator{
   text-align:right;
@@ -15,7 +9,6 @@
 }
 
 .comment-indicator-text{
-  background-color: lightblue;
   color: black;
   border-radius: 10px;
   font-size: 16px;
@@ -34,71 +27,116 @@
 }
 
 .post-comment-block{
-  background-color: black;
+  background-color: #F1F1F1;
   display:flex;
   flex-direction: row;
-  width: 96%;
+  width: 1000px;
   margin-top: 20px;
+  height: 500px;
 }
 
 .meme-side{
   position:relative;
   left: 0px;
   top: 0%;
-  width: 48%;
+  width: 500px;
+  height: 500px;
 }
 
 .meme{
-  width:100%
+  min-width: 400px;
+  max-height: 400px;
+  max-width: 500px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
 }
 
 .memeStuff{
   display: flex;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 500px;
   flex-direction:column;
+  color: black;
 }
 
 .meme-name{
   left:0px;
-  font-size: 20px;
+  font-size: 24px;
   text-align:left;
-  color: white;
+  font-style: italic;
 }
 
 .postInterations{
   display: flex;
   flex-direction:row;
+  height: 50px;
+}
+
+.post-info{
+  position: absolute;
+  left: 5px;
+  bottom: 50px;
+  text-overflow: ellipsis;
+  display: inline;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  vertical-align:middle;
+  height: 50px;
+}
+
+.post-info-login{
+  position: absolute;
+  left: 5px;
+  bottom: 50px;
+  text-overflow: ellipsis;
+  display: inline;
+  flex-direction:row;
+  vertical-align:middle;
+  height: 50px;
 }
 
 .arrowsLit{
+  display: block;
   height: 50%;
   position: relative;
+  margin-left: auto;
+  margin-right: auto;
   top: 25%;
   filter: invert(49%) sepia(94%) saturate(2189%) hue-rotate(187deg) brightness(89%) contrast(90%);
 }
 
 .arrows{
+  display: block;
   height: 50%;
   position: relative;
+  margin-left: auto;
+  margin-right: auto;
   top: 25%;
 }
 
 .poster-block{
   margin-left:2%;
   width:30%;
+  color: black;
 }
 
 .meme-poster{
   right:0px;
-  font-size: 20px;
+  font-size: 18px;
   text-align:left;
-  color: white;
+  width: 500px;
 }
 
 .comment-side{
   position: relative;
-  left: 4%;
-  width:48%;
-
+  right: 0px;
+  bottom: 0px;
+  overflow-y: auto;
+  height: 500px;
+  width: 500px;
 }
 
 .commentArea {
@@ -111,26 +149,81 @@
   text-align: left;
   color: black;
   margin-left: 20px;
-  background-color: #c4c4c4;
   min-height: 1em;
-}
-
-.comment-author {
-  text-align: left;
-  color: black;
 }
 
 .comment {
   display: flex;
   flex-direction:row;
   width:96%;
+  margin-top: 20px;
+}
+
+.commentInterations{
+  display: block;
+  flex-direction:column;
+}
+
+div.upButton{
+  width: 50px;
+  height: 44px;
+}
+
+div.downButton{
+  width: 50px;
+  height: 44px;
+}
+
+div.upButtonLit{
+  width: 50px;
+  height: 44px;
+}
+
+div.downButtonLit{
+  width: 50px;
+  height: 44px;
+}
+
+div.greyButton{
+  width: 50px;
+  height: 44px;
+}
+
+.commentArea {
+  max-width: 95%;
+  min-width: 50%;
+  min-height: 100px;
+}
+
+.comment-text {
+  text-align: left;
+  color: black;
+  margin-left: 20px;
+  min-height: 1em;
+  font-size: 18px;
+  width: 400px;
+  word-wrap: break-word;
+}
+
+.comment-author {
+  text-align: left;
+  color: black;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.comment {
+  display: flex;
+  flex-direction:row;
+  width:fit-content;
   border-style: solid;
   border-color: black;
   border-radius: 5px;
+  background-color: #BCBCBC;
 }
 
 .comment-author-text {
-  background-color: #c4c4c4;
+
 }
 
 .commentInterations{
