@@ -26,7 +26,7 @@ export default class ChangeProfilePicture extends React.Component {
     }
     if (this.state.can_upload) {
       //make the api call to update picture
-      fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?ownerID=" + sessionStorage.getItem("user") + "&category=profile_picture", {
+      fetch(process.env.REACT_APP_API_PATH+"/user-artifacts/" + sessionStorage.getItem("user"), {
         method: "PATCH",
         headers: {
           'Content-Type': 'application/json',
@@ -34,10 +34,8 @@ export default class ChangeProfilePicture extends React.Component {
         },
         body: JSON.stringify({
           ownerID: sessionStorage.getItem("user"),
-          type: "image",
           //Changes profile picture
-          url: this.state.picture_URL,
-          category: "profile_picture"
+          url: this.state.picture_URL
         })
       })
           .then(res => res.json())
@@ -64,11 +62,9 @@ export default class ChangeProfilePicture extends React.Component {
     return (
       <div>
         <form onSubmit={this.submitHandler}>
-          <label>
             <img src={this.state.picture_URL} alt="Upload Photo" className="user-profile-picture"/>
             <br/>
             <input type="text" rows="1" cols="70" className="upload-input" onChange={this.updateURL} />
-          </label>
           <br/>
           <br/>
           <input className="submit-button" type="submit" value="Save" />
