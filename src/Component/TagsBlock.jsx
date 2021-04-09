@@ -1,6 +1,7 @@
 import React from "react";
 
 import "../App.css";
+import "./styles/TagsBlock.css";
 
 export default class TagsBlock extends React.Component {
 
@@ -154,7 +155,8 @@ export default class TagsBlock extends React.Component {
                   }
               }
           );
-          this.getTags()
+        this.getTags();
+        event.target.submit();
     }
 
     myChangeHandler = (event) =>{
@@ -166,8 +168,8 @@ export default class TagsBlock extends React.Component {
         if(this.state.addClicked === false){
             return(
                 <form onSubmit={this.addTag}>
-                    <input type="text" placeholder="hashtag" onChange={this.myChangeHandler} onSubmit={this.addTag}></input>
-                    <button className="addTag">add tag</button>
+                    <input type="text" placeholder="hashtag" onChange={this.myChangeHandler} id='field' onSubmit={this.addTag}></input>
+                    <button className="addTag" >add tag</button>
                 </form>
             )
         }

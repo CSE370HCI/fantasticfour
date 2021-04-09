@@ -1,5 +1,6 @@
 import React from "react";
 import Post from "./Post.jsx";
+import "./styles/PostingList.css";
 
 export default class PostingList extends React.Component {
   constructor(props) {
@@ -36,8 +37,8 @@ export default class PostingList extends React.Component {
     fetch(url, {
       method: "get",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer '+sessionStorage.getItem("token")
+        'Content-Type': 'application/json'
+
       },
 
     })

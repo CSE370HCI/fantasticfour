@@ -1,5 +1,6 @@
 import React from "react";
 import "../App.css";
+import "./styles/EditSettings.css";
 import Modal from "./Modal.jsx";
 import {Link} from 'react-router-dom';
 
@@ -155,21 +156,24 @@ export default class EditSettings extends React.Component {
         window.location.href = "delete";
     };
 
+    onClose = () => {
+            window.location.href = "profile";
+        };
+
   render() {
     return (
     <div id="myModal" className="editProfile">
-            <div className="modal-content">
+            <div className="settings-content">
               <span className="close" onClick={this.onClose}>
                 &times;
               </span>
               <br/>
               Edit Personal Information
-                 <form onSubmit={this.submitHandler} className="profileform" >
+                 <form onSubmit={this.submitHandler} style={{'font-size': '15px'}}>
                     <br/>
                     <label>
                         Username
                     </label>
-                    <br/>
                     <input
                       defaultValue={this.state.username}
                       type="text"
@@ -180,7 +184,6 @@ export default class EditSettings extends React.Component {
                     <label>
                       Email Address
                     </label>
-                    <br/>
                     <input
                       defaultValue={this.state.email}
                       type="text"
@@ -191,7 +194,6 @@ export default class EditSettings extends React.Component {
                     <label>
                       Password
                     </label>
-                    <br/>
                     <input
                       defaultValue={this.state.password}
                       type="password"
@@ -202,23 +204,17 @@ export default class EditSettings extends React.Component {
                     <label>
                       Confirm Password
                     </label>
-                    <br/>
                     <input
                       defaultValue={this.state.password}
                       type="password"
                       onChange={e => this.fieldChangeHandler("confirmpassword", e)}
                       value={this.state.confirmpassword}
                     />
-                    <div>
-                    </div>
                     <br/>
-                    <input type="submit" value="Confirm" />
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
+                    <input className="desktop-confirm" type="submit" value="Confirm" />
                     <br/>
                      <input
+                         className="desktop-delete distancedbutton"
                          type="button"
                          onClick={this.redirect}
                          value="Delete Account"

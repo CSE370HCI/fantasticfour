@@ -1,5 +1,6 @@
 import React from "react";
 import "../App.css";
+import "./styles/Upload.css";
 
 //The post form component holds both a form for posting, and also the list of current posts in your feed
 export default class Upload extends React.Component {
@@ -58,7 +59,7 @@ export default class Upload extends React.Component {
                 });
                 this.addTag(this.state.tag, result["id"])
                 // redirects users back to the posts screen
-                window.location.href = "posts";
+                window.location.href = "/";
               }
           );
     }
@@ -124,20 +125,24 @@ export default class Upload extends React.Component {
         <form onSubmit={this.submitHandler}>
           <label>
             <br/>
-              Title*<br/>
+            Title*
+            <br/>
             <input type="text" cols="70" className="upload-input" onChange={this.updateTitle} />
-            <br /><br />
-            Upload Photo (URL)* <br/>
+            <br/>
+            <br/>
+            Upload Photo (URL)*
+            <br/>
             <input type="text" rows="1" cols="70" className="upload-input" onChange={this.updateURL} />
-            <br /><br />
-            Communities <br/>
+            <br/>
+            <br/>
+            Communities
+            <br/>
             <input type="text" cols="70" className="upload-input" onChange={this.updateTag} />
           </label>
-          <br />
-          <br />
-
-          <input type="submit" value="submit" />
-          <br />
+          <br/>
+          <br/>
+          <input className="submit-button" type="submit" value="submit" />
+          <br/>
           {this.state.post_message}
         </form>
       </div>

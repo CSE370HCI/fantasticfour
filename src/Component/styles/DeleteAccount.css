@@ -1,0 +1,11 @@
+.danger-button-blocked {
+    cursor: not-allowed;
+    opacity: 0.2;
+  }
+  
+.danger-button-unblocked {
+}
+  
+.cancel-button {
+    background: #7E7E7E;
+}

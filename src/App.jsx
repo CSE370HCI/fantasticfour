@@ -21,8 +21,12 @@ import {
   BrowserRouter as Router, Route, Switch
 } from 'react-router-dom';
 import DeleteAccount from "./Component/DeleteAccount";
+import ChangeProfilePicture from "./Component/ChangeProfilePicture";
 import UserProfile from "./Component/UserProfile";
+import ForgotPasswordForm from "./Component/ForgotPasswordForm"
 import {Link} from 'react-router-dom';
+import Followers from "./Component/Followers";
+import Following from "./Component/Following";
 
 // toggleModal will both show and hide the modal dialog, depending on current state.  Note that the
 // contents of the modal dialog are set separately before calling toggle - this is just responsible
@@ -77,13 +81,31 @@ class App extends React.Component {
           <div className="maincontent" id="mainContent">
             <Switch>
             <Route path="/profile">
-              <div className="user-profile">
+              <div className="page-template">
                 <p className='page-title'>My Profile</p>
                 <UserProfile userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
+            <Route path="/changepicture">
+              <div className="page-template">
+                <p className='page-title'>Change Profile Picture</p>
+                <ChangeProfilePicture userid={sessionStorage.getItem("user")} />
+              </div>
+            </Route>
+              <Route path="/followers">
+                <div className="page-template">
+                  <p className='page-title'>Followers</p>
+                  <Followers userid={sessionStorage.getItem("user")} />
+                </div>
+              </Route>
+              <Route path="/following">
+                <div className="page-template">
+                  <p className='page-title'>Following</p>
+                  <Following userid={sessionStorage.getItem("user")} />
+                </div>
+              </Route>
             <Route path="/delete">
-              <div className="deleteAccount">
+              <div className="page-template">
                 <p className='page-title'>Delete Your Account</p>
                 <DeleteAccount userid={sessionStorage.getItem("user")} />
               </div>
@@ -121,35 +143,34 @@ class App extends React.Component {
               </div>
             </Route>
             <Route path="/styleguide">
-              <div>
-                <br/>
+              <div className="styleGuide">
                 <p>Style Guide</p>
                 <StyleGuide/>
               </div>
             </Route>
             <Route path="/upload">
-              <div className="upload">
+              <div className="page-template">
                 <p className='page-title'>Create a New Post</p>
                 <Upload userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
-            <Route path={["/posts"]}>
-              <div>
-                <p>Posts</p>
-                <LoginForm refreshPosts={this.doRefreshPosts}  />
-                <PostForm refresh={this.state.refreshPosts}/>
-              </div>
-            </Route>
             <Route path={["/login", "/signup"]}>
-              <div>
+              <div className="page-template">
+                <p className="page-title">Login / Signup</p>
                 <LoginForm refreshPosts={this.doRefreshPosts}/>
               </div>
             </Route>
+            <Route path="/forgot-password">
+              <div className="page-template">
+                <p className="page-title">Forgot Your Password?</p>
+                <ForgotPasswordForm/>
+              </div>
+            </Route>
             <Route path={["/postinglist", "/"]}>
+                <p>Latest</p>
+              <div className="post-feed">
               <div className="posting-block">
                 <PostingList refresh={this.state.refreshPosts}/>
-              </div>
-              <div className="left-background">
               </div>
               <div className="column-view">
                 <div className="upload-button">
@@ -160,6 +181,7 @@ class App extends React.Component {
                 <div className="tagBlock">
                   <TagsBlock />
                 </div>
+              </div>
               </div>
             </Route>
             </Switch>

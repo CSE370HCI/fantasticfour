@@ -1,0 +1,296 @@
+.comment-block{
+  width:100%;
+  display:flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.comment-indicator{
+  text-align:right;
+  width:100%;
+  display:block;
+  float:right;
+  margin-top: 5px;
+}
+
+.comment-indicator-text{
+  color: black;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  width:120px;
+  padding:5px;
+  float:right;
+  margin-left:10px;
+  text-align: center;
+}
+
+.comment-icon{
+  width:40px;
+  height:40px;
+  float:right;
+  filter: invert(100%)
+}
+
+.post-comment-block{
+  background-color: #EEEEEE;
+  display:flex;
+  flex-direction: row;
+  width: 96%;
+  margin-top: 20px;
+  height: fit-content;
+  min-height: 30vh;
+}
+
+.meme-side{
+  position:relative;
+  left: 0px;
+  top: 0%;
+  width: 48%;
+}
+
+.meme{
+  width:100%
+}
+
+.memeStuff{
+  display: flex;
+  flex-direction:column;
+}
+
+.meme-name{
+  left:0px;
+  font-size: 24px;
+  text-align:left;
+  color: black;
+  font-style: italic;
+}
+
+.postInterations{
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  display: flex;
+  flex-direction:row;
+  height: 48px;
+}
+
+.arrowsLit{
+  height: 50%;
+  position: relative;
+  bottom: 35%;
+  right: 15%;
+  margin-left: 50%;
+  margin-right: 50%;
+  margin-top: 50%;
+  margin-bottom: 50%;
+  filter: invert(49%) sepia(94%) saturate(2189%) hue-rotate(187deg) brightness(89%) contrast(90%);
+}
+
+.arrows{
+  height: 50%;
+  position: relative;
+  bottom: 35%;
+  right: 15%;
+  margin-left: 50%;
+  margin-right: 50%;
+  margin-top: 50%;
+  margin-bottom: 50%;
+}
+
+.poster-block{
+  margin-left:2%;
+  width:30%;
+}
+
+.meme-poster{
+  right:0px;
+  font-size: 20px;
+  text-align:left;
+  color: black;
+}
+
+.comment-side{
+  overflow-y: auto;
+  position: relative;
+  left: 4%;
+  width:48%;
+}
+
+.commentArea {
+  max-width: 95%;
+  min-width: 50%;
+  min-height: 100px;
+}
+
+.comment-text {
+  text-align: left;
+  color: black;
+  margin-left: 20px;
+  min-height: 1em;
+  font-size: 18px;
+  width: 400px;
+  word-wrap: break-word;
+  left: 4%;
+  min-height: 1em;
+  width:95%;
+  max-width: 95%;
+}
+
+.comment-author-text {
+  display: flex;
+  text-align: left;
+  color: black;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.comment {
+  display: flex;
+  flex-direction:row;
+  border-width: 1px;
+  border-style: solid;
+  border-color: black;
+  background-color: #BCBCBC;
+}
+
+.commentInterations{
+  display: flex;
+  flex-direction:column;
+  max-width: 8%;
+}
+
+.upButtonC{
+  background-color: #00FF47;
+  border-color: #00FF47;
+  border-width: 5%;
+  border-style: solid; 
+}
+
+.upButtonLitC{
+  background-color: #00FF47;
+  max-height: 1.5em;
+  border-color: #2D86D8;
+  border-width: 5%;
+  border-style: solid; 
+}
+
+.downButtonC{
+  background-color: #FF8B8B;
+  border-color: #FF8B8B;
+  border-width: 5%;
+  border-style: solid; 
+}
+
+.downButtonLitC{
+  background-color: #FF8B8B;
+  max-height: 1.5em;
+  border-color: #2D86D8;
+  border-width: 5%;
+  border-style: solid; 
+}
+
+.greyButtonC{
+  background-color: #767373;
+  max-height: 1.5em;
+  border-color: #767373;
+  border-width: 5%;
+  border-style: solid; 
+}
+
+.arrowsLitC{
+  height: 70%;
+  top:15%;
+  position: relative;
+  filter: invert(49%) sepia(94%) saturate(2189%) hue-rotate(187deg) brightness(89%) contrast(90%);
+}
+
+.arrowsC{
+  height: 70%;
+  top:15%;
+  position: relative;
+}
+
+.editor-comment{
+  border-style: none;
+
+}
+
+div.DraftEditor-root {
+  border: none;
+  width:100%;
+}
+
+.comment-body {
+  width: 100%;
+  min-width: 35%;
+}
+
+.comments-all {
+  position: absolute;
+  display: block;
+  flex-position: row;
+  width: 100%;
+}
+
+.comments.show{
+  width:100%;
+  color:black;
+  border-width: 1px;
+  border-style: solid;
+  border-color: black;
+  background-color: #BCBCBC;
+}
+
+.comment-list {
+  position: absolute;
+  display: flex;
+  bottom: 0px;
+  right: 0px;
+  height: calc(100% - 50px);
+  width: 100%;
+}
+
+.greyButton {
+  position: relative;
+  display: block;
+  height: 42px;
+  width: 50px;
+}
+
+.upButton {
+  position: relative;
+  display: flex;
+  height: 42px;
+  width: 50px;
+}
+
+.downButton {
+  position: relative;
+  display: flex;
+  height: 42px;
+  width: 50px;
+}
+
+.upButtonLit {
+  position: relative;
+  display: flex;
+  height: 42px;
+  width: 50px;
+}
+
+.downButtonLit {
+  position: relative;
+  display: flex;
+  height: 42px;
+  width: 50px;
+}
+
+.post-info{
+  text-align: left;
+  margin-left: 5px;
+  margin-bottom: 15px;
+  text-overflow: ellipsis;
+  display: inline;
+}

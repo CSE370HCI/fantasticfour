@@ -1,0 +1,13 @@
+.commentBox {
+    border: 1px solid #000;
+    background-color: white;
+    height: 3em;
+    overflow-y: auto;
+  }
+
+form.DraftEditor-root {
+    border: 1px solid #000;
+    background-color: white;
+    height: 3em;
+    overflow-y: auto;
+  }
