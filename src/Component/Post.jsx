@@ -2,7 +2,7 @@ import React from "react";
 import "../App.css";
 import "./styles/Post.css"
 import CommentForm from "./CommentForm.jsx";
-import helpIcon from "../assets/delete.png";
+import deleteIcon from "../assets/delete.png";
 import commentIcon from "../assets/comment.svg";
 import upArrow from "../assets/UpArrow.svg";
 import downArrow from "../assets/DownArrow.svg";
@@ -494,7 +494,7 @@ export default class Post extends React.Component {
     if (this.props.post.author.id == sessionStorage.getItem("user")) {
       return(
       <img
-        src={helpIcon}
+        src={deleteIcon}
         className="sidenav-icon deleteIcon"
         alt="Delete Post"
         title="Delete Post"

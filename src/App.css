@@ -25,7 +25,9 @@
 
 .deleteIcon{
   float:right;
+  filter: invert(32%) sepia(80%) saturate(7228%) hue-rotate(355deg) brightness(96%) contrast(118%);
 }
+
 
 .settings{
   width:100%;
@@ -157,7 +159,6 @@ input {
 .sidenav-icon{
   width:40px;
   height:40px;
-
   margin-bottom:15px;
 }
 
