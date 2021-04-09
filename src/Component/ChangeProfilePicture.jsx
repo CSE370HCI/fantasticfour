@@ -7,10 +7,31 @@ export default class ChangeProfilePicture extends React.Component {
     super(props);
     this.state = {
       picture_URL: "",
-      can_upload: false
+      can_upload: false,
+      profile_picture: ""
     };
   }
 
+  componentDidMount(){
+  fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?ownerID=" + sessionStorage.getItem("user") + "&category=profile_picture", {
+          method: "GET",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+sessionStorage.getItem("token")
+          }
+        })
+          .then(res => res.json())
+          .then(
+            result => {
+              if(sessionStorage.getItem("user") != null){
+                this.setState({
+                  profile_picture: result[0][0]["id"]
+                });
+                console.log(this.state.profile_picture);
+              }
+            }
+          );
+  }
   submitHandler = event => {
 
     //keep the form from actually submitting via HTML - we want to handle it in react
@@ -26,7 +47,7 @@ export default class ChangeProfilePicture extends React.Component {
     }
     if (this.state.can_upload) {
       //make the api call to update picture
-      fetch(process.env.REACT_APP_API_PATH+"/user-artifacts/" + sessionStorage.getItem("user"), {
+      fetch(process.env.REACT_APP_API_PATH+"/user-artifacts/" + this.state.profile_picture, {
         method: "PATCH",
         headers: {
           'Content-Type': 'application/json',
@@ -44,9 +65,10 @@ export default class ChangeProfilePicture extends React.Component {
                 // redirects users back to the profile screen
                 console.log(result);
                 window.location.href = "profile";
+                this.state.artifact_id = result;
               }
           );
-    }
+      }
   };
 
   // this method will keep the current URL up to date as you type it,
@@ -67,7 +89,7 @@ export default class ChangeProfilePicture extends React.Component {
             <input type="text" rows="1" cols="70" className="upload-input" onChange={this.updateURL} />
           <br/>
           <br/>
-          <input className="submit-button" type="submit" value="Save" />
+          <input className="submit-button" type="submit" value="Confirm" />
         </form>
       </div>
     );
