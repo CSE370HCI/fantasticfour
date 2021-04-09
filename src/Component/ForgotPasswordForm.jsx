@@ -130,7 +130,7 @@ class ForgotPasswordForm extends React.Component {
                             <input type="email" onChange={this.emailChangeHandler}/>
                         </label>
                         <br/>
-                        <input type="submit" value="Reset Password"/>
+                        <input className="desktop-confirm" type="submit" value="Reset Password"/>
                     </form>
                 </div>
             );
@@ -157,7 +157,7 @@ class ForgotPasswordForm extends React.Component {
                         </label>
                         <br/>
                         { this.state.passwordmismatch ? <p>Passwords don't match</p> : <></> }
-                        <input type="submit" value="Create New Password"/>
+                        <input className="desktop-confirm" type="submit" value="Create New Password"/>
                     </form>
                 </div>
             )

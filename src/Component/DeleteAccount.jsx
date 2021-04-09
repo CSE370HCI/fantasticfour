@@ -135,7 +135,6 @@ export default class DeleteAccount extends React.Component {
                         <br />
                         <input
                             type="text"
-                            className="upload-input"
                             onChange={this.updateInput}
                         />
                     </label>
@@ -143,18 +142,18 @@ export default class DeleteAccount extends React.Component {
                     <br />
 
                     <input
+                        type="submit"
+                        disabled={this.state.button_disabled}
+                        className={"desktop-delete " + this.state.button_state_css}
+                        value="Confirm"
+                    />
+                    <input
                         type="button"
-                        className="cancel-button"
+                        className="desktop-confirm cancel-button"
                         onClick={this.redirect}
                         value="Cancel"
                     />
                     &nbsp;&nbsp;
-                    <input
-                        type="submit"
-                        disabled={this.state.button_disabled}
-                        className={this.state.button_state_css}
-                        value="Confirm"
-                    />
                     <br />
                 </form>
             </div>

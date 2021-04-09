@@ -5,19 +5,6 @@
   border-radius: 50%;
 }
 
-.profile-followers {
-  cursor: pointer;
-  color: dodgerblue;
-}
-
 .edit-button {
-  width: 78%;
-  height: 30px;
   background: #2D86D8;
-  padding: 0;
-  border: none;
-  color: #FFFFFF;
-  font-family: 'Roboto', sans-serif;
-  font-size: 18px;
-  cursor: pointer;
 }

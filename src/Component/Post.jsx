@@ -6,7 +6,9 @@ import helpIcon from "../assets/delete.png";
 import commentIcon from "../assets/comment.svg";
 import upArrow from "../assets/UpArrow.svg";
 import downArrow from "../assets/DownArrow.svg";
-import { parseConfigFileTextToJson } from "typescript";
+import { parseConfigFileTextToJson, resolveModuleName } from "typescript";
+import {stateFromMarkdown} from 'draft-js-import-markdown';
+import {convertToRaw, Editor, EditorState, RichUtils} from 'draft-js';
 
 export default class Post extends React.Component {
   constructor(props) {
@@ -18,7 +20,8 @@ export default class Post extends React.Component {
       dislikes: 0,
       tags: [],
       userreaction: 0,
-      comments: [0, []]
+      comments: [0, []], 
+      tempVal: 0
     };
     this.post = React.createRef();
 
@@ -31,7 +34,6 @@ export default class Post extends React.Component {
 
   getUserReaction(){
   if(sessionStorage.getItem("user") != null){
-    console.log("Check1")
     fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&type=reaction", {
       method: "GET",
       headers: {
@@ -60,26 +62,30 @@ export default class Post extends React.Component {
 
   getCommentReaction(postID){
     if(sessionStorage.getItem("user") != null){
-    var rep = 0;
-    fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+postID +"&userID="+sessionStorage.getItem("user")+"&type=reaction", {
-      method: "GET",
-      headers: {
-        'Authorization': 'Bearer '+sessionStorage.getItem("token")
-      }
-    }).then(result => result.json()
-    ).then(
-        result => {
-          if(result[1] === 0){
-            console.log("postID"+postID+": "+0)
-          }else if(result[0][0].name === "upvote"){
-            console.log("postID"+postID+": "+1)
-          }else {
-            console.log("postID"+postID+": "+-1)
-          }
+      fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+postID +"&userID="+sessionStorage.getItem("user")+"&type=reaction", {
+        method: "GET",
+        headers: {
+          'Authorization': 'Bearer '+sessionStorage.getItem("token")
         }
-    )
+      }).then(res => res.json()
+      ).then(
+          result => {
+            if(result[1] === 0){
+              console.log("Value 0 for post "+postID)
+              return 0;
+            }else if(result[0][0].name === "upvote"){
+              console.log("Value 1 for post "+postID)
+              return 1;
+            }else {
+              console.log("Value -1 for post "+postID)
+              return -1;
+            }
+          },
+          error => {
+            console.log("Bad request received.")
+          }
+      )
     }
-    return 0;
   }
 
   like(event) {
@@ -165,7 +171,6 @@ export default class Post extends React.Component {
 
   dislike(event){
   if(sessionStorage.getItem("user") != null){
-    console.log("postid??"+this.props.post.id);
     fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&name=downvote&type=reaction", {
       method: "GET",
       headers: {
@@ -292,7 +297,6 @@ export default class Post extends React.Component {
   }
 
   likeComment(postID) {
-    if(sessionStorage.getItem("user") != null){
     console.log("Tried to like comment "+postID)
     fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+postID +"&userID="+sessionStorage.getItem("user")+"&name=upvote&type=reaction", {
       method: "GET",
@@ -363,10 +367,8 @@ export default class Post extends React.Component {
     //THIS PRINT CONSOLE LINE DOESN'T GIVE CORRECT USERREACTION
     //console.log("Reputation given by user on post ", this.props.post.id, " is: ", this.state.userreaction)
   }
-  }
 
   dislikeComment(postID){
-    if(sessionStorage.getItem("user") != null){
     console.log("Tried to dislike comment "+postID)
     fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+postID +"&userID="+sessionStorage.getItem("user")+"&name=downvote&type=reaction", {
       method: "GET",
@@ -437,13 +439,13 @@ export default class Post extends React.Component {
     //THIS PRINT CONSOLE LINE DOESN'T GIVE CORRECT USERREACTION
     //console.log("Reputation given by user on post ", this.props.post.id, " is: ", this.state.userreaction)
   }
-  }
 
   // we only want to display comment information if this is a post that accepts comments
   conditionalDisplay() {
     //if (this.props.post.commentCount <= 0) {
     //  return "";
     //  }
+    if(sessionStorage.getItem("user") != null){
     //else {
       return (
         <div className="comment-block">
@@ -463,11 +465,13 @@ export default class Post extends React.Component {
               onAddComment={this.setCommentCount}
               parent={this.props.post.id}
               commentCount={this.getCommentCount()}
+              
             />
           </div>
         </div>
       );
     //}
+    }
   }
 
   // we only want to expose the delete post functionality if the user is
@@ -513,21 +517,21 @@ export default class Post extends React.Component {
 
   commentUp(rep){
     if(rep === 1){
-      return "upButtonLit"
+      return "upButtonLitC"
     }else if(rep === 0){
-      return "upButton"
+      return "upButtonC"
     }else{
-      return "greyButton"
+      return "greyButtonC"
     }
   }
 
   commentDown(rep){
     if(rep === -1){
-      return "downButtonLit"
+      return "downButtonLitC"
     }else if(rep === 0){
-      return "downButton"
+      return "downButtonC"
     }else{
-      return "greyButton"
+      return "greyButtonC"
     }
   }
 
@@ -537,22 +541,21 @@ export default class Post extends React.Component {
     fetch(process.env.REACT_APP_API_PATH+"/posts?sort=newest&parentID="+parentID, {
       method: "GET",
       headers: {
-
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '+sessionStorage.getItem("token")
       },
     }).then(res => res.json()
     ).then(
         result => {
           if (result[1] === 0){
-            //console.log("SAD"+parentID)
             return [0, []]
           }else{
-            //console.log("Comments for post "+parentID)
             var cList = []
             for(var x=0;x<result[1];x++){
-              const rep = this.getCommentReaction(result[0][x].id);
+              var rep = this.getCommentReaction(result[0][x].id)
+              console.log("After call on post "+parentID+"- rep="+rep)
               cList.push({comment: result[0][x].content, author: result[0][x].author.username, id: result[0][x].id, reputation: rep})
             }
-            console.log("CLIST"+this.props.post.id+": "+JSON.stringify([result[1], cList]))
             this.setState({
               comments: [result[1], cList]
             })
@@ -574,58 +577,37 @@ export default class Post extends React.Component {
       //console.log("SAD2-"+this.props.post.id)
       return
     }else{
-      if(sessionStorage.getItem("user") != null){
       var elementList = []
       for(var x=0;x<comments[0];x++){
         const rep = comments[1][x].reputation;
         const postID = comments[1][x].id;
-        console.log("postID"+postID+"-rep"+rep)
+        const comment_text = EditorState.createWithContent(stateFromMarkdown(comments[1][x].comment))
+        //console.log("postID"+postID+"-rep"+rep)
         elementList.push(
-          <div className="comment">
+          <div className="comment" key={x}>
             <div className="commentInterations">
               <div className={this.commentUp(rep)}>
-                <img src={upArrow} className={(rep === 1) ? 'arrowsLit' : 'arrows'} onClick={event => this.likeComment(postID)} alt={rep}/>
+                <img src={upArrow} className={(rep === 1) ? 'arrowsLitC' : 'arrowsC'} onClick={event => this.likeComment(postID)} alt={rep}/>
               </div>
               <div className={this.commentDown(rep)}>
-                <img src={downArrow} className={(rep === -1) ? 'arrowsLit' : 'arrows'} onClick={event => this.dislikeComment(postID)} alt={rep}/>
+                <img src={downArrow} className={(rep === -1) ? 'arrowsLitC' : 'arrowsC'} onClick={event => this.dislikeComment(postID)} alt={rep}/>
               </div>
             </div>
-            <div>
+            <div className="comment-body">
               <div className="comment-author">
                 <span className="comment-author-text">{comments[1][x].author}</span>
               </div>
               <div className="comment-text">
-                {comments[1][x].comment}
+                <Editor editorState={comment_text} readOnly="true" className="editor-comment"/>
               </div>
             </div>
           </div>)
       }
-      return(<div>{elementList}</div>)
-      } else {
-      var elementList = []
-            for(var x=0;x<comments[0];x++){
-              const rep = comments[1][x].reputation;
-              const postID = comments[1][x].id;
-              console.log("postID"+postID+"-rep"+rep)
-              elementList.push(
-                <div className="comment">
-                  <div>
-                    <div className="comment-author">
-                      <span className="comment-author-text">{comments[1][x].author}</span>
-                    </div>
-                    <div className="comment-text">
-                      {comments[1][x].comment}
-                    </div>
-                  </div>
-                </div>)
-            }
-            return(<div>{elementList}</div>)
-      }
+      return(<div className="comments-all">{elementList}</div>)
     }
   }
 
   render() {
-    if(sessionStorage.getItem("user") != null){
     return (
       <div className="post-comment-block">
         <div className="meme-side">
@@ -633,17 +615,18 @@ export default class Post extends React.Component {
             <img src={this.props.post.thumbnailURL} className="meme" alt=""/>
           </div>
           <div className="memeStuff">
-            <div className="post-info-login">
-              <b className="meme-name">{this.props.post.content}</b>
-              <b className="meme-poster"> by {this.props.post.author.username}</b>
+            <div>
+              <h1 className="meme-name">{this.props.post.content}</h1><br/>
             </div>
             <div className="postInterations">
               <div className={this.isUp()}>
-                {this.state.userreaction}
                 <img src={upArrow} className={(this.state.userreaction === 1) ? 'arrowsLit' : 'arrows'} onClick={event => this.like(event)} alt={this.state.userreaction}/>
               </div>
               <div className={this.isDown()}>
                 <img src={downArrow} className={(this.state.userreaction === -1) ? 'arrowsLit' : 'arrows'} onClick={event => this.dislike(event)} alt={this.state.userreaction}/>
+              </div>
+              <div className="poster-block">
+                <h1 className="meme-poster">{this.props.post.author.username}</h1>
               </div>
             </div>
           </div>
@@ -653,36 +636,12 @@ export default class Post extends React.Component {
             {this.showDelete()}
           </div>
             {this.conditionalDisplay()}
-          <div className="comment-list">
+          <div>
             {this.renderComments(this.state.comments)}
           </div>
         </div>
       </div>
     );
-    } else {
-    return (
-          <div className="post-comment-block">
-            <div className="meme-side">
-              <div>
-                <img src={this.props.post.thumbnailURL} className="meme" alt=""/>
-              </div>
-              <div className="memeStuff">
-                <li className="post-info">
-                    <b className="meme-name">{this.props.post.content}</b>
-                    <b className="meme-poster"> by {this.props.post.author.username}</b>
-                </li>
-              </div>
-            </div>
-            <div  className="comment-side">
-              <div className="comment-indicator-text">
-                {this.getCommentCount()} Comments
-              </div>
-              <div className="comment-list">
-                {this.renderComments(this.state.comments)}
-              </div>
-            </div>
-          </div>
-    )}
   }
   //note: time removed from render because time is irrelevant, memes are timeless
 }
