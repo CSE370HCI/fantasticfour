@@ -62,11 +62,9 @@ export default class ChangeProfilePicture extends React.Component {
     return (
       <div>
         <form onSubmit={this.submitHandler}>
-          <label>
             <img src={this.state.picture_URL} alt="Upload Photo" className="user-profile-picture"/>
             <br/>
             <input type="text" rows="1" cols="70" className="upload-input" onChange={this.updateURL} />
-          </label>
           <br/>
           <br/>
           <input className="submit-button" type="submit" value="Save" />
