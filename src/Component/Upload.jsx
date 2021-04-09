@@ -59,7 +59,7 @@ export default class Upload extends React.Component {
                 });
                 this.addTag(this.state.tag, result["id"])
                 // redirects users back to the posts screen
-                window.location.href = "/";
+                window.location.href = "homepage";
               }
           );
     }
@@ -123,7 +123,6 @@ export default class Upload extends React.Component {
     return (
       <div>
         <form onSubmit={this.submitHandler}>
-          <label>
             <br/>
             Title*
             <br/>
@@ -138,7 +137,6 @@ export default class Upload extends React.Component {
             Communities
             <br/>
             <input type="text" cols="70" className="upload-input" onChange={this.updateTag} />
-          </label>
           <br/>
           <br/>
           <input className="submit-button" type="submit" value="submit" />

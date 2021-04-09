@@ -39,7 +39,7 @@ export default class DeleteAccount extends React.Component {
                     (result) => {
                         sessionStorage.removeItem("token", null);
                         sessionStorage.removeItem("user", null);
-                        window.location.href = "/login";
+                        window.location.href = "login";
                     }
                 )
         } else if (this.state.delete_option == "PURGE") {
@@ -57,8 +57,9 @@ export default class DeleteAccount extends React.Component {
             )
                 .then((res) => res.json())
                 .then(
-                    //deletes all posts
                     (result) => {
+                        console.log("HERE")
+                        console.log(result)
                         for (const artifact of result[0]) {
                             console.log(artifact["id"])
                             fetch(process.env.REACT_APP_API_PATH + "/user-artifacts/" + artifact["id"], {
@@ -69,29 +70,33 @@ export default class DeleteAccount extends React.Component {
                                 },
                             });
                         }
-                        fetch(
-                            process.env.REACT_APP_API_PATH +
-                            "/users/" +
-                            sessionStorage.getItem("user"),
-                            {
-                                method: "DELETE",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                    Authorization: "Bearer " + sessionStorage.getItem("token"),
-                                },
-                            }
-                        );
-                        window.location.href = "/login";
-                        sessionStorage.removeItem("token", null);
-                        sessionStorage.removeItem("user", null);
                     }
                 )
+                .then( () => {
+                    fetch(
+                        process.env.REACT_APP_API_PATH +
+                        "/users/" +
+                        sessionStorage.getItem("user"),
+                        {
+                            method: "DELETE",
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: "Bearer " + sessionStorage.getItem("token"),
+                            },
+                        }
+                    )
+                })
+                .then( () => {
+                    sessionStorage.removeItem("token", null);
+                    sessionStorage.removeItem("user", null);
+                    window.location.href = "login";
+                })
         }
 
     };
 
     redirect = () => {
-        window.location.href = "/settings";
+        window.location.href = "settings";
     };
 
     // this method will keep the current post up to date as you type it,
