@@ -61,6 +61,9 @@ export default class LoginForm extends React.Component {
     
   }
 
+  toHome = () => {
+    window.location.href = "postinglist";
+  };
 
   // when the user hits submit, process the login through the API
   submitHandler = event => {
@@ -320,12 +323,7 @@ export default class LoginForm extends React.Component {
         </div>
       );
     } else {
-      console.log("Returning welcome message");
-      if (this.state.username) {
-        return <p>Welcome, {this.state.username}</p>;
-      } else {
-        return <p>Welcome!</p>;
-      }
+      this.toHome();
     }
   }
 }

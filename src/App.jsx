@@ -16,6 +16,7 @@ import Navbar from "./Component/Navbar.jsx";
 import StyleGuide from "./Component/StyleGuide.jsx";
 import Upload from "./Component/Upload";
 import PostingList from "./Component/PostingList.jsx";
+import PostingListB from "./Component/PostingListB.jsx";
 import TagsBlock from "./Component/TagsBlock.jsx";
 import {
   BrowserRouter as Router, Route, Switch
@@ -122,15 +123,24 @@ class App extends React.Component {
                 <FriendList userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
-            <Route path="/home">
-              <div>
-                <p>Home</p>
-              </div>
-            </Route>
-            <Route path="/latest">
-              <div>
-                <p>Latest</p>
-              </div>
+            <Route path="/b">
+              <p>B</p>
+                            <div className="post-feed">
+                            <div className="posting-block">
+                              <PostingListB refresh={this.state.refreshPosts}/>
+                            </div>
+                            <div className="right-background"/>
+                            <div className="column-view">
+                              <div className="upload-button">
+                                <Link to="/upload" className="upload-button-text">
+                                  Upload a Post
+                                </Link>
+                              </div>
+                              <div className="tagBlock">
+                                <TagsBlock />
+                              </div>
+                            </div>
+                            </div>
             </Route>
             <Route path="/popular">
               <div>
@@ -166,12 +176,13 @@ class App extends React.Component {
                 <ForgotPasswordForm/>
               </div>
             </Route>
-            <Route path={["/postinglist", "/"]}>
+            <Route path={["/postinglist", "/", "/latest"]}>
                 <p>Latest</p>
               <div className="post-feed">
               <div className="posting-block">
                 <PostingList refresh={this.state.refreshPosts}/>
               </div>
+              <div className="right-background"/>
               <div className="column-view">
                 <div className="upload-button">
                   <Link to="/upload" className="upload-button-text">

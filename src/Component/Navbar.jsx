@@ -109,7 +109,11 @@ class Navbar extends React.Component {
             Style Guide
           </Link>
         </li>
-
+                <li className="b-test">
+                  <Link to="/b" style={{textDecoration: 'none', color: 'black'}}>
+                    B Testing
+                  </Link>
+                </li>
       </ul>
 
       <loginbar id="loginbar" className="loginbar">
@@ -157,6 +161,11 @@ class Navbar extends React.Component {
             Style Guide
           </Link>
         </li>
+                <li className="b-test">
+                  <Link to="/b" style={{textDecoration: 'none', color: 'black'}}>
+                    B Testing
+                  </Link>
+                </li>
       </ul>
 
       <loginbar id="loginbar" className="loginbar">

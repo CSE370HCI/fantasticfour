@@ -11,6 +11,7 @@
 }
 
 .App-header {
+  
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -24,7 +25,10 @@
 
 .deleteIcon{
   float:right;
+  filter: invert(50%) sepia(99%) saturate(7496%) hue-rotate(3deg) brightness(94%) contrast(121%);
+  padding-left: 20px;
 }
+
 
 .settings{
   width:100%;
@@ -156,7 +160,6 @@ input {
 .sidenav-icon{
   width:40px;
   height:40px;
-
   margin-bottom:15px;
 }
 
@@ -235,12 +238,21 @@ input {
   position: fixed;
 }
 
+.right-background {
+  left: 72%;
+  position: fixed;
+  top: 0px;
+  background-color: #282c34;
+  height:100%;
+  width: 28%;
+}
+
 .column-view {
   position:fixed;
   left:75%;
   display: flex;
   flex-direction: column;
-  width:25%
+  width:25%;
 }
 
 .black-text {
