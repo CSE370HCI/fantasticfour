@@ -98,6 +98,7 @@
   margin-top: 50%;
   margin-bottom: 50%;
   filter: invert(49%) sepia(94%) saturate(2189%) hue-rotate(187deg) brightness(89%) contrast(90%);
+  max-width: 80%;
 }
 
 .arrows{
@@ -109,6 +110,7 @@
   margin-right: 50%;
   margin-top: 50%;
   margin-bottom: 50%;
+  max-width: 80%;
 }
 
 .poster-block{
@@ -218,12 +220,14 @@
   top:15%;
   position: relative;
   filter: invert(49%) sepia(94%) saturate(2189%) hue-rotate(187deg) brightness(89%) contrast(90%);
+  max-width: 80%;
 }
 
 .arrowsC{
   height: 70%;
   top:15%;
   position: relative;
+  max-width: 80%;
 }
 
 .editor-comment{
