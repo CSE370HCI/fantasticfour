@@ -296,6 +296,7 @@ div.DraftEditor-root {
   display: flex;
   height: 42px;
   width: 50px;
+  filter: invert(49%) sepia(94%) saturate(2189%) hue-rotate(187deg) brightness(89%) contrast(90%);
 }
 
 .downButtonLit {
@@ -303,6 +304,7 @@ div.DraftEditor-root {
   display: flex;
   height: 42px;
   width: 50px;
+  filter: invert(49%) sepia(94%) saturate(2189%) hue-rotate(187deg) brightness(89%) contrast(90%);
 }
 
 .post-info{
