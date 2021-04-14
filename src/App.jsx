@@ -28,6 +28,7 @@ import ForgotPasswordForm from "./Component/ForgotPasswordForm"
 import {Link} from 'react-router-dom';
 import Followers from "./Component/Followers";
 import Following from "./Component/Following";
+import Random from "./Component/Random";
 
 // toggleModal will both show and hide the modal dialog, depending on current state.  Note that the
 // contents of the modal dialog are set separately before calling toggle - this is just responsible
@@ -148,8 +149,9 @@ class App extends React.Component {
               </div>
             </Route>
             <Route path="/random">
-              <div>
-                <p>Random</p>
+              <div className="page-template">
+                <p className='page-title'>Random</p>
+                <Random userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
             <Route path="/styleguide">
