@@ -71,13 +71,13 @@ export default class Post extends React.Component {
       ).then(
           result => {
             if(result[1] === 0){
-              console.log("Value 0 for post "+postID)
+              //console.log("Value 0 for post "+postID)
               return 0;
             }else if(result[0][0].name === "upvote"){
-              console.log("Value 1 for post "+postID)
+              //console.log("Value 1 for post "+postID)
               return 1;
             }else {
-              console.log("Value -1 for post "+postID)
+              //console.log("Value -1 for post "+postID)
               return -1;
             }
           },
@@ -678,6 +678,12 @@ export default class Post extends React.Component {
     }
   }
 
+  showLikes() {
+    if (this.props.source === 'popular'){
+      return <dic>Upvotes: {this.props.post.upvotes}</dic>
+    }
+  }
+
   render() {
     if(sessionStorage.getItem("user") != null){
     return (
@@ -699,9 +705,12 @@ export default class Post extends React.Component {
               <div className={this.isDown()}>
                 <img src={downArrow} className={(this.state.userreaction === -1) ? 'arrowsLit' : 'arrows'} onClick={event => this.dislike(event)} alt={this.state.userreaction}/>
               </div>
+              <div>
+                {this.showLikes()}
+              </div>
               <div className="comment-count-text">
                 {this.getCommentCount()} Comments
-            </div>
+              </div>
             </div>
           </div>
         </div>
