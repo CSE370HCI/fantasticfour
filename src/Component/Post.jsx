@@ -699,11 +699,11 @@ export default class Post extends React.Component {
             </li>
             <br/>
             <div className="postInterations">
-              <div className={this.isUp()}>
-                <img src={upArrow} className={(this.state.userreaction === 1) ? 'arrowsLit' : 'arrows'} onClick={event => this.like(event)} alt={this.state.userreaction}/>
+              <div className={this.isUp()} onClick={event => this.like(event)} >
+                <img src={upArrow} className={(this.state.userreaction === 1) ? 'arrowsLit' : 'arrows'} alt={this.state.userreaction}/>
               </div>
-              <div className={this.isDown()}>
-                <img src={downArrow} className={(this.state.userreaction === -1) ? 'arrowsLit' : 'arrows'} onClick={event => this.dislike(event)} alt={this.state.userreaction}/>
+              <div className={this.isDown()} onClick={event => this.dislike(event)} >
+                <img src={downArrow} className={(this.state.userreaction === -1) ? 'arrowsLit' : 'arrows'} alt={this.state.userreaction}/>
               </div>
               <div>
                 {this.showLikes()}
