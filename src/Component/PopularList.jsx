@@ -81,7 +81,6 @@ export default class PostingList extends React.Component {
 
     fetchPopularity() {
         var list = this.state.posts
-        var tlist = []
         var size = 0
         list.forEach(post_t => {
                     fetch(process.env.REACT_APP_API_PATH+"/post-tags?name=upvote&type=reaction&postID="+post_t.id, {
@@ -93,12 +92,7 @@ export default class PostingList extends React.Component {
                     ).then(
                         result => {
                             post_t['upvotes'] = result[1]
-                            tlist = this.state.postLikes
                             size += 1
-                            tlist.push(post_t)
-                            this.setState({
-                                postLikes: tlist
-                            })
                         }
                     ).then( () => {
                         if(size === this.state.size){
