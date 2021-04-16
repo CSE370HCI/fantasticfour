@@ -1,0 +1,22 @@
+.post {
+    text-align:left;
+    color: black;
+}
+.post-title {
+    font-size: 24px;
+    font-style: italic;
+}
+
+.post-owner {
+    font-size: 20px;
+}
+
+.post-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    height: 100%;
+    /*max-width:600px;*/
+    /*max-height:600px;*/
+}
