@@ -12,7 +12,8 @@ export default class Upload extends React.Component {
       post_message: "",
       post_URL: "",
       tag: "",
-      canIPost: false
+      canIPost: false,
+      restrictedFrom: []
     };
     this.postListing = React.createRef();
   }
@@ -58,8 +59,15 @@ export default class Upload extends React.Component {
                   post_message: result.Status
                 });
                 this.addTag(this.state.tag, result["id"])
-                // redirects users back to the posts screen
-                window.location.href = "homepage";
+
+                if (this.state.restrictedFrom.length > 0) {
+                  this.addBlockingTag(result["id"]);
+                }
+                else {
+                  // redirects users back to the posts screen
+                  window.location.href = "homepage";
+                }
+                
               }
           );
     }
@@ -97,6 +105,30 @@ export default class Upload extends React.Component {
     )
   }
 
+  addBlockingTag(postID) {
+    let restrictedUsers = this.state.restrictedFrom
+    for (let i = 0; i < restrictedUsers.length; i++) {
+      fetch(process.env.REACT_APP_API_PATH+"/post-tags", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+sessionStorage.getItem("token")
+        },
+        body: JSON.stringify({
+            postID: postID,
+            userID: sessionStorage.getItem("user"),
+            name: restrictedUsers[i],
+            type: "blocking"
+        })
+      })
+      .then(res => res.json())
+      .then(result => {
+        console.log("add blocking tag for user: ", restrictedUsers[i])
+        window.location.href = "homepage";
+      })
+    }
+  }
+
   // this method will keep the current post up to date as you type it,
   // so that the submit handler can read the information from the state.
   updateTitle = event => {
@@ -116,6 +148,13 @@ export default class Upload extends React.Component {
       tag: event.target.value
     });
   };
+
+  updateRestrictedFrom = event => {
+    this.setState({
+      restrictedFrom: event.target.value.replace(/\s+/g, '').split(',')
+    })
+    console.log(this.state.restrictedFrom);
+  }
 
 
 
@@ -137,6 +176,11 @@ export default class Upload extends React.Component {
             Communities
             <br/>
             <input type="text" cols="70" className="upload-input" onChange={this.updateTag} />
+            <br/>
+            <br/>
+            Restrict View
+            <br/>
+            <input type="text" className="upload-input" onChange={this.updateRestrictedFrom} placeholder="Usernames to block"/>
           <br/>
           <br/>
           <input className="submit-button" type="submit" value="submit" />

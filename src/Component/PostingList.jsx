@@ -29,6 +29,20 @@ export default class PostingList extends React.Component {
     }
   }
 
+  // filterBlocked(posts) {
+  //   //if (this.state.posts) {
+  //     // get name of logged in user
+  //     let username = "";
+      
+
+  //     // this.setState({
+  //     //   isLoaded: true,
+  //     //   posts: filteredPosts
+  //     // })
+  //     return filteredPosts;
+  //   //}
+  // }
+
   loadPosts() {
     let url = process.env.REACT_APP_API_PATH+"/posts?parentID=";
     if (this.props && this.props.parentid){
@@ -46,10 +60,61 @@ export default class PostingList extends React.Component {
       .then(
         result => {
           if (result) {
-            this.setState({
-              isLoaded: true,
-              posts: result[0]
-            });
+            let posts = result[0];
+
+            // if not logged in, load posts normally
+            if (!sessionStorage.getItem("user")) {
+              this.setState({
+                isLoaded: true,
+                posts: posts
+              });
+
+              return;
+            }
+
+            // if logged in filter blocked username
+            let username = "";
+            fetch(process.env.REACT_APP_API_PATH+"/users/" + sessionStorage.getItem("user"), {
+              method: "get",
+              headers: {
+                "Content-Type": "application/json"
+              }
+            })
+            .then(res => res.json())
+            .then(result => {
+              username = result.username;
+              console.log("username: ", username)
+
+              let filteredPosts = []
+              for (let i = 0; i < posts.length; i++) {
+                let post = posts[i]
+                console.log("in posting list: ", post.id);
+                fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID=" + posts[i].id + "&type=blocking" + "&name=" + username, {
+                  method: "get",
+                  headers: {
+                    "Content-Type": "application/json"
+                  }
+                })
+                .then(res => res.json())
+                .then(result => {
+                  if (result[1] == 0) {
+                    filteredPosts.push(post)
+                  }
+                })
+                .then(() => {
+                  this.setState({
+                    isLoaded: true,
+                    posts: filteredPosts
+                  });
+                })
+              }
+            })
+            
+            // end filter blocked username
+
+            
+            
+
             console.log("Got Posts");
           }
         },
@@ -60,10 +125,21 @@ export default class PostingList extends React.Component {
           });
           console.log("ERROR loading Posts")
         }
-      );
+      )
+      // .then(result => {
+      //   this.setState({
+      //     isLoaded: true,
+      //     posts: result
+      //   })
+
+      //   console.log("filtered: ", this.state.posts);
+
+
+      // });
   }
 
   render() {
+    
     //this.loadPosts();
     const {error, isLoaded, posts} = this.state;
     if (error) {
@@ -71,7 +147,7 @@ export default class PostingList extends React.Component {
     } else if (!isLoaded) {
       return <div> Loading... </div>;
     } else if (posts) {
-
+      console.log("rendering....", posts.length);
       if (posts.length > 0){
       return (
 
