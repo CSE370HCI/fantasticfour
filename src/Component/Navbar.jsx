@@ -109,7 +109,6 @@ class Navbar extends React.Component {
             Style Guide
           </Link>
         </li>
-
         <li className="upload_post">
           <Link to="/upload" style={{textDecoration: 'none', color: 'black'}}>
             Create a Post
@@ -167,6 +166,11 @@ class Navbar extends React.Component {
             Style Guide
           </Link>
         </li>
+                <li className="b-test">
+                  <Link to="/b" style={{textDecoration: 'none', color: 'black'}}>
+                    B Testing
+                  </Link>
+                </li>
       </ul>
 
       <loginbar id="loginbar" className="loginbar">

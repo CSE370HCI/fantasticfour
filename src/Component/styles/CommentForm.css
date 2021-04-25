@@ -12,4 +12,8 @@ form.DraftEditor-root {
     background-color: white;
     height: 3em;
     overflow-y: auto;
+    justify-content:left;
+    text-align: left;
+    align-items: left;
+    align-content: left;
   }

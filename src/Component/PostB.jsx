@@ -10,7 +10,7 @@ import { parseConfigFileTextToJson, resolveModuleName } from "typescript";
 import {stateFromMarkdown} from 'draft-js-import-markdown';
 import {convertToRaw, Editor, EditorState, RichUtils} from 'draft-js';
 
-export default class Post extends React.Component {
+export default class PostB extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -71,13 +71,13 @@ export default class Post extends React.Component {
       ).then(
           result => {
             if(result[1] === 0){
-              //console.log("Value 0 for post "+postID)
+              console.log("Value 0 for post "+postID)
               return 0;
             }else if(result[0][0].name === "upvote"){
-              //console.log("Value 1 for post "+postID)
+              console.log("Value 1 for post "+postID)
               return 1;
             }else {
-              //console.log("Value -1 for post "+postID)
+              console.log("Value -1 for post "+postID)
               return -1;
             }
           },
@@ -619,11 +619,6 @@ export default class Post extends React.Component {
     //console.log("comments"+this.props.post.id+": "+JSON.stringify(comments))
     if (comments[0] === 0){
       //console.log("SAD2-"+this.props.post.id)
-      if(sessionStorage.getItem("user") != null){
-        return (<div className="comment-invite">Hello there, do you wish to talk? </div>)
-      } else {
-        return (<div className="comment-invite">No comments yet. Sign in to speak your mind!</div>)
-      }
     }else{
       if(sessionStorage.getItem("user") != null){
       var elementList = []
@@ -678,12 +673,6 @@ export default class Post extends React.Component {
     }
   }
 
-  showLikes() {
-    if (this.props.source === 'popular'){
-      return <dic>Upvotes: {this.props.post.upvotes}</dic>
-    }
-  }
-
   render() {
     if(sessionStorage.getItem("user") != null){
     return (
@@ -699,18 +688,15 @@ export default class Post extends React.Component {
             </li>
             <br/>
             <div className="postInterations">
-              <div className={this.isUp()} onClick={event => this.like(event)} >
-                <img src={upArrow} className={(this.state.userreaction === 1) ? 'arrowsLit' : 'arrows'} alt={this.state.userreaction}/>
+              <div className={this.isUp()}>
+                <img src={upArrow} className={(this.state.userreaction === 1) ? 'arrowsLit' : 'arrows'} onClick={event => this.like(event)} alt={this.state.userreaction}/>
               </div>
-              <div className={this.isDown()} onClick={event => this.dislike(event)} >
-                <img src={downArrow} className={(this.state.userreaction === -1) ? 'arrowsLit' : 'arrows'} alt={this.state.userreaction}/>
-              </div>
-              <div>
-                {this.showLikes()}
+              <div className={this.isDown()}>
+                <img src={downArrow} className={(this.state.userreaction === -1) ? 'arrowsLit' : 'arrows'} onClick={event => this.dislike(event)} alt={this.state.userreaction}/>
               </div>
               <div className="comment-count-text">
                 {this.getCommentCount()} Comments
-              </div>
+            </div>
             </div>
           </div>
         </div>
