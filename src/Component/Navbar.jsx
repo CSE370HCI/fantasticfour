@@ -59,6 +59,16 @@ class Navbar extends React.Component {
             );
   }
 
+  reloadHandler = () => {
+      console.log(window.location.href)
+      if (window.location.href.includes('/random')) {
+          window.location.reload();
+      }
+      else {
+          window.location.href = "random";
+      }
+  }
+
   logout = () => {
     sessionStorage.removeItem("token", null);
     sessionStorage.removeItem("user", null);
@@ -66,7 +76,7 @@ class Navbar extends React.Component {
       profile_picture: "",
       logged_in: false
     };
-    window.location.reload();
+      window.location.href = "login";
   }
 
   render() {
@@ -99,21 +109,21 @@ class Navbar extends React.Component {
             Popular
           </Link>
         </li>
-        <li className="random">
-          <Link to="/random" style={{textDecoration: 'none', color: 'black'}}>
+        <li className="random" onClick={this.reloadHandler}  style={{textDecoration: 'none', color: 'black'}}>
+          {/*<Link to="/random" style={{textDecoration: 'none', color: 'black'}}>*/}
             Random
-          </Link>
+          {/*</Link>*/}
         </li>
         <li className="style guide">
           <Link to="/styleguide" style={{textDecoration: 'none', color: 'black'}}>
             Style Guide
           </Link>
         </li>
-                <li className="b-test">
-                  <Link to="/b" style={{textDecoration: 'none', color: 'black'}}>
-                    B Testing
-                  </Link>
-                </li>
+        <li className="b-test">
+          <Link to="/b" style={{textDecoration: 'none', color: 'black'}}>
+            B Testing
+          </Link>
+        </li>
       </ul>
 
       <loginbar id="loginbar" className="loginbar">
@@ -151,21 +161,21 @@ class Navbar extends React.Component {
               Popular
             </Link>
           </li>
-        <li className="random">
-          <Link to="/random" style={{textDecoration: 'none', color: 'black'}}>
-            Random
-          </Link>
-        </li>
+          <li className="random" onClick={() => this.reloadHandler()}  style={{textDecoration: 'none', color: 'black'}}>
+              {/*<Link to="/random" style={{textDecoration: 'none', color: 'black'}}>*/}
+              Random
+              {/*</Link>*/}
+          </li>
         <li className="style guide">
           <Link to="/styleguide" style={{textDecoration: 'none', color: 'black'}}>
             Style Guide
           </Link>
         </li>
-                <li className="b-test">
-                  <Link to="/b" style={{textDecoration: 'none', color: 'black'}}>
-                    B Testing
-                  </Link>
-                </li>
+        <li className="b-test">
+          <Link to="/b" style={{textDecoration: 'none', color: 'black'}}>
+            B Testing
+          </Link>
+        </li>
       </ul>
 
       <loginbar id="loginbar" className="loginbar">
