@@ -163,7 +163,6 @@ export default class EditSettings extends React.Component {
   render() {
     return (
     <div id="myModal" className="editProfile">
-            <div className="settings-content">
               <span className="close" onClick={this.onClose}>
                 &times;
               </span>
@@ -220,7 +219,6 @@ export default class EditSettings extends React.Component {
                          value="Delete Account"
                      />
                   </form>
-            </div>
     </div>
     );
   }
