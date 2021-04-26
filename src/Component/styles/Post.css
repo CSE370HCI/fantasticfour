@@ -296,6 +296,7 @@ div.DraftEditor-root {
   display: flex;
   height: 42px;
   width: 50px;
+  border-color: #2D86D8;
 }
 
 .downButtonLit {
@@ -303,6 +304,7 @@ div.DraftEditor-root {
   display: flex;
   height: 42px;
   width: 50px;
+  border-color: #2D86D8;
 }
 
 .post-info{

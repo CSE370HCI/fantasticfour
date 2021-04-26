@@ -537,7 +537,7 @@ heading{
   padding-bottom: 2%;
   padding-right: 1%;
   padding-left: 1%;
-  width: 40%;
+  width: 30%;
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
 }
@@ -563,4 +563,7 @@ heading{
   .follower-column {
     width: 100%;
   }
+    .page-template {
+        width: 40%;
+    }
 }
