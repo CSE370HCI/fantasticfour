@@ -127,22 +127,22 @@ class App extends React.Component {
             </Route>
             <Route path="/b">
               <p>B</p>
-                            <div className="post-feed">
-                            <div className="posting-block">
-                              <PostingListB refresh={this.state.refreshPosts}/>
-                            </div>
-                            <div className="right-background"/>
-                            <div className="column-view">
-                              <div className="upload-button">
-                                <Link to="/upload" className="upload-button-text">
-                                  Upload a Post
-                                </Link>
-                              </div>
-                              <div className="tagBlock">
-                                <TagsBlock />
-                              </div>
-                            </div>
-                            </div>
+              <div className="post-feed">
+              <div className="posting-block">
+                <PostingListB refresh={this.state.refreshPosts}/>
+              </div>
+              <div className="right-background"/>
+              <div className="column-view">
+                <div className="upload-button">
+                  <Link to="/upload" className="upload-button-text">
+                    Upload a Post
+                  </Link>
+                </div>
+                <div className="tagBlock">
+                  <TagsBlock />
+                </div>
+              </div>
+              </div>
             </Route>
             <Route path="/popular">
               <div>
@@ -183,15 +183,15 @@ class App extends React.Component {
             <Route path={["/postinglist", "/", "/latest"]}>
                 <p>Latest</p>
               <div className="post-feed">
-              <div className="posting-block">
-                <PostingList refresh={this.state.refreshPosts}/>
-              </div>
-              <div className="right-background"/>
-              <div className="column-view">
-                <div className="upload-button">
-                  <Link to="/upload" className="upload-button-text">
-                    Upload a Post
-                  </Link>
+                <div className="posting-block">
+                  <PostingList refresh={this.state.refreshPosts}/>
+                </div>
+                <div className="right-background"/>
+                <div className="column-view">
+                  <div className="upload-button">
+                    <Link to="/upload" className="upload-button-text">
+                      Upload a Post
+                    </Link>
                 </div>
                 <div className="tagBlock">
                   <TagsBlock />

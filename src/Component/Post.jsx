@@ -2,6 +2,7 @@ import React from "react";
 import "../App.css";
 import "./styles/Post.css"
 import CommentForm from "./CommentForm.jsx";
+import CommentDisplay from "./CommentDisplay.jsx"
 import deleteIcon from "../assets/delete.png";
 import commentIcon from "../assets/comment.svg";
 import upArrow from "../assets/UpArrow.svg";
@@ -20,7 +21,7 @@ export default class Post extends React.Component {
       dislikes: 0,
       tags: [],
       userreaction: 0,
-      comments: [0, []], 
+      comments: [], 
       tempVal: 0
     };
     this.post = React.createRef();
@@ -559,60 +560,19 @@ export default class Post extends React.Component {
     fetch(process.env.REACT_APP_API_PATH+"/posts?sort=newest&parentID="+parentID, {
       method: "GET",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer '+sessionStorage.getItem("token")
+        'Content-Type': 'application/json'
       },
     }).then(res => res.json()
     ).then(
         result => {
-          if (result[1] === 0){
-            return [0, []]
-          }else{
-            var cList = []
-            for(var x=0;x<result[1];x++){
-              var rep = this.getCommentReaction(result[0][x].id)
-              console.log("After call on post "+parentID+"- rep="+rep)
-              cList.push({comment: result[0][x].content, author: result[0][x].author.username, id: result[0][x].id, reputation: rep})
-            }
-            this.setState({
-              comments: [result[1], cList]
-            })
-          }
+          this.setState({
+            comments: result[0],
+            commentCount: result[1]
+          });
         }
       )
-      } else {
-      console.log("postid"+this.props.post.id)
-          fetch(process.env.REACT_APP_API_PATH+"/posts?sort=newest&parentID="+parentID, {
-            method: "GET",
-            headers: {
-
-            },
-          }).then(res => res.json()
-          ).then(
-              result => {
-                if (result[1] === 0){
-                  return [0, []]
-                }else{
-                  var cList = []
-                  for(var x=0;x<result[1];x++){
-                    var rep = this.getCommentReaction(result[0][x].id)
-                    console.log("After call on post "+parentID+"- rep="+rep)
-                    cList.push({comment: result[0][x].content, author: result[0][x].author.username, id: result[0][x].id, reputation: rep})
-                  }
-                  this.setState({
-                    comments: [result[1], cList]
-                  })
-                }
-              }
-            )
       }
-  }
-
-  setComments(parentID) {
-    //console.log("ALL COMMENTS"+this.props.post.id+": "+JSON.stringify(this.getComments(parentID)))
-    this.setState({
-      comments: this.getComments(parentID)
-    })
+      
   }
 
   renderComments(comments){
@@ -685,6 +645,7 @@ export default class Post extends React.Component {
   }
 
   render() {
+    const comments = this.state.comments;
     if(sessionStorage.getItem("user") != null){
     return (
       <div className="post-comment-block">
@@ -709,42 +670,50 @@ export default class Post extends React.Component {
                 {this.showLikes()}
               </div>
               <div className="comment-count-text">
-                {this.getCommentCount()} Comments
+                {this.state.commentCount} Comments
               </div>
             </div>
           </div>
         </div>
         <div  className="comment-side">
-            {this.conditionalDisplay()}
-          <div>
-            {this.renderComments(this.state.comments)}
+          {this.conditionalDisplay()}
+          <div className="comment-indicator-text">
+              {this.state.commentCount} Comments
+          </div>
+          <div className="comment-list">
+            {comments.map(post => (
+              <CommentDisplay key={post.id} post={post} author={post.author.username}/>
+                  ))}
           </div>
         </div>
       </div>
     );
   } else {
         return (
-              <div className="post-comment-block">
-                <div className="meme-side">
-                  <div>
-                    <img src={this.props.post.thumbnailURL} className="meme" alt=""/>
-                  </div>
-                  <div className="memeStuff">
-                    <li className="post-info">
-                        <b className="meme-name">{this.props.post.content}</b>
-                        <b className="meme-poster"> by {this.props.post.author.username}</b>
-                    </li>
-                  </div>
-                </div>
-                <div  className="comment-side">
-                  <div className="comment-indicator-text">
-                    {this.getCommentCount()} Comments
-                  </div>
-                  <div className="comment-list">
-                    {this.renderComments(this.state.comments)}
-                  </div>
-                </div>
-              </div>
+          <div className="post-comment-block">
+          <div className="meme-side">
+            <div>
+              <img src={this.props.post.thumbnailURL} className="meme" alt=""/>
+            </div>
+            <div className="memeStuff">
+              <li className="post-info">
+                <b className="meme-name">{this.props.post.content}</b>
+                <b className="meme-poster"> by {this.props.post.author.username}</b>
+              </li>
+              <br/>
+            </div>
+          </div>
+          <div  className="comment-side">
+            <div className="comment-indicator-text">
+                {this.state.commentCount} Comments
+            </div>
+            <div className="comment-list">
+              {comments.map(post => (
+                <CommentDisplay key={post.id} post={post} author={post.author.username}/>
+                    ))}
+            </div>
+          </div>
+        </div>
         )}
         }
   //note: time removed from render because time is irrelevant, memes are timeless
