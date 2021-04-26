@@ -109,9 +109,11 @@ class Navbar extends React.Component {
             Popular
           </Link>
         </li>
-        <li className="random" onClick={this.reloadHandler}  style={{textDecoration: 'none', color: 'black'}}>
-            Random
-        </li>
+          <li className="random">
+          <Link to="/random" onClick={this.reloadHandler} style={{textDecoration: 'none', color: 'black'}}>
+              Random
+          </Link>
+            </li>
         <li className="style guide">
           <Link to="/styleguide" style={{textDecoration: 'none', color: 'black'}}>
             Style Guide
@@ -159,8 +161,10 @@ class Navbar extends React.Component {
               Popular
             </Link>
           </li>
-          <li className="random" onClick={() => this.reloadHandler()}  style={{textDecoration: 'none', color: 'black'}}>
-              Random
+          <li className="random">
+              <Link to="/random" onClick={this.reloadHandler} style={{textDecoration: 'none', color: 'black'}}>
+                  Random
+              </Link>
           </li>
         <li className="style guide">
           <Link to="/styleguide" style={{textDecoration: 'none', color: 'black'}}>
