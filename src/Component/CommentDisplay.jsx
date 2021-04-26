@@ -10,7 +10,7 @@ import { parseConfigFileTextToJson, resolveModuleName } from "typescript";
 import {stateFromMarkdown} from 'draft-js-import-markdown';
 import {convertToRaw, Editor, EditorState, RichUtils} from 'draft-js';
 
-export default class Post extends React.Component {
+export default class CommentDisplay extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
