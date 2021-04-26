@@ -483,9 +483,6 @@ export default class Post extends React.Component {
     return (
         <div className="comment-block">
           <div className="comment-indicator">
-            <div className="comment-indicator-text">
-              {this.getCommentCount()} Comments
-            </div>
           </div>
         </div>
           );
@@ -572,7 +569,6 @@ export default class Post extends React.Component {
         }
       )
       }
-      
   }
 
   renderComments(comments){
@@ -677,9 +673,6 @@ export default class Post extends React.Component {
         </div>
         <div  className="comment-side">
           {this.conditionalDisplay()}
-          <div className="comment-indicator-text">
-              {this.state.commentCount} Comments
-          </div>
           <div className="comment-list">
             {comments.map(post => (
               <CommentDisplay key={post.id} post={post} author={post.author.username}/>
@@ -709,7 +702,7 @@ export default class Post extends React.Component {
             </div>
             <div className="comment-list">
               {comments.map(post => (
-                <CommentDisplay key={post.id} post={post} author={post.author.username}/>
+                <CommentDisplay post={post} author={post.author.username}/>
                     ))}
             </div>
           </div>

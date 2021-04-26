@@ -302,11 +302,11 @@ export default class Post extends React.Component {
     return (
         <div className="comment" key={postID}>
             <div className="commentInterations">
-              <div className={this.commentUp(rep)}>
-                <img src={upArrow} className={(rep === 1) ? 'arrowsLitC' : 'arrowsC'} onClick={event => this.likeComment(postID)} alt={rep}/>
+              <div className={this.commentUp(rep)} onClick={event => this.likeComment(postID)}>
+                <img src={upArrow} className={(rep === 1) ? 'arrowsLitC' : 'arrowsC'} alt={rep}/>
               </div>
-              <div className={this.commentDown(rep)}>
-                <img src={downArrow} className={(rep === -1) ? 'arrowsLitC' : 'arrowsC'} onClick={event => this.dislikeComment(postID)} alt={rep}/>
+              <div className={this.commentDown(rep)} onClick={event => this.dislikeComment(postID)}>
+                <img src={downArrow} className={(rep === -1) ? 'arrowsLitC' : 'arrowsC'} alt={rep}/>
               </div>
             </div>
             <div className="comment-body">

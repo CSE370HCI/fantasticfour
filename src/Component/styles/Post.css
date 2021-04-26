@@ -264,7 +264,6 @@ div.DraftEditor-root {
 }
 
 .comment-list {
-  position: absolute;
   display: column;
   bottom: 0px;
   right: 0px;
