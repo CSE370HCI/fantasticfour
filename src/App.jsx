@@ -116,7 +116,8 @@ class App extends React.Component {
               </div>
             </Route>
             <Route path="/settings">
-              <div className="settings">
+              <div className="page-template">
+                <p className="page-title">Edit Personal Information</p>
                 <EditSettings userid={sessionStorage.getItem("user")} />
               </div>
             </Route>

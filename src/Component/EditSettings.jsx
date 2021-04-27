@@ -1,5 +1,6 @@
 import React from "react";
 import "../App.css";
+import "./styles/Profile.css";
 import "./styles/EditSettings.css";
 import Modal from "./Modal.jsx";
 import {Link} from 'react-router-dom';
@@ -162,66 +163,60 @@ export default class EditSettings extends React.Component {
 
   render() {
     return (
-    <div id="myModal" className="editProfile">
-            <div className="settings-content">
-              <span className="close" onClick={this.onClose}>
-                &times;
-              </span>
-              <br/>
-              Edit Personal Information
-                 <form onSubmit={this.submitHandler} style={{'font-size': '15px'}}>
-                    <br/>
-                    <label>
-                        Username
-                    </label>
-                    <input
-                      defaultValue={this.state.username}
-                      type="text"
-                      onChange={e => this.fieldChangeHandler("username", e)}
-                      value={this.state.username}
-                    />
-                    <br/><br/>
-                    <label>
-                      Email Address
-                    </label>
-                    <input
-                      defaultValue={this.state.email}
-                      type="text"
-                      onChange={e => this.fieldChangeHandler("email", e)}
-                      value={this.state.email}
-                    />
-                    <br/><br/>
-                    <label>
-                      Password
-                    </label>
-                    <input
-                      defaultValue={this.state.password}
-                      type="password"
-                      onChange={e => this.fieldChangeHandler("password", e)}
-                      value={this.state.password}
-                    />
-                    <br/><br/>
-                    <label>
-                      Confirm Password
-                    </label>
-                    <input
-                      defaultValue={this.state.password}
-                      type="password"
-                      onChange={e => this.fieldChangeHandler("confirmpassword", e)}
-                      value={this.state.confirmpassword}
-                    />
-                    <br/>
-                    <input className="desktop-confirm" type="submit" value="Confirm" />
-                    <br/>
-                     <input
-                         className="desktop-delete distancedbutton"
-                         type="button"
-                         onClick={this.redirect}
-                         value="Delete Account"
-                     />
-                  </form>
-            </div>
-    </div>
+      <form onSubmit={this.submitHandler} style={{'font-size': '15px'}}>
+        <br/>
+        <label>
+          Username
+        </label>
+        <input
+          defaultValue={this.state.username}
+          type="text"
+          onChange={e => this.fieldChangeHandler("username", e)}
+          value={this.state.username}
+        />
+        <br/>
+        <br/>
+        <label>
+          Email Address
+        </label>
+        <input
+          defaultValue={this.state.email}
+          type="text"
+          onChange={e => this.fieldChangeHandler("email", e)}
+          value={this.state.email}
+        />
+        <br/>
+        <br/>
+        <label>
+          Password
+        </label>
+        <input
+          defaultValue={this.state.password}
+          type="password"
+          onChange={e => this.fieldChangeHandler("password", e)}
+          value={this.state.password}
+        />
+        <br/>
+        <br/>
+        <label>
+          Confirm Password
+        </label>
+        <input
+          defaultValue={this.state.password}
+          type="password"
+          onChange={e => this.fieldChangeHandler("confirmpassword", e)}
+          value={this.state.confirmpassword}
+        />
+        <br/>
+        <input className="desktop-confirm" type="submit" value="Confirm" />
+        <br/>
+        <input
+          className="desktop-delete distancedbutton"
+          type="button"
+          onClick={this.redirect}
+          value="Delete Account"
+        />
+      </form>
     );
   }
 }
