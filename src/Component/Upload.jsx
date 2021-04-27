@@ -13,7 +13,7 @@ export default class Upload extends React.Component {
       post_URL: "",
       tag: "",
       canIPost: false,
-      restrictedFrom: []
+      restrictedTo: []
     };
     this.postListing = React.createRef();
   }
@@ -60,8 +60,8 @@ export default class Upload extends React.Component {
                 });
                 this.addTag(this.state.tag, result["id"])
 
-                if (this.state.restrictedFrom.length > 0) {
-                  this.addBlockingTag(result["id"]);
+                if (this.state.restrictedTo.length > 0) {
+                  this.addAllowingTag(result["id"]);
                 }
                 else {
                   // redirects users back to the posts screen
@@ -105,9 +105,9 @@ export default class Upload extends React.Component {
     )
   }
 
-  addBlockingTag(postID) {
-    let restrictedUsers = this.state.restrictedFrom
-    for (let i = 0; i < restrictedUsers.length; i++) {
+  addAllowingTag(postID) {
+    let allowedUsers = this.state.restrictedTo
+    for (let i = 0; i < allowedUsers.length; i++) {
       fetch(process.env.REACT_APP_API_PATH+"/post-tags", {
         method: "POST",
         headers: {
@@ -117,13 +117,13 @@ export default class Upload extends React.Component {
         body: JSON.stringify({
             postID: postID,
             userID: sessionStorage.getItem("user"),
-            name: restrictedUsers[i],
-            type: "blocking"
+            name: allowedUsers[i],
+            type: "allowing"
         })
       })
       .then(res => res.json())
       .then(result => {
-        console.log("add blocking tag for user: ", restrictedUsers[i])
+        console.log("add allowing tag for user: ", allowedUsers[i])
         window.location.href = "homepage";
       })
     }
@@ -149,11 +149,11 @@ export default class Upload extends React.Component {
     });
   };
 
-  updateRestrictedFrom = event => {
+  updateRestrictedTo = event => {
     this.setState({
-      restrictedFrom: event.target.value.replace(/\s+/g, '').split(',')
+      restrictedTo: event.target.value.replace(/\s+/g, '').split(',') // parses the provided input and creates an array by splitting up names at commas
     })
-    console.log(this.state.restrictedFrom);
+    console.log(this.state.restrictedTo);
   }
 
 
@@ -178,9 +178,9 @@ export default class Upload extends React.Component {
             <input type="text" cols="70" className="upload-input" onChange={this.updateTag} />
             <br/>
             <br/>
-            Restrict View
+            Limit View
             <br/>
-            <input type="text" className="upload-input" onChange={this.updateRestrictedFrom} placeholder="Usernames to block"/>
+            <input type="text" className="upload-input" onChange={this.updateRestrictedTo} placeholder="Usernames to only allow"/>
           <br/>
           <br/>
           <input className="submit-button" type="submit" value="submit" />
