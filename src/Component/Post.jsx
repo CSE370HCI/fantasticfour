@@ -7,6 +7,7 @@ import deleteIcon from "../assets/delete.png";
 import commentIcon from "../assets/comment.svg";
 import upArrow from "../assets/UpArrow.svg";
 import downArrow from "../assets/DownArrow.svg";
+import {Link} from 'react-router-dom';
 import { parseConfigFileTextToJson, resolveModuleName } from "typescript";
 import {stateFromMarkdown} from 'draft-js-import-markdown';
 import {convertToRaw, Editor, EditorState, RichUtils} from 'draft-js';
@@ -16,6 +17,7 @@ export default class Post extends React.Component {
     super(props);
     this.state = {
       showModal: false,
+      showModalE: false,
       commentCount: this.props.post.commentCount,
       likes: 1,
       dislikes: 0,
@@ -25,7 +27,6 @@ export default class Post extends React.Component {
       tempVal: 0
     };
     this.post = React.createRef();
-
   }
 
   componentDidMount() {
@@ -63,7 +64,6 @@ export default class Post extends React.Component {
 
   like(event) {
   if(sessionStorage.getItem("user") != null){
-    console.log("postid??"+this.props.post.id);
     fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+this.props.post.id +"&userID="+sessionStorage.getItem("user")+"&name=upvote&type=reaction", {
       method: "GET",
       headers: {
@@ -248,6 +248,19 @@ export default class Post extends React.Component {
     return "comments hide";
   }
 
+  showHideEdit() {
+    if (this.state.showModalE) {
+      return "comments show";
+    }
+    return "comments hide";
+  }
+
+  showModalE = e => {
+    this.setState({
+      showModalE: !this.state.showModalE
+    });
+  };
+
   deletePost(postID) {
   if(sessionStorage.getItem("user") != null){
     //make the api call to post
@@ -297,7 +310,6 @@ export default class Post extends React.Component {
               onAddComment={this.setCommentCount}
               parent={this.props.post.id}
               commentCount={this.getCommentCount()}
-              
             />
           </div>
         </div>
@@ -316,15 +328,11 @@ export default class Post extends React.Component {
   // we only want to expose the delete post functionality if the user is
   // author of the post
   showDelete(){
-    if (this.props.post.author.id == sessionStorage.getItem("user")) {
+    if (this.props.userid == sessionStorage.getItem("user")) {
       return(
-      <img
-        src={deleteIcon}
-        className="sidenav-icon deleteIcon"
-        alt="Delete Post"
-        title="Delete Post"
-        onClick={e => this.deletePost(this.props.post.id)}
-      />
+        <div className="comment-indicator-text" onClick={e => this.showModal()}>
+            Edit
+        </div>
     );
     }
     return "";
@@ -377,7 +385,6 @@ export default class Post extends React.Component {
 
   getComments(parentID) {
   if(sessionStorage.getItem("user") != null){
-    console.log("postid"+this.props.post.id)
     fetch(process.env.REACT_APP_API_PATH+"/posts?sort=newest&parentID="+parentID, {
       method: "GET",
       headers: {
@@ -413,7 +420,7 @@ export default class Post extends React.Component {
           <div className="memeStuff">
             <li className="post-info">
               <b className="meme-name">{this.props.post.content}</b>
-              <b className="meme-poster"> by {this.props.post.author.username}</b>
+              <b className="meme-poster"> by {this.props.username}</b>
             </li>
             <br/>
             <div className="postInterations">
@@ -436,7 +443,7 @@ export default class Post extends React.Component {
           {this.conditionalDisplay()}
           <div className="comment-list">
             {comments.map(post => (
-              <CommentDisplay key={post.id} post={post} author={post.author.username}/>
+              <CommentDisplay key={post.id} post={post} author={post.author.username} userid={post.author.id} postid={post.id}/>
                   ))}
           </div>
         </div>

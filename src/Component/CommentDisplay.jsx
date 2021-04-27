@@ -2,6 +2,7 @@ import React from "react";
 import "../App.css";
 import "./styles/Post.css"
 import CommentForm from "./CommentForm.jsx";
+import EditComment from "./EditComment.jsx"
 import deleteIcon from "../assets/delete.png";
 import commentIcon from "../assets/comment.svg";
 import upArrow from "../assets/UpArrow.svg";
@@ -16,7 +17,8 @@ export default class CommentDisplay extends React.Component {
     this.state = {
       likes: 1,
       dislikes: 0,
-      userreaction: 0
+      userreaction: 0,
+      showModalE: false,
     };
     this.post = React.createRef();
 
@@ -295,6 +297,44 @@ export default class CommentDisplay extends React.Component {
     }
   }
 
+  showHideEdit() {
+    if (this.state.showModalE) {
+      return "comments show";
+    }
+    return "comments hide";
+  }
+
+  showModalE = e => {
+    this.setState({
+      showModalE: !this.state.showModalE
+    });
+  };
+
+
+  displayEdit(){
+    if (this.props.userid == sessionStorage.getItem("user")) {
+      return(
+        <div className={this.showHideEdit()}>
+            <EditComment
+              onAddComment={this.setCommentCount}
+              postid={this.props.postid}
+              content={this.props.post.content}
+            />
+          </div>
+    );
+    }
+    return "";
+  }
+
+  showEdit(){
+
+      return(
+        <div className="comment-indicator-text" onClick={e => this.showModalE()}>
+            Edit
+        </div>
+    )
+  }
+
   render() {
     var rep = this.state.userreaction
     var postID = this.props.post.id
@@ -312,10 +352,12 @@ export default class CommentDisplay extends React.Component {
             <div className="comment-body">
               <div className="comment-author">
                 <span className="comment-author-text">{this.props.author}</span>
+                {this.showEdit()}
               </div>
               <div className="comment-text">
                 <Editor editorState={comment_text} readOnly="true" className="editor-comment"/>
               </div>
+              {this.displayEdit()}
             </div>
           </div>
   )
