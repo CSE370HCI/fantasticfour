@@ -1,6 +1,7 @@
 import React from "react";
 import "../App.css";
 import "./styles/Upload.css";
+import deleteIcon from "../assets/delete.png";
 
 //The post form component holds both a form for posting, and also the list of current posts in your feed
 export default class EditForm extends React.Component {
@@ -101,10 +102,48 @@ export default class EditForm extends React.Component {
     });
   };
 
+  showDelete(){
+      return(
+      <img
+        src={deleteIcon}
+        className="sidenav-icon deleteIcon"
+        alt="Delete Post"
+        title="Delete Post"
+        onClick={e => this.deletePost(this.props.postid)}
+      />
+    );
+  }
+
+  deletePost(postID) {
+      //make the api call to post
+      fetch(process.env.REACT_APP_API_PATH+"/posts/"+postID, {
+        method: "DELETE",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+sessionStorage.getItem("token")
+        }
+        })
+        .then(
+          result => {
+            
+          },
+          error => {
+            alert("error!"+error);
+          }
+        );
+    }
+
   render() {
     return (
       <div>
         <form onSubmit={this.submitHandler}>
+          <img
+          src={deleteIcon}
+          className="sidenav-icon deleteIcon"
+          alt="Delete Post"
+          title="Delete Post"
+          onClick={e => this.deletePost(this.props.postid)}
+        />
             <br/>
             Title
             <br/>

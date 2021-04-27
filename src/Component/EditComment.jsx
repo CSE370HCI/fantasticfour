@@ -3,7 +3,7 @@ import "./styles/CommentForm.css"
 import PostingList from "./PostingList.jsx";
 import {convertToRaw, Editor, EditorState, RichUtils} from 'draft-js';
 import { stateToMarkdown } from "draft-js-export-markdown";
-
+import deleteIcon from "../assets/delete.png";
 
 const styleMap = {
   'STRIKETHROUGH': {
@@ -87,6 +87,24 @@ export default class EditComment extends React.Component {
     this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'CLEAR'));
   }
 
+  deletePost(postID) {
+    //make the api call to post
+    fetch(process.env.REACT_APP_API_PATH+"/posts/"+postID, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '+sessionStorage.getItem("token")
+      }
+      })
+      .then(
+        result => {
+        },
+        error => {
+          alert("error!"+error);
+        }
+      );
+  }
+
   render() {
   if(sessionStorage.getItem("user") != null){
     return (
@@ -95,6 +113,13 @@ export default class EditComment extends React.Component {
           <label>
             Edit Comment
           </label>
+          <img
+          src={deleteIcon}
+          className="sidenav-icon deleteIcon"
+          alt="Delete Post"
+          title="Delete Post"
+          onClick={e => this.deletePost(this.props.postid)}
+        />
           <div>
               <button onClick={this.onBold.bind(this)}>Bold</button>
               <button onClick={this.onItalics.bind(this)}>Italics</button>
