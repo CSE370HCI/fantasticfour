@@ -7,6 +7,7 @@ import deleteIcon from "../assets/delete.png";
 import commentIcon from "../assets/comment.svg";
 import upArrow from "../assets/UpArrow.svg";
 import downArrow from "../assets/DownArrow.svg";
+import EditForm from "./EditForm.jsx"
 import {Link} from 'react-router-dom';
 import { parseConfigFileTextToJson, resolveModuleName } from "typescript";
 import {stateFromMarkdown} from 'draft-js-import-markdown';
@@ -312,6 +313,14 @@ export default class Post extends React.Component {
               commentCount={this.getCommentCount()}
             />
           </div>
+          <div className={this.showHideEdit()}>
+            <EditForm
+              onAddComment={this.setCommentCount}
+              postid={this.props.post.id}
+              commentCount={this.getCommentCount()}
+              post={this.props.post}
+            />
+          </div>
         </div>
       );
     //}
@@ -330,7 +339,7 @@ export default class Post extends React.Component {
   showDelete(){
     if (this.props.userid == sessionStorage.getItem("user")) {
       return(
-        <div className="comment-indicator-text" onClick={e => this.showModal()}>
+        <div className="comment-indicator-text" onClick={e => this.showModalE()}>
             Edit
         </div>
     );
@@ -381,7 +390,6 @@ export default class Post extends React.Component {
       return "greyButtonC"
     }
   }
-
 
   getComments(parentID) {
   if(sessionStorage.getItem("user") != null){
