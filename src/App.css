@@ -143,6 +143,7 @@ input {
   margin-top:70px;
   flex-grow: 1;
   height:fit-content;
+  max-width: 100%;
 }
 
 .styleGuide{
@@ -566,4 +567,8 @@ heading{
     .page-template {
         width: 40%;
     }
+}
+
+.width-limit {
+  max-width: 90%;
 }

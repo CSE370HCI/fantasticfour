@@ -18,6 +18,7 @@ import Upload from "./Component/Upload";
 import PostingList from "./Component/PostingList.jsx";
 import PostingListB from "./Component/PostingListB.jsx";
 import TagsBlock from "./Component/TagsBlock.jsx";
+import TaggedList from "./Component/TaggedList.jsx";
 import {
   BrowserRouter as Router, Route, Switch
 } from 'react-router-dom';
@@ -144,10 +145,11 @@ class App extends React.Component {
               </div>
               </div>
             </Route>
+            <Route path="/tag/:tag_name" component={TaggedList} />
             <Route path="/popular">
-              <div>
+              <div className="posting-block">
                 <p>Popular</p>
-                <PopularList userid={sessionStorage.getItem("user")} />
+                <PopularList userid={sessionStorage.getItem("user")}/>
               </div>
             </Route>
             <Route path="/random">

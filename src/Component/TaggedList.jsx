@@ -1,8 +1,10 @@
 import React from "react";
 import Post from "./Post.jsx";
+import TagsBlock from "./TagsBlock.jsx";
+import {Link} from 'react-router-dom';
 import "./styles/PostingList.css";
 
-export default class PostingList extends React.Component {
+export default class TaggedList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,7 +18,7 @@ export default class PostingList extends React.Component {
   }
 
   componentDidMount() {
-
+    console.log("FOUND TAGGEDLIST")
     this.loadPosts();
 
   }
@@ -30,7 +32,7 @@ export default class PostingList extends React.Component {
   }
 
   loadPosts() {
-    let url = process.env.REACT_APP_API_PATH+"/posts?parentID=";
+    let url = process.env.REACT_APP_API_PATH+"/post-tags?type=hashtag&name="+this.props.match.params.tag_name;
     if (this.props && this.props.parentid){
       url += this.props.parentid;
     }
@@ -40,15 +42,21 @@ export default class PostingList extends React.Component {
         'Content-Type': 'application/json'
 
       },
-
     })
       .then(res => res.json())
       .then(
         result => {
           if (result) {
+            var filtered = []
+            for (const [key, post] of Object.entries(result[0])){
+              if ((post.post.id !== 4 && post.name !== "helloworld") || !(post.post.id === 4 && post.user.id !==sessionStorage.getItem("user"))){
+                filtered.push(post)
+              }
+            }
+            console.log("filtered: "+JSON.stringify(filtered))
             this.setState({
               isLoaded: true,
-              posts: result[0]
+              posts: filtered
             });
             console.log("Got Posts");
           }
@@ -64,6 +72,7 @@ export default class PostingList extends React.Component {
   }
 
   render() {
+    console.log("TAG!! "+ this.props.match.params.tag_name)
     //this.loadPosts();
     const {error, isLoaded, posts} = this.state;
     if (error) {
@@ -73,14 +82,27 @@ export default class PostingList extends React.Component {
     } else if (posts) {
 
       if (posts.length > 0){
+        console.log("posts: "+JSON.stringify(this.state.posts))
       return (
-
-        <div className="posts">
-
+        <div className="post-feed">
+          <div className="posting-block">
+            <div className="posts">
           {posts.map(post => (
-            <Post key={post.id} post={post} type={this.props.type} loadPosts={this.loadPosts} username={post.author.username} userid={post.author.id}/>
-          ))}
-
+            <Post key={post.id} post={post.post} type={this.props.type} loadPosts={this.loadPosts} username={post.user.username} userid={post.user.id}/>
+            ))}
+            </div>
+          </div>
+          <div className="right-background"/>
+          <div className="column-view">
+            <div className="upload-button">
+              <Link to="/upload" className="upload-button-text">
+                Upload a Post
+              </Link>
+          </div>
+          <div className="tagBlock">
+            <TagsBlock />
+          </div>
+        </div>
         </div>
 
       );

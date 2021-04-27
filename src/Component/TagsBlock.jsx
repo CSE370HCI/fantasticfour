@@ -184,7 +184,7 @@ export default class TagsBlock extends React.Component {
         const tagList = this.state.list;
         var elementList = [];
         for (var i = 0; i<tagList.length;i++){
-            var link = "/post-tag/" + tagList[i]
+            var link = "/tag/" + tagList[i]
             elementList.push(<a href={link} key={i}>#{tagList[i]} </a>)
         }
         return(
