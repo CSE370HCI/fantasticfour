@@ -60,22 +60,66 @@ export default class PostingList extends React.Component {
   async filterPosts(posts) {
     let filteredPosts = [];
 
-    // get fulfilled value of Promise
-    const username = await this.getLoggedInUser();
+    // if logged in
+    if (sessionStorage.getItem("user")) {
+      // get fulfilled value of Promise
+      const username = await this.getLoggedInUser();
 
-    for (let i = 0; i < posts.length; i++) {
-      // check to see if logged in user exists in list of users being blocked for specific post
-      const get = await fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID=" + posts[i].id + "&type=blocking" + "&name=" + username, {
-        method: "get",
-        headers: {
-          "Content-Type": "application/json"
+      // check for posts that have not been blocked from logged in user
+      for (let i = 0; i < posts.length; i++) {
+
+        // check for specific audience
+        // if so, then check if allowed for logged in user then add to render
+        const privacy = await fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID=" + posts[i].id + "&type=privacy" + "&name=specific", {
+          method: "get",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+        const privacyResult = await privacy.json();
+
+        if (privacyResult[1] > 0) {
+          const allowing = await fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID=" + posts[i].id + "&type=allowing" + "&name=" + username, {
+            method: "get",
+            headers: {
+              "Content-Type": "application/json"
+            }
+          })
+          const allowingResult = await allowing.json();
+
+          if (allowingResult[1] == 0 && posts[i].author.username != username) { // list empty AND user not author, not allowed for logged in user
+            continue;
+          }
         }
-      })
 
-      const result = await get.json()
-
-      if (result[1] == 0) { // not being blocked
-        filteredPosts.push(posts[i])
+        const blocking = await fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID=" + posts[i].id + "&type=blocking" + "&name=" + username, {
+          method: "get",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+        const blockingResult = await blocking.json();
+  
+        if (blockingResult[1] == 0) { // not being blocked
+          filteredPosts.push(posts[i])
+        }
+      }
+    }
+    // not logged in
+    else {
+      // filter out posts with privacy tag "specific"
+      for (let i = 0; i < posts.length; i++) {
+        const specific = await fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID=" + posts[i].id + "&type=privacy" + "&name=specific", {
+          method: "get",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+        const specificResult = await specific.json();
+  
+        if (specificResult[1] == 0) { // not limited audience
+          filteredPosts.push(posts[i])
+        }
       }
     }
 
