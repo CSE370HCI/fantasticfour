@@ -45,10 +45,17 @@ class Navbar extends React.Component {
             .then(
                 result => {
                     if(sessionStorage.getItem("user") != null){
-                    this.setState({
-                        profile_picture: result[0][0]["url"],
-                        logged_in: true
-                    });
+                      if(result[0][0]["url"].charAt(0) == '/'){
+                        this.setState({
+                          profile_picture: "https://webdev.cse.buffalo.edu" + result[0][0]["url"],
+                          logged_in: true
+                        });
+                      } else {
+                        this.setState({
+                          profile_picture: result[0][0]["url"],
+                          logged_in: true
+                        });
+                      }
                     } else {
                     this.setState({
                         profile_picture: "",
@@ -109,11 +116,11 @@ class Navbar extends React.Component {
             Style Guide
           </Link>
         </li>
-                <li className="b-test">
-                  <Link to="/b" style={{textDecoration: 'none', color: 'black'}}>
-                    B Testing
-                  </Link>
-                </li>
+        <li className="upload-post">
+          <Link to="/upload" style={{textDecoration: 'none', color: 'black'}}>
+            Upload a Post
+          </Link>
+        </li>
       </ul>
 
       <loginbar id="loginbar" className="loginbar">
@@ -161,11 +168,6 @@ class Navbar extends React.Component {
             Style Guide
           </Link>
         </li>
-                <li className="b-test">
-                  <Link to="/b" style={{textDecoration: 'none', color: 'black'}}>
-                    B Testing
-                  </Link>
-                </li>
       </ul>
 
       <loginbar id="loginbar" className="loginbar">

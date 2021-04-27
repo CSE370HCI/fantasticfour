@@ -157,8 +157,8 @@ export default class EditSettings extends React.Component {
     };
 
     onClose = () => {
-            window.location.href = "profile";
-        };
+        window.location.href = "profileinfo";
+    };
 
   render() {
     return (

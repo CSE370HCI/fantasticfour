@@ -1,39 +1,22 @@
 import React from "react";
+
 import "../App.css";
-import "./styles/UserProfile.css";
+import "./styles/ProfileBlock.css";
 
-//The post form component holds both a form for posting, and also the list of current posts in your feed
-export default class UserProfile extends React.Component {
+export default class ProfileBlock extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      profile_picture: "",
-      username: "",
-      email: "",
-      followers: "",
-      following: ""
-    };
-    this.postListing = React.createRef();
-  }
+    constructor(props) {
+        super(props)
+        this.state = {
+          profile_picture: "",
+          username: "",
+          email: "",
+          followers: "",
+          following: ""
+        };
+    }
 
-    toSettings = () => {
-        window.location.href = "settings";
-    };
-
-    toChangePicture = () => {
-        window.location.href = "changepicture";
-    };
-
-    toFollowers = () => {
-        window.location.href = "followers";
-    };
-
-    toFollowing = () => {
-        window.location.href = "following";
-    };
-
-  componentDidMount() {
+componentDidMount() {
       fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?ownerID=" + sessionStorage.getItem("user") + "&category=profile_picture", {
           method: "GET",
           headers: {
@@ -107,35 +90,40 @@ export default class UserProfile extends React.Component {
           );
   }
 
-  render() {
-    return (
-        <div>
-          <img src={this.state.profile_picture} alt="profile picture" className="user-profile-picture"/>
-          <br/>
-          <a onClick={this.toChangePicture} className="text-link">
-                Change Profile Picture
-          </a>
-          <br/>
-          <br/>
-            <a onClick={this.toFollowers} className="text-link">
-                Followers: {this.state.followers}
-            </a>
-          <br/>
-            <a onClick={this.toFollowing}className="text-link">
-                Following: {this.state.following}
-            </a>
-          <br/>
-          Username: {this.state.username}
-          <br/>
-          Email: {this.state.email}
-          <br/><br/>
-            <input
-                type="button"
-                className="desktop-confirm edit-button"
-                onClick={this.toSettings}
-                value="Edit"
-            />
-        </div>
-    );
-  }
+  toFollowers = () => {
+    window.location.href = "followers";
+  };
+
+  toFollowing = () => {
+    window.location.href = "following";
+  };
+
+  toProfileInfo = () => {
+    window.location.href = "profileinfo";
+  };
+
+    render() {
+        return(
+            <div > 
+                <p className="tag-header">{this.state.username}</p>
+                <img src={this.state.profile_picture} alt="profile picture" className="profile-picture-block"/>
+                <br/>
+                <a onClick={this.toFollowers} className="text-link">
+                  Followers: {this.state.followers}
+                </a>
+                <br/>
+                  <a onClick={this.toFollowing}className="text-link">
+                    Following: {this.state.following}
+                  </a>
+                <br/>
+                <input
+                  type="button"
+                  className="desktop-confirm edit-button"
+                  onClick={this.toProfileInfo}
+                  value="Profile Settings"
+                />
+            </div>
+        );
+        
+    }
 }

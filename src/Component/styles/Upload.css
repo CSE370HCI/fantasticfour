@@ -9,3 +9,7 @@
   font-size: 18px;
   cursor: pointer;
 }
+
+.image-preview {
+  width: 100%;
+}

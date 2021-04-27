@@ -24,7 +24,9 @@ export default class Post extends React.Component {
       tempVal: 0
     };
     this.post = React.createRef();
-
+    if(this.props.post.thumbnailURL.charAt(0) == '/'){
+      this.props.post.thumbnailURL = "https://webdev.cse.buffalo.edu" + this.props.post.thumbnailURL;
+    }
   }
 
   componentDidMount() {
@@ -620,7 +622,7 @@ export default class Post extends React.Component {
     if (comments[0] === 0){
       //console.log("SAD2-"+this.props.post.id)
       if(sessionStorage.getItem("user") != null){
-        return (<div className="comment-invite">Hello there, do you wish to talk? </div>)
+        return (<div className="comment-invite">Now's your chance to make the first comment! </div>)
       } else {
         return (<div className="comment-invite">No comments yet. Sign in to speak your mind!</div>)
       }

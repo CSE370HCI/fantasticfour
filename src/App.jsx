@@ -16,8 +16,10 @@ import Navbar from "./Component/Navbar.jsx";
 import StyleGuide from "./Component/StyleGuide.jsx";
 import Upload from "./Component/Upload";
 import PostingList from "./Component/PostingList.jsx";
+import ProfileList from "./Component/ProfileList.jsx";
 import PostingListB from "./Component/PostingListB.jsx";
 import TagsBlock from "./Component/TagsBlock.jsx";
+import ProfileBlock from "./Component/ProfileBlock.jsx";
 import {
   BrowserRouter as Router, Route, Switch
 } from 'react-router-dom';
@@ -83,7 +85,7 @@ class App extends React.Component {
 
           <div className="maincontent" id="mainContent">
             <Switch>
-            <Route path="/profile">
+            <Route path="/profileinfo">
               <div className="page-template">
                 <p className='page-title'>My Profile</p>
                 <UserProfile userid={sessionStorage.getItem("user")} />
@@ -180,6 +182,20 @@ class App extends React.Component {
                 <ForgotPasswordForm/>
               </div>
             </Route>
+            <Route path="/profile">
+              <p>Latest</p>
+              <div className="post-feed">
+                <div className="posting-block">
+                  <ProfileList refresh={this.state.refreshPosts}/>
+                </div>
+                <div className="right-background"/>
+                  <div className="column-view">
+                    <div className="tagBlock">
+                      <ProfileBlock />
+                    </div>
+                  </div>
+                </div>
+            </Route>
             <Route path={["/postinglist", "/", "/latest"]}>
                 <p>Latest</p>
               <div className="post-feed">
@@ -188,11 +204,6 @@ class App extends React.Component {
               </div>
               <div className="right-background"/>
               <div className="column-view">
-                <div className="upload-button">
-                  <Link to="/upload" className="upload-button-text">
-                    Upload a Post
-                  </Link>
-                </div>
                 <div className="tagBlock">
                   <TagsBlock />
                 </div>

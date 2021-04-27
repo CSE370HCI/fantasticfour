@@ -1,0 +1,26 @@
+.addTag{
+  border:none;
+  border-radius:5px;
+  background-color:lightgray;
+}
+
+.tag-header {
+  color: black;
+  height: fit-content;
+}
+
+.tags {
+  background-color: white;
+  margin:10px;
+  border-style: double;
+  border-radius: 10px;
+  border-color: black;
+  min-height: 100px;
+}
+
+.profile-picture-block {
+  object-fit: cover;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
