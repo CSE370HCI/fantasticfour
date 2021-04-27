@@ -327,12 +327,13 @@ export default class CommentDisplay extends React.Component {
   }
 
   showEdit(){
-
+    if (this.props.userid == sessionStorage.getItem("user")) {
       return(
         <div className="comment-indicator-text" onClick={e => this.showModalE()}>
             Edit
         </div>
     )
+      };
   }
 
   render() {
