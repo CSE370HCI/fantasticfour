@@ -563,16 +563,6 @@ heading{
   border-radius: 50%;
 }
 
-
-/*@media screen and (max-width: 1280px) {*/
-/*  .follower-column {*/
-/*    width: 100%;*/
-/*  }*/
-/*    .page-template {*/
-/*        width: 40%;*/
-/*    }*/
-/*}*/
-
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
     .page-template {
@@ -597,7 +587,7 @@ heading{
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
     .page-template {
-        width: 20%;
+        width: 30%;
     }
 
 }
