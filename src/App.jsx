@@ -148,7 +148,7 @@ class App extends React.Component {
               </div>
               </div>
             </Route>
-            <Route path="/tag/:tag_name" component={TaggedList} />
+            <Route path="/tag/:tag_names" component={TaggedList} />
             <Route path="/popular">
               <div className="posting-block">
                 <p>Popular</p>

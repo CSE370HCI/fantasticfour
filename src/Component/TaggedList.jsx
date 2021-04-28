@@ -11,6 +11,7 @@ export default class TaggedList extends React.Component {
       error: null,
       isLoaded: false,
       posts: [],
+      tagsList: [],
       listType: props.listType
     };
     this.postingList = React.createRef();
@@ -19,7 +20,14 @@ export default class TaggedList extends React.Component {
 
   componentDidMount() {
     console.log("FOUND TAGGEDLIST")
-    this.loadPosts();
+    var tagsList = (this.props.match.params.tag_names).split("&")
+    this.setState({
+      tagsList: tagsList
+    })
+    for (const [key, tag] of Object.entries(tagsList)){
+      console.log("Send a "+tag)
+      this.loadPosts(tag);
+    }
 
   }
 
@@ -27,12 +35,14 @@ export default class TaggedList extends React.Component {
     console.log("PrevProps "+prevProps.refresh);
     console.log("Props "+this.props.refresh);
     if (prevProps.refresh !== this.props.refresh){
-      this.loadPosts();
+      for (const [key, tag] of Object.entries(this.state.tagsList)){
+        this.loadPosts(tag);
+      }
     }
   }
 
-  loadPosts() {
-    let url = process.env.REACT_APP_API_PATH+"/post-tags?type=hashtag&name="+this.props.match.params.tag_name;
+  loadPosts(tag_name) {
+    let url = process.env.REACT_APP_API_PATH+"/post-tags?type=hashtag&name="+tag_name;
     if (this.props && this.props.parentid){
       url += this.props.parentid;
     }
@@ -53,10 +63,10 @@ export default class TaggedList extends React.Component {
                 filtered.push(post)
               }
             }
-            console.log("filtered: "+JSON.stringify(filtered))
+            console.log(tag_name+"-filtered: "+JSON.stringify(filtered))
             this.setState({
               isLoaded: true,
-              posts: filtered
+              posts: filtered.concat(this.state.posts)
             });
             console.log("Got Posts");
           }
