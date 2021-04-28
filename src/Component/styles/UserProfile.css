@@ -1,8 +1,16 @@
 .user-profile-picture {
   object-fit: cover;
+  /*width: 300px;*/
+  /*height: 300px;*/
   width: 300px;
   height: 300px;
   border-radius: 50%;
+}
+
+.user-profile-picture:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
 }
 
 .edit-button {
