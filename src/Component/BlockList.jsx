@@ -8,10 +8,12 @@ export default class Following extends React.Component {
         this.state = {
             authorID: this.props.userid,
             userList: [],
+            blocklistID: "",
             blockedUsers: [],
             blockedID: "",
             noSelection: false,
-            noBlockedUsers: false
+            noBlockedUsers: false,
+            noBlockedList: false
         };
         this.fieldChangeHandler.bind(this);
     }
@@ -65,12 +67,16 @@ export default class Following extends React.Component {
         if (groupsResult[1] === 1) {
             blockListID = groupsResult[0][0].id
 
+            this.setState({
+                blocklistID: blockListID,
+                noBlockedList: false
+            })
             // load group members into blockedUsers array
             this.loadMembers(blockListID)
         }
         else {
             this.setState({
-                noBlockedUsers: true
+                noBlockedList: true
             })
         }
         console.log("group id: ", blockListID)
@@ -93,25 +99,23 @@ export default class Following extends React.Component {
             console.log(groupMembersResults[0])
             users = groupMembersResults[0]
 
+            let blockedUsers = []
             for (let i = 0; i < groupMembersResults[1]; i++) {
                 users[i].user.photo = await this.loadPictureFor(users[i].user.id)
                 console.log("Profile photo link: ", users[i].user.photo)
-                this.setState({
-                    blockedUsers: [...this.state.blockedUsers, users[i].user]
-                })
+                blockedUsers.push(users[i].user)
             }
-            // users.forEach(user => {
-            //     console.log("this user has been blocked: ", user.user)
-            //     // get profile picture
-            //     user.user.photo = this.loadPictureFor(user.user.id)
-            //     console.log("profile photo link: ", user.user.photo)
-            //     this.setState({
-            //         blockedUsers: [...this.state.blockedUsers, user.user]
-            //     })
-            // })
-        }
 
-        //groupMemmbersResult = await getGroupMembers.json()
+            this.setState({
+                blockedUsers: blockedUsers,
+                noBlockedUsers: false
+            })
+        }
+        else {
+            this.setState({
+                noBlockedUsers: true
+            })
+        }
     }
 
     // fetches and returns url for user photo
@@ -126,8 +130,7 @@ export default class Following extends React.Component {
 
         const userArtifactsResults = await getUserArtifacts.json()
 
-        console.log("profile picture url: ", "https://webdev.cse.buffalo.edu" + userArtifactsResults[0][0].url)
-        return "https://webdev.cse.buffalo.edu" + userArtifactsResults[0][0].url
+        return userArtifactsResults[0][0].url
     }
 
     fieldChangeHandler(field, e) {
@@ -141,10 +144,13 @@ export default class Following extends React.Component {
         this.setState({
             blockedID: blockedID
         })
+        this.setState({
+            noSelection: false
+        })
         console.log("Blocking:  ", blockedID)
     }
 
-    submitHandler = event => {
+    submitHandler = async (event) => {
         //keep the form from actually submitting
         event.preventDefault();
         if (this.state.blockedID === "") {
@@ -153,11 +159,85 @@ export default class Following extends React.Component {
             })
             return;
         }
-        console.log(this.state.blockedID);
+        else {
+            // add user to block list
+            // check if blocklist exists, if not create one
+            if (this.state.noBlockedList) {
+                // POST request to create group for blocklist
+                const postGroups = await fetch(process.env.REACT_APP_API_PATH+"/groups", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                    },
+                    body: JSON.stringify({
+                        ownerID: sessionStorage.getItem("user"),
+                        name: "block",
+                        type: "privacy"
+                    })
+                })
 
-        //make the api call to the user controller
-        
+                const groupsResult = await postGroups.json()
+                console.log("Creating block list for user, here's the result: ", groupsResult)
+                this.setState({
+                    blocklistID: groupsResult.id,
+                    noBlockedList: false
+                })
+            }
+            // blocklist exists, add group-member
+            console.log("Adding to blocklist: ", this.state.blocklistID)
+            const postGroupMembers = await fetch(process.env.REACT_APP_API_PATH+"/group-members", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                },
+                body: JSON.stringify({
+                    userID: this.state.blockedID,
+                    groupID: this.state.blocklistID,
+                    type: "privacy"
+                })
+            })
+
+            console.log("Reply from posting block request: ", postGroupMembers)
+            if (postGroupMembers.ok) {
+                this.setState({
+                    noBlockedList: false,
+                    noBlockedUsers: false,
+                })
+
+                this.loadBlockedUsers(); // reload list
+            }
+        }
+        console.log(this.state.blockedID);
     };
+
+    async unblockUser(userID) {
+        // get group-member ID
+        const getGroupMembers = await fetch(process.env.REACT_APP_API_PATH+"/group-members?userID=" + userID + "&groupID=" + this.state.blocklistID, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+sessionStorage.getItem("token")
+            }
+        })
+
+        const groupMembersResults = await getGroupMembers.json()
+
+        const groupMemberID = groupMembersResults[0][0].id
+
+        // delete request to group-members with id from above
+        const deleteGroupMembers = await fetch(process.env.REACT_APP_API_PATH+"/group-members/" + groupMemberID, {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+sessionStorage.getItem("token")
+            }
+        })
+
+        console.log("Trying to delete: ", deleteGroupMembers)
+        this.loadBlockedUsers()
+    }
 
 
     render() {
@@ -165,7 +245,7 @@ export default class Following extends React.Component {
             <div className="follower-row">
                 <div className="follower-column left">
                     {
-                        this.state.noBlockedUsers ?
+                        (this.state.noBlockedUsers || this.state.noBlockedList) ?
                         <p>No users blocked!</p>
                         :
                         <ul>
