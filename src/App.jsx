@@ -192,45 +192,30 @@ class App extends React.Component {
                 <ForgotPasswordForm/>
               </div>
             </Route>
-            <Route path="/profile">
-              <p>Latest</p>
-              <div className="post-feed">
-                <div className="posting-block">
-                  <ProfileList refresh={this.state.refreshPosts}/>
-                </div>
-                <div className="right-background"/>
-                  <div className="column-view">
-                    <div className="tagBlock">
-                      <ProfileBlock />
-                    </div>
-                  </div>
-                </div>
-            </Route>
+            <Route path="/profile/:user_id" component={ProfileList} exact/>
             <Route path={["/postinglist", "/", "/latest"]}>
-              <p>Latest</p>
               <div className="post-feed">
                 <div className="posting-block">
                   <PostingList refresh={this.state.refreshPosts}/>
                 </div>
                 <div className="right-background"/>
-                <div className="column-view">
-                  <div className="upload-button">
-                    <Link to="/upload" className="upload-button-text">
-                      Upload a Post
-                    </Link>
-                </div>
-              </div>
-              <div className="posting-block">
-                <PostingList refresh={this.state.refreshPosts}/>
-              </div>
-              <div className="right-background"/>
-              <div className="column-view">
-
-                <div className="tagBlock">
-                  <TagsBlock />
-                </div>
-              </div>
-              </div>
+                  <div className="column-view">
+                    <div className="upload-button">
+                      <Link to="/upload" className="upload-button-text">
+                        Upload a Post
+                      </Link>
+                    </div>
+                  </div>
+                  <div className="posting-block">
+                    <PostingList refresh={this.state.refreshPosts}/>
+                  </div>
+                  <div className="right-background"/>
+                    <div className="column-view">
+                      <div className="tagBlock">
+                        <TagsBlock />
+                      </div>
+                    </div>
+                  </div>
             </Route>
             </Switch>
           </div>

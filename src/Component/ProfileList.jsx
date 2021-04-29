@@ -1,6 +1,7 @@
 import React from "react";
 import Post from "./Post.jsx";
 import "./styles/PostingList.css";
+import ProfileBlock from "./ProfileBlock.jsx";
 
 export default class ProfileList extends React.Component {
   constructor(props) {
@@ -9,16 +10,19 @@ export default class ProfileList extends React.Component {
       error: null,
       isLoaded: false,
       posts: [],
-      listType: props.listType
+      listType: props.listType,
+      user_id: sessionStorage.getItem("user")
     };
     this.postingList = React.createRef();
     this.loadPosts = this.loadPosts.bind(this);
   }
 
   componentDidMount() {
-
+    var user_id = this.props.match.params.user_id
+    this.setState({
+      user_id: user_id
+    })
     this.loadPosts();
-
   }
 
   componentDidUpdate(prevProps) {
@@ -74,15 +78,26 @@ export default class ProfileList extends React.Component {
 
       if (posts.length > 0){
       return (
-
-        <div className="posts">
-
-          {posts.map(post => (post.author.id == sessionStorage.getItem("user")) ?
-          (<Post key={post.id} post={post} type={this.props.type} loadPosts={this.loadPosts}/>):
-          (<span/>))
-          }
-
+        <div>
+        <div className="posting-block">
+          <div className="posts">
+            {posts.map(post => (post.author.id == this.state.user_id) ?
+            (<Post key={post.id} post={post} type={this.props.type} loadPosts={this.loadPosts} username={post.author.username} userid={post.author.id}/>):
+            (<span/>))
+            }
+          </div>
         </div>
+        <div>
+          <div className="right-background"/>
+            <div className="column-view">
+              <div className="tagBlock">
+                <ProfileBlock id={this.state.user_id}/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
 
       );
       } else {
