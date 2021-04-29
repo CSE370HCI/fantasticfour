@@ -8,6 +8,7 @@ import commentIcon from "../assets/comment.svg";
 import upArrow from "../assets/UpArrow.svg";
 import downArrow from "../assets/DownArrow.svg";
 import { parseConfigFileTextToJson, resolveModuleName } from "typescript";
+import {Link} from 'react-router-dom';
 import {stateFromMarkdown} from 'draft-js-import-markdown';
 import {convertToRaw, Editor, EditorState, RichUtils} from 'draft-js';
 
@@ -353,7 +354,7 @@ export default class CommentDisplay extends React.Component {
             </div>
             <div className="comment-body">
               <div className="comment-author">
-                <span className="comment-author-text">{this.props.author}</span>
+                <Link to={"/profile/" + this.props.post.author.id} className="comment-author-text" style={{textDecoration: 'none', color: 'blue'}}>{this.props.author}</Link>
                 {this.showEdit()}
               </div>
               <div className="comment-text">
@@ -368,7 +369,7 @@ export default class CommentDisplay extends React.Component {
           <div className="comment" key={postID}>
               <div className="comment-body">
                 <div className="comment-author">
-                  <span className="comment-author-text">{this.props.author}</span>
+                  <Link to={"/profile/" + this.props.post.author.id} className="comment-author-text" style={{textDecoration: 'none', color: 'blue'}}>{this.props.author}</Link>
                 </div>
                 <div className="comment-text">
                   <Editor editorState={comment_text} readOnly="true" className="editor-comment"/>
