@@ -193,8 +193,8 @@ export default class Following extends React.Component {
                         <ul>
                             {this.state.connections.map(connection => (
                                 <div key={connection.id} className="follower-list">
-                                    <img src={connection["connectedUser"]["photo"]} alt="profile picture"/>
-                                    &nbsp;&nbsp;{connection.connectedUser.username}&nbsp;&nbsp;
+                                    <img src={connection["connectedUser"]["photo"]} alt={connection.connectedUser.username}/>
+                                    {connection.connectedUser.username}
                                     <input type="button" className="unfollow-button" onClick={() => {this.unfollowUser(connection.id)}} value="Unfollow"/>
                                 </div>
                             ))}

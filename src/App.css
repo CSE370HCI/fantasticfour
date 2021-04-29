@@ -547,21 +547,6 @@ heading{
   font-size: 18px;
 }
 
-.follower-list {
-  color: black;
-  text-align: left;
-  margin:2%;
-  display: flex;
-  align-items:center;
-}
-
-.follower-list img {
-  object-fit: cover;
-  padding-right:5px;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
@@ -589,7 +574,6 @@ heading{
     .page-template {
         width: 30%;
     }
-
 }
 
 .width-limit {
