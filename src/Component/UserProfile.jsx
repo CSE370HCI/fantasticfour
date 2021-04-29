@@ -167,6 +167,10 @@ export default class UserProfile extends React.Component {
                 Change Profile Picture
           </a>
           <br/>
+            <a onClick={this.toBlockList}className="text-link">
+                Manage Blocked Users
+            </a>
+          <br/>
             <br/>
             <a onClick={this.toFollowers} className="text-link">
                 Followers: {this.state.followers}
@@ -176,9 +180,6 @@ export default class UserProfile extends React.Component {
                 Following: {this.state.following}
             </a>
             <br/>
-            <a onClick={this.toBlockList}className="text-link">
-                Blocking: {this.state.blocking}
-            </a>
             <br/>
             <br/>
             <a >
