@@ -75,7 +75,7 @@ label {
 }
 
 input {
-  width: 80%;
+  width: 75%;
   margin: 10px auto;
 }
 
@@ -585,4 +585,16 @@ heading{
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+}
+
+.error-message {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 75%;
+    background: #FF5959;
+    color: white;
+    padding: 0;
 }
