@@ -429,7 +429,7 @@ export default class Post extends React.Component {
                   <li className="post-info">
                     <b className="meme-name">{this.props.post.content}</b>
                     <b className="meme-by"> by </b>
-                    <Link to={"/profile/" + this.props.post.author.id} className="meme-poster" style={{textDecoration: 'none'}}>{this.props.username}</Link>
+                    <Link to={"/profile/" + this.props.userid} className="meme-poster" style={{textDecoration: 'none'}}>{this.props.username}</Link>
                   </li>
                   <br/>
                   <div className="postInterations">
@@ -465,7 +465,7 @@ export default class Post extends React.Component {
             <li className="post-info">
               <b className="meme-name">{this.props.post.content}</b>
               <b className="meme-by"> by </b>
-              <Link to={"/profile/" + this.props.post.author.id} className="meme-poster" style={{textDecoration: 'none'}}>{this.props.username}</Link>
+              <Link to={"/profile/" + this.props.userid} className="meme-poster" style={{textDecoration: 'none'}}>{this.props.username}</Link>
             </li>
             <br/>
             <div className="postInterations">

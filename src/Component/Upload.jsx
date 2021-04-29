@@ -97,14 +97,15 @@ export default class Upload extends React.Component {
                       post_message: result.Status,
                       post_id: result["id"]
                     });
-                    this.addTag(this.state.tag, result["id"])
+                    console.log("Submitted tags: "+this.state.tag+" for post "+result['id'])
+                    this.addTags(this.state.tag, result["id"])
 
                     // if whitelisted, perform appropriate requests and redirect
                     if (this.state.restrictedTo.length > 0) {
                       this.addAllowingTag(result["id"]); // function redirects to home after executing
                     }
                     else {
-                      window.location.href = "home";
+                      //window.location.href = "home";
                     }
                   }
                 );
@@ -118,17 +119,23 @@ export default class Upload extends React.Component {
     }
   };
 
-  addTags(list, post){
+  addTags(tags, postid){
+    var list = tags.split(",")
     for(var i=0;i<list.length;i++){
-      var tag = list[0];
+      var tag = list[i];
+      console.log("Tag: "+ tag)
+      if(tag.charAt(0) === ' '){
+        tag = tag.substring(1);
+      }
       if(tag.charAt(0) === '#'){
         tag = tag.substring(1);
       }
-      this.addTag(tag, post);
+      console.log("Tag: "+ tag + "/ id: "+postid)
+      this.addTag(tag, postid);
     }
   }
 
-  addTag(tag, post){
+  addTag(tag, postid){
     fetch(process.env.REACT_APP_API_PATH+"/post-tags", {
       method: "POST",
       headers: {
@@ -136,8 +143,8 @@ export default class Upload extends React.Component {
         'Authorization': 'Bearer '+sessionStorage.getItem("token")
       },
       body: JSON.stringify({
-          postID: post,
-          userID: null,
+          postID: postid,
+          userID: sessionStorage.getItem("user"),
           name: tag,
           type: "hashtag"
       })
@@ -146,6 +153,10 @@ export default class Upload extends React.Component {
     ).then(
         result =>{
             console.log("Received: " + result.name)
+        },
+        error => {
+          alert("error!");
+          console.log("received bad")
         }
     )
   }
