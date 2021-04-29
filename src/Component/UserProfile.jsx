@@ -96,9 +96,17 @@ export default class UserProfile extends React.Component {
           .then(
               result => {
                   if(sessionStorage.getItem("user") != null){
-                    this.setState({
-                        profile_picture: result[0][0]["url"]
-                    });
+                    if(result[0][0]["url"].charAt(0) == '/'){
+                      this.setState({
+                        profile_picture: "https://webdev.cse.buffalo.edu" + result[0][0]["url"],
+                        logged_in: true
+                      });
+                    } else {
+                      this.setState({
+                        profile_picture: result[0][0]["url"],
+                        logged_in: true
+                      });
+                    }
                   }
               }
           );

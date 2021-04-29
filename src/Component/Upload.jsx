@@ -11,9 +11,13 @@ export default class Upload extends React.Component {
       post_title: "",
       post_message: "",
       post_URL: "",
+      post_id: "",
       tag: "",
-      canIPost: false,
-      restrictedTo: []
+      restrictedTo: [],
+      picture_preview: "",
+      is_invalid_title: false,
+      is_invalid_image: false,
+      canIPost: false
     };
     this.postListing = React.createRef();
   }
@@ -22,54 +26,95 @@ export default class Upload extends React.Component {
   // while the test harness does not use images, if you had an image URL you would pass it
   // in the thumbnailURL field.
   submitHandler = event => {
+      this.setState({
+          is_invalid_title: false,
+          is_invalid_image: false,
+      });
 
     //keep the form from actually submitting via HTML - we want to handle it in react
+    const fileField = document.querySelector('input[type="file"]');
     event.preventDefault();
     if (this.state.post_title.length == 0) {
-      alert("You need a post title to continue")
+        this.setState({
+            is_invalid_title: true,
+        });
     }
-    else if (this.state.post_URL.length == 0) {
-      alert("You need to include an image URL to continue")
-    }
-    else if (!this.state.post_URL.match("(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\\.(?:jpg|gif|png))(?:\\?([^#]*))?(?:#(.*))?")){
-      alert("You must use a proper image URL")
+    else if (fileField.files[0] == null) {
+        this.setState({
+            is_invalid_image: true,
+        });
     }
     else {
       this.state.canIPost = true;
     }
     if (this.state.canIPost) {
       //make the api call to post
-      fetch(process.env.REACT_APP_API_PATH+"/posts", {
+      fetch(process.env.REACT_APP_API_PATH+"/user-artifacts", {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer '+sessionStorage.getItem("token")
+          'Authorization': 'Bearer '+ sessionStorage.getItem("token")
         },
         body: JSON.stringify({
-          authorID: sessionStorage.getItem("user"),
-          content: this.state.post_title,
-          type: "post",
-          thumbnailURL: this.state.post_URL
+          ownerID: sessionStorage.getItem("user"),
+          type: "image",
+          url: "https://e7.pngegg.com/pngimages/415/81/png-clipart-check-mark-error-s-text-photography.png",
+          category: "post_image"
         })
       })
-          .then(res => res.json())
-          .then(
-              result => {
-                this.setState({
-                  post_message: result.Status
-                });
-                this.addTag(this.state.tag, result["id"])
+        .then(res => res.json())
+        .then(result => {
+          console.log(result);
+          const formData = new FormData();
+          formData.append("file", fileField.files[0]);
+          fetch(process.env.REACT_APP_API_PATH+"/user-artifacts/" + result["id"] + "/upload", {
+            method: 'POST',
+            headers: {
+              'Authorization': 'Bearer '+ sessionStorage.getItem("token")
+            },
+            body: formData
+          })
+            .then(response => response.json())
+            .then(result => {
+              console.log('Success:', result);
+              fetch(process.env.REACT_APP_API_PATH+"/posts", {
+                method: "POST",
+                headers: {
+                  'Content-Type': 'application/json',
+                   'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                },
+                body: JSON.stringify({
+                  authorID: sessionStorage.getItem("user"),
+                  content: this.state.post_title,
+                  type: "post",
+                  thumbnailURL: "https://webdev.cse.buffalo.edu"+result["url"]
+                })
+              })
+                .then(res => res.json())
+                .then(
+                  result => {
+                    this.setState({
+                      post_message: result.Status,
+                      post_id: result["id"]
+                    });
+                    this.addTag(this.state.tag, result["id"])
 
-                if (this.state.restrictedTo.length > 0) {
-                  this.addAllowingTag(result["id"]);
-                }
-                else {
-                  // redirects users back to the posts screen
-                  window.location.href = "homepage";
-                }
-                
-              }
-          );
+                    // if whitelisted, perform appropriate requests and redirect
+                    if (this.state.restrictedTo.length > 0) {
+                      this.addAllowingTag(result["id"]); // function redirects to home after executing
+                    }
+                    else {
+                      window.location.href = "home";
+                    }
+                  }
+                );
+              })
+            .catch(error => {
+              console.error('Error:', error);
+            });
+        }
+        );
+
     }
   };
 
@@ -144,7 +189,7 @@ export default class Upload extends React.Component {
       .then(res => res.json())
       .then(result => {
         console.log("add allowing tag for user: ", allowedUsers[i])
-        window.location.href = "homepage";
+        window.location.href = "home";
       })
     }
   }
@@ -154,12 +199,6 @@ export default class Upload extends React.Component {
   updateTitle = event => {
     this.setState({
       post_title: event.target.value
-    });
-  };
-
-  updateURL = event => {
-    this.setState({
-      post_URL: event.target.value
     });
   };
 
@@ -176,6 +215,16 @@ export default class Upload extends React.Component {
   }
 
 
+  updateFile = event => {
+    const preview = new FileReader();
+    preview.readAsDataURL(event.target.files[0]);
+    preview.onloadend = event => {
+      this.setState({
+        picture_preview: preview.result,
+        is_invalid_image: false,
+      });
+    }
+  }
 
   render() {
     return (
@@ -185,11 +234,21 @@ export default class Upload extends React.Component {
             Title*
             <br/>
             <input type="text" cols="70" className="upload-input" onChange={this.updateTitle} />
+            {
+                this.state.is_invalid_title ? (
+                    <p className="error-message">⚠ Your post is missing a title!</p>
+                ) : ""
+            }
             <br/>
             <br/>
-            Upload Photo (URL)*
+            <img src={this.state.picture_preview} alt="Upload Image" className="image-preview"/>
+            {
+                this.state.is_invalid_image ? (
+                    <p className="error-message">⚠ Your post is missing an image!</p>
+                ) : ""
+            }
             <br/>
-            <input type="text" rows="1" cols="70" className="upload-input" onChange={this.updateURL} />
+            <input type="file" id="myFile" name="filename" onChange={this.updateFile} className="fileUpload" accept=".png, .jpeg, .jpg, .gif"/>
             <br/>
             <br/>
             Communities

@@ -19,7 +19,9 @@ export default class LoginForm extends React.Component {
       sessiontoken: "",
       signup: false,
       passwordmismatch: true,
-      usernameexists: false
+      usernameexists: false,
+      is_invalid_login: false,
+      is_deleted_account: false
     };
     this.refreshPostsFromLogin = this.refreshPostsFromLogin.bind(this);
   }
@@ -69,6 +71,11 @@ export default class LoginForm extends React.Component {
   submitHandler = event => {
     //keep the form from actually submitting
     event.preventDefault();
+
+      this.setState({
+          is_invalid_login: false,
+          is_deleted_account: false
+      });
 
     // Check username availability;
     fetch(process.env.REACT_APP_API_PATH + "/users?username=" + this.state.username, {
@@ -166,7 +173,7 @@ export default class LoginForm extends React.Component {
             }
         },
         error => {
-            alert(error);
+            console.log(error);
         });
         }
         // not in signup mode
@@ -208,15 +215,14 @@ export default class LoginForm extends React.Component {
                     alanmessage: result.message
                 });
                 }
-            },
-            error => {
-                alert("error!");
             }
             )
             .then(res => res.json())
             .then(result => {
             if (result[0][0]["status"] == "DELETED") {
-                alert("This user's account has been deleted!");
+                this.setState({
+                    is_deleted_account: true,
+                });
             }
             else {
                 // set the auth token and user ID in the session state
@@ -233,7 +239,9 @@ export default class LoginForm extends React.Component {
             }
             },
             error => {
-            alert("Error retrieving account");
+                this.setState({
+                    is_invalid_login: true
+                });
             console.log(error);
             });
         }
@@ -260,6 +268,19 @@ export default class LoginForm extends React.Component {
       return (
         <div className="temp-login-form">
           <form onSubmit={this.submitHandler}>
+              {
+                  this.state.is_invalid_login ?
+                      <p className="error-message">⚠ Invalid username or password</p>
+                      :
+                      ""
+              }
+              {
+                  this.state.is_deleted_account ?
+                      <p className="error-message">⚠ This account has been deleted</p>
+                      :
+                      ""
+              }
+              <br/>
             <label>
               Email
               <input type="email" onChange={this.emailChangeHandler} />
@@ -271,12 +292,12 @@ export default class LoginForm extends React.Component {
                 <label>
                   Username
                   <input type="text" onChange={this.myChangeHandler} />
-                  <br/>
                   {
                     this.state.usernameexists ? (
-                        <p>Username already exists!</p>
+                        <p className="error-message">⚠ Username already exists!</p>
                     ) : ""
                   }
+                  <br/>
                 
                 </label>
               ) : ""
@@ -294,18 +315,19 @@ export default class LoginForm extends React.Component {
                 <label>
                   Confirm Password
                   <input type="password" onChange={this.verifyPassword} />
-                  <br/>
+
                   {
                   this.state.passwordmismatch ?
-                    <p>Passwords don't match</p>
+                    <p className="error-message">⚠ Passwords don't match</p>
                     :
                     ""
                   }
+                  <br/>
                 </label>
               ) : ""
             }
 
-            <input className="desktop-confirm" type="submit" value="submit" />
+            <input className="desktop-confirm" type="submit" value="Submit" />
 
             {
               this.state.signup ?

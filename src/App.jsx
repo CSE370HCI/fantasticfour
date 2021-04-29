@@ -16,8 +16,11 @@ import Navbar from "./Component/Navbar.jsx";
 import StyleGuide from "./Component/StyleGuide.jsx";
 import Upload from "./Component/Upload";
 import PostingList from "./Component/PostingList.jsx";
+import ProfileList from "./Component/ProfileList.jsx";
 import PostingListB from "./Component/PostingListB.jsx";
 import TagsBlock from "./Component/TagsBlock.jsx";
+import TaggedList from "./Component/TaggedList.jsx";
+import ProfileBlock from "./Component/ProfileBlock.jsx";
 import {
   BrowserRouter as Router, Route, Switch
 } from 'react-router-dom';
@@ -84,7 +87,7 @@ class App extends React.Component {
 
           <div className="maincontent" id="mainContent">
             <Switch>
-            <Route path="/profile">
+            <Route path="/profileinfo">
               <div className="page-template">
                 <p className='page-title'>My Profile</p>
                 <UserProfile userid={sessionStorage.getItem("user")} />
@@ -116,6 +119,7 @@ class App extends React.Component {
             </Route>
             <Route path="/settings">
               <div className="page-template">
+                <p className="page-title">Edit Personal Information</p>
                 <EditSettings userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
@@ -150,14 +154,15 @@ class App extends React.Component {
               </div>
               </div>
             </Route>
+            <Route path="/tag/:tag_names" component={TaggedList} />
             <Route path="/popular">
-              <div>
+              <div className="post-template">
                 <p>Popular</p>
-                <PopularList userid={sessionStorage.getItem("user")} />
+                <PopularList userid={sessionStorage.getItem("user")}/>
               </div>
             </Route>
             <Route path="/random">
-              <div className="page-template">
+              <div className="post-template">
                 <p className='page-title'>Random</p>
                 <Random userid={sessionStorage.getItem("user")} />
               </div>
@@ -186,8 +191,22 @@ class App extends React.Component {
                 <ForgotPasswordForm/>
               </div>
             </Route>
+            <Route path="/profile">
+              <p>Latest</p>
+              <div className="post-feed">
+                <div className="posting-block">
+                  <ProfileList refresh={this.state.refreshPosts}/>
+                </div>
+                <div className="right-background"/>
+                  <div className="column-view">
+                    <div className="tagBlock">
+                      <ProfileBlock />
+                    </div>
+                  </div>
+                </div>
+            </Route>
             <Route path={["/postinglist", "/", "/latest"]}>
-                <p>Latest</p>
+              <p>Latest</p>
               <div className="post-feed">
                 <div className="posting-block">
                   <PostingList refresh={this.state.refreshPosts}/>
@@ -199,6 +218,13 @@ class App extends React.Component {
                       Upload a Post
                     </Link>
                 </div>
+              </div>
+              <div className="posting-block">
+                <PostingList refresh={this.state.refreshPosts}/>
+              </div>
+              <div className="right-background"/>
+              <div className="column-view">
+
                 <div className="tagBlock">
                   <TagsBlock />
                 </div>

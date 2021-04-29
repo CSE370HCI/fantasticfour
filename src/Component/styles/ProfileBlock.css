@@ -18,11 +18,9 @@
   min-height: 100px;
 }
 
-.tag {
-  display:inline;
-}
-
-.checkbox {
-  margin-left: 5px;
-  max-width:10px;  
+.profile-picture-block {
+  object-fit: cover;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
 }

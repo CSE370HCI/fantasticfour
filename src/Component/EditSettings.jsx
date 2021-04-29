@@ -157,17 +157,11 @@ export default class EditSettings extends React.Component {
     };
 
     onClose = () => {
-            window.location.href = "profile";
+            window.location.href = "profileinfo";
         };
 
   render() {
     return (
-    <div id="myModal" className="editProfile">
-              <span className="close" onClick={this.onClose}>
-                &times;
-              </span>
-              <br/>
-              Edit Personal Information
                  <form onSubmit={this.submitHandler} style={{'font-size': '15px'}}>
                     <br/>
                     <label>
@@ -219,7 +213,6 @@ export default class EditSettings extends React.Component {
                          value="Delete Account"
                      />
                   </form>
-    </div>
     );
   }
 }

@@ -7,8 +7,10 @@ export default class ChangeProfilePicture extends React.Component {
     super(props);
     this.state = {
       picture_URL: "",
+      picture_File: null,
       can_upload: false,
-      profile_picture: ""
+      profile_picture: "",
+      picture_preview: null
     };
   }
 
@@ -33,60 +35,54 @@ export default class ChangeProfilePicture extends React.Component {
           );
   }
   submitHandler = event => {
-
+    const fileField = document.querySelector('input[type="file"]');
     //keep the form from actually submitting via HTML - we want to handle it in react
     event.preventDefault();
-    if (this.state.picture_URL.length == 0) {
-      alert("You need to include an image URL to continue")
-    }
-    else if (!this.state.picture_URL.match("(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\\.(?:jpg|gif|png))(?:\\?([^#]*))?(?:#(.*))?")){
-      alert("You must use a proper image URL")
-    }
-    else {
+    if (fileField.files[0] == null){
+      alert("You need to include an image to continue")
+    } else {
       this.state.can_upload = true;
     }
     if (this.state.can_upload) {
       //make the api call to update picture
-      fetch(process.env.REACT_APP_API_PATH+"/user-artifacts/" + this.state.profile_picture, {
-        method: "PATCH",
+
+      const formData = new FormData();
+      formData.append("file", fileField.files[0]);
+      fetch(process.env.REACT_APP_API_PATH+"/user-artifacts/" + this.state.profile_picture + "/upload", {
+        method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer '+sessionStorage.getItem("token")
+          'Authorization': 'Bearer '+ sessionStorage.getItem("token")
         },
-        body: JSON.stringify({
-          ownerID: sessionStorage.getItem("user"),
-          //Changes profile picture
-          url: this.state.picture_URL
-        })
+        body: formData
       })
-          .then(res => res.json())
-          .then(
-              result => {
-                // redirects users back to the profile screen
-                console.log(result);
-                window.location.href = "profile";
-                this.state.artifact_id = result;
-              }
-          );
-      }
+      .then(response => response.json())
+      .then(result => {
+        console.log('Success:', result);
+        window.location.href = "profileinfo";
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
   };
 
-  // this method will keep the current URL up to date as you type it,
-  // so that the submit handler can read the information from the state.
-
-  updateURL = event => {
-    this.setState({
-      picture_URL: event.target.value
-    });
-  };
+  updateFile = event => {
+    const preview = new FileReader();
+    preview.readAsDataURL(event.target.files[0]);
+    preview.onloadend = event => {
+      this.setState({
+        picture_preview: preview.result
+      });
+    }
+  }
 
   render() {
     return (
       <div>
         <form onSubmit={this.submitHandler}>
-            <img src={this.state.picture_URL} alt="Upload Photo" className="user-profile-picture"/>
-            <br/>
-            <input type="text" rows="1" cols="70" className="upload-input" onChange={this.updateURL} />
+          <img src={this.state.picture_preview} alt="Upload Image" className="user-profile-picture"/>
+          <br/>
+          <input type="file" id="myFile" name="filename" onChange={this.updateFile} className="fileUpload" accept=".png, .jpeg, .jpg, .gif"/>
           <br/>
           <br/>
           <input className="submit-button" type="submit" value="Confirm" />
