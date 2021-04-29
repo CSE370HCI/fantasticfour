@@ -209,7 +209,8 @@ export default class Upload extends React.Component {
   // so that the submit handler can read the information from the state.
   updateTitle = event => {
     this.setState({
-      post_title: event.target.value
+      post_title: event.target.value,
+        is_invalid_title: false
     });
   };
 
@@ -252,7 +253,7 @@ export default class Upload extends React.Component {
             }
             <br/>
             <br/>
-            <img src={this.state.picture_preview} alt="Upload Image" className="image-preview"/>
+            <img src={this.state.picture_preview} alt="Upload Image*" className="image-preview"/>
             {
                 this.state.is_invalid_image ? (
                     <p className="error-message">⚠ Your post is missing an image!</p>
@@ -272,7 +273,7 @@ export default class Upload extends React.Component {
             <input type="text" className="upload-input" onChange={this.updateRestrictedTo} placeholder="Usernames to only allow"/>
           <br/>
           <br/>
-          <input className="submit-button" type="submit" value="submit" />
+          <input className="submit-button" type="submit" value="Post" />
           <br/>
           {this.state.post_message}
         </form>

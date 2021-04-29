@@ -9,7 +9,10 @@ export default class PostingList extends React.Component {
       error: null,
       isLoaded: false,
       posts: [],
-      listType: props.listType
+      listType: props.listType,
+      blockedUsers: [], // holds id of blocked user for logged in user
+      authorID: this.props.userid,
+      loadedBlockedUsers: false
     };
     this.postingList = React.createRef();
     this.loadPosts = this.loadPosts.bind(this);
@@ -19,6 +22,7 @@ export default class PostingList extends React.Component {
 
     this.loadPosts();
 
+    !this.state.loadedBlockedUsers && this.loadBlockedUsers()
   }
 
   componentDidUpdate(prevProps) {
@@ -28,20 +32,6 @@ export default class PostingList extends React.Component {
       this.loadPosts();
     }
   }
-
-  // filterBlocked(posts) {
-  //   //if (this.state.posts) {
-  //     // get name of logged in user
-  //     let username = "";
-      
-
-  //     // this.setState({
-  //     //   isLoaded: true,
-  //     //   posts: filteredPosts
-  //     // })
-  //     return filteredPosts;
-  //   //}
-  // }
 
   // returns promise of username of account currently logged in (needs "await" keyword when calling to get the result of promise)
   async getLoggedInUser() {
@@ -98,9 +88,9 @@ export default class PostingList extends React.Component {
             "Content-Type": "application/json"
           }
         })
-        const blockingResult = await blocking.json();
+        const blockingResult = await blocking.json(); // if blockingResult[1] == 0, not being blocked for logged in user
   
-        if (blockingResult[1] == 0) { // not being blocked
+        if (blockingResult[1] == 0 && !this.isOnBlocklist(posts[i].author.id)) { // not being blocked
           filteredPosts.push(posts[i])
         }
       }
@@ -124,6 +114,64 @@ export default class PostingList extends React.Component {
     }
 
     return filteredPosts
+  }
+  async loadBlockedUsers() {
+    // check if block list exists, if not, no blocked users.
+    const getGroups = await fetch(process.env.REACT_APP_API_PATH+"/groups?ownerID=" + sessionStorage.getItem("user") + "&name=block", {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+sessionStorage.getItem("token")
+        }
+    })
+
+    const groupsResult = await getGroups.json()
+
+    let blockListID = 0
+    if (groupsResult[1] === 1) {
+        blockListID = groupsResult[0][0].id
+
+        // load group members into blockedUsers array
+        this.loadMembers(blockListID)
+    }
+    console.log("group id: ", blockListID)
+  }
+
+  async loadMembers(id) {
+    console.log("In load members with id: ", id)
+    const getGroupMembers = await fetch(process.env.REACT_APP_API_PATH+"/group-members?groupID=" + id, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+sessionStorage.getItem("token")
+        }
+    })
+
+    const groupMembersResults = await getGroupMembers.json()
+
+    let users
+    if (groupMembersResults[1] > 0) {
+        console.log(groupMembersResults[0])
+        users = groupMembersResults[0]
+
+        for (let i = 0; i < groupMembersResults[1]; i++) {
+            this.setState({
+                blockedUsers: [...this.state.blockedUsers, users[i].user.id]
+            })
+        }
+        this.setState({
+          loadedBlockedUsers: true
+        })
+    }
+  }
+
+  // returns boolean for presence of post author in the blocklist for logged in user
+  isOnBlocklist(authorID) {
+    //this.loadBlockedUsers();
+    if (this.state.blockedUsers)
+      return this.state.blockedUsers.includes(authorID);
+    else
+      return false;
   }
 
   async loadPosts() {
@@ -151,84 +199,6 @@ export default class PostingList extends React.Component {
       isLoaded: true,
       posts
     })
-    
-      // uncomment start
-
-      // .then(
-      //   result => {
-      //     if (result) {
-      //       let posts = result[0];
-
-      //       // if not logged in, load posts normally
-      //       if (!sessionStorage.getItem("user")) {
-      //         this.setState({
-      //           isLoaded: true,
-      //           posts: posts
-      //         });
-
-      //         return;
-      //       }
-
-      //       // if logged in filter blocked username
-            
-      //       const username = this.getLoggedInUser();
-            
-      //       console.log(username);
-
-      //       //   let filteredPosts = []
-      //       //   for (let i = 0; i < posts.length; i++) {
-      //       //     let post = posts[i]
-      //       //     console.log("in posting list: ", post.id);
-      //       //     fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID=" + posts[i].id + "&type=blocking" + "&name=" + username, {
-      //       //       method: "get",
-      //       //       headers: {
-      //       //         "Content-Type": "application/json"
-      //       //       }
-      //       //     })
-      //       //     .then(res => res.json())
-      //       //     .then(result => {
-      //       //       if (result[1] == 0) {
-      //       //         filteredPosts.push(post)
-      //       //       }
-      //       //     })
-      //       //     .then(() => {
-      //       //       this.setState({
-      //       //         isLoaded: true,
-      //       //         posts: filteredPosts
-      //       //       });
-      //       //     })
-      //       //   }
-      //       // })
-            
-      //       // end filter blocked username
-
-            
-            
-
-      //       console.log("Got Posts");
-      //     }
-      //   },
-      //   error => {
-      //     this.setState({
-      //       isLoaded: true,
-      //       error
-      //     });
-      //     console.log("ERROR loading Posts")
-      //   }
-      // )
-
-      // .then(result => {
-      //   this.setState({
-      //     isLoaded: true,
-      //     posts: result
-      //   })
-
-      //   console.log("filtered: ", this.state.posts);
-
-
-      // });
-
-      // uncomment end
   }
 
   render() {
@@ -247,7 +217,7 @@ export default class PostingList extends React.Component {
         <div className="posts">
 
           {posts.map(post => (
-            <Post key={post.id} post={post} type={this.props.type} loadPosts={this.loadPosts} username={post.author.username} userid={post.author.id}/>
+            <Post key={post.id} post={post} type={this.props.type} loadPosts={this.loadPosts} username={post.author.username} userid={post.author.id} blockedUsers={this.state.blockedUsers}/>
           ))}
 
         </div>
