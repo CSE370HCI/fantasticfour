@@ -410,24 +410,6 @@ export default class Post extends React.Component {
       }
   }
 
-  refreshComments = () =>{
-    if(sessionStorage.getItem("user") != null){
-      fetch(process.env.REACT_APP_API_PATH+"/posts?sort=newest&parentID="+this.props.post.id, {
-        method: "GET",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      }).then(res => res.json()
-      ).then(
-          result => {
-            this.setState({
-              comments: result[0],
-              commentCount: result[1]
-            });
-          }
-        ).then(console.log("Load Comments"))
-        }
-    }
 
   showLikes() {
     if (this.props.source === 'popular'){
