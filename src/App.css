@@ -75,7 +75,7 @@ label {
 }
 
 input {
-  width: 80%;
+  width: 75%;
   margin: 10px auto;
 }
 
@@ -208,6 +208,10 @@ input {
   height:fit-content;
   background-color: #C4C4C4;
   overflow: hidden;
+}
+
+.post-template {
+    width: 100%;
 }
 
 .temp-login {
@@ -543,29 +547,32 @@ heading{
   font-size: 18px;
 }
 
-.follower-list {
-  color: black;
-  text-align: left;
-  margin:2%;
-  display: flex;
-  align-items:center;
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .page-template {
+        width: 70%;
+    }
 }
 
-.follower-list img {
-  object-fit: cover;
-  padding-right:5px;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .page-template {
+        width: 50%;
+    }
 }
 
-
-@media screen and (max-width: 1280px) {
-  .follower-column {
-    width: 100%;
-  }
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
     .page-template {
         width: 40%;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .page-template {
+        width: 30%;
     }
 }
 
@@ -578,4 +585,16 @@ heading{
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+}
+
+.error-message {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 75%;
+    background: #FF5959;
+    color: white;
+    padding: 0;
 }
