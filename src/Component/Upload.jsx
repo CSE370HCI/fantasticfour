@@ -13,6 +13,9 @@ export default class Upload extends React.Component {
       post_URL: "",
       post_id: "",
       tag: "",
+      picture_preview: "",
+      is_invalid_title: false,
+      is_invalid_image: false,
       canIPost: false
     };
     this.postListing = React.createRef();
@@ -22,22 +25,29 @@ export default class Upload extends React.Component {
   // while the test harness does not use images, if you had an image URL you would pass it
   // in the thumbnailURL field.
   submitHandler = event => {
+      this.setState({
+          is_invalid_title: false,
+          is_invalid_image: false,
+      });
 
     //keep the form from actually submitting via HTML - we want to handle it in react
     const fileField = document.querySelector('input[type="file"]');
     event.preventDefault();
     if (this.state.post_title.length == 0) {
-      alert("You need a post title to continue")
+        this.setState({
+            is_invalid_title: true,
+        });
     }
     else if (fileField.files[0] == null) {
-      alert("You need to upload an image to continue")
+        this.setState({
+            is_invalid_image: true,
+        });
     }
     else {
       this.state.canIPost = true;
     }
     if (this.state.canIPost) {
       //make the api call to post
-
       fetch(process.env.REACT_APP_API_PATH+"/user-artifacts", {
         method: "POST",
         headers: {
@@ -140,12 +150,6 @@ export default class Upload extends React.Component {
     });
   };
 
-  updateURL = event => {
-    this.setState({
-      post_URL: event.target.value
-    });
-  };
-
   updateTag = event => {
     this.setState({
       tag: event.target.value
@@ -157,7 +161,8 @@ export default class Upload extends React.Component {
     preview.readAsDataURL(event.target.files[0]);
     preview.onloadend = event => {
       this.setState({
-        picture_preview: preview.result
+        picture_preview: preview.result,
+        is_invalid_image: false,
       });
     }
   }
@@ -170,9 +175,19 @@ export default class Upload extends React.Component {
             Title*
             <br/>
             <input type="text" cols="70" className="upload-input" onChange={this.updateTitle} />
+            {
+                this.state.is_invalid_title ? (
+                    <p className="error-message">⚠ Your post is missing a title!</p>
+                ) : ""
+            }
             <br/>
             <br/>
             <img src={this.state.picture_preview} alt="Upload Image" className="image-preview"/>
+            {
+                this.state.is_invalid_image ? (
+                    <p className="error-message">⚠ Your post is missing an image!</p>
+                ) : ""
+            }
             <br/>
             <input type="file" id="myFile" name="filename" onChange={this.updateFile} className="fileUpload" accept=".png, .jpeg, .jpg, .gif"/>
             <br/>
