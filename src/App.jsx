@@ -125,6 +125,7 @@ class App extends React.Component {
             </Route>
             <Route path="/blocklist">
               <div className="page-template">
+                <p className='page-title'>Manage Blocking</p>
                 <BlockList userid={sessionStorage.getItem("user")} />
               </div>
             </Route>

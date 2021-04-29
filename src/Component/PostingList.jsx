@@ -9,7 +9,8 @@ export default class PostingList extends React.Component {
       error: null,
       isLoaded: false,
       posts: [],
-      listType: props.listType
+      listType: props.listType,
+      blockedUsers: []
     };
     this.postingList = React.createRef();
     this.loadPosts = this.loadPosts.bind(this);
@@ -98,9 +99,9 @@ export default class PostingList extends React.Component {
             "Content-Type": "application/json"
           }
         })
-        const blockingResult = await blocking.json();
+        const blockingResult = await blocking.json(); // if blockingResult[1] == 0, not being blocked for logged in user
   
-        if (blockingResult[1] == 0) { // not being blocked
+        if (blockingResult[1] == 0 && !this.isOnBlocklist(posts[i].id)) { // not being blocked
           filteredPosts.push(posts[i])
         }
       }
@@ -124,6 +125,11 @@ export default class PostingList extends React.Component {
     }
 
     return filteredPosts
+  }
+
+  // returns boolean for presence of post author in the blocklist for logged in user
+  isOnBlocklist(id) {
+
   }
 
   async loadPosts() {
