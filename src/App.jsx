@@ -196,7 +196,7 @@ class App extends React.Component {
             <Route path={["/postinglist", "/", "/latest"]}>
               <div className="post-feed">
                 <div className="posting-block">
-                  <PostingList refresh={this.state.refreshPosts}/>
+                  <PostingList userid={sessionStorage.getItem("user")} refresh={this.state.refreshPosts}/>
                 </div>
                 <div className="right-background"/>
                   <div className="column-view">
