@@ -150,13 +150,13 @@ class App extends React.Component {
             </Route>
             <Route path="/tag/:tag_names" component={TaggedList} />
             <Route path="/popular">
-              <div className="posting-block">
+              <div className="post-template">
                 <p>Popular</p>
                 <PopularList userid={sessionStorage.getItem("user")}/>
               </div>
             </Route>
             <Route path="/random">
-              <div className="page-template">
+              <div className="post-template">
                 <p className='page-title'>Random</p>
                 <Random userid={sessionStorage.getItem("user")} />
               </div>

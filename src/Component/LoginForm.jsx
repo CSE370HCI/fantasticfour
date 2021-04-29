@@ -305,7 +305,7 @@ export default class LoginForm extends React.Component {
               ) : ""
             }
 
-            <input className="desktop-confirm" type="submit" value="submit" />
+            <input className="desktop-confirm" type="submit" value="Submit" />
 
             {
               this.state.signup ?
