@@ -12,7 +12,8 @@ export default class Following extends React.Component {
             responseMessage: "",
             users: [],
             connections: [],
-            following: []
+            following: [],
+            is_invalid_selection: false
 
         };
         this.fieldChangeHandler.bind(this);
@@ -116,7 +117,7 @@ export default class Following extends React.Component {
     fieldChangeHandler(field, e) {
         console.log("field change");
         this.setState({
-            [field]: e.target.value
+            [field]: e.target.value,
         });
     }
 
@@ -144,10 +145,15 @@ export default class Following extends React.Component {
     }
 
     submitHandler = event => {
+        this.setState({
+            is_invalid_selection: false
+        });
         //keep the form from actually submitting
         event.preventDefault();
         if (this.state.friendid === "") {
-            alert("You did not make a selection");
+            this.setState({
+                is_invalid_selection: true
+            });
             return;
         }
         console.log("friend is ");
@@ -204,6 +210,11 @@ export default class Following extends React.Component {
                         <form onSubmit={this.submitHandler} className="profileform">
                             <label>
                                 Follow a User
+                                {
+                                    this.state.is_invalid_selection ? (
+                                        <p className="error-message">⚠ You did not select a user!</p>
+                                    ) : ""
+                                }
                                 <br />
                                 <div className="autocomplete">
                                     <Autocomplete suggestions={this.state.users} selectAutocomplete={e => this.selectAutocomplete(e)} />
