@@ -118,11 +118,19 @@
   width:30%;
 }
 
-.meme-poster{
+.meme-by{
   right:0px;
   font-size: 20px;
   text-align:left;
   color: black;
+}
+
+.meme-poster{
+  right:0px;
+  font-size: 20px;
+  text-align:left;
+  font-weight: bold;
+  color: blue;
 }
 
 .comment-side{

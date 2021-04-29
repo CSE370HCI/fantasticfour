@@ -96,7 +96,7 @@ class Navbar extends React.Component {
       <iconbar id="logobar" className="logobar">
         <li className="home">
           <Link to="/" >
-            <img src={logo} />
+            <img src={logo} title="Home"/>
           </Link>
         </li>
       </iconbar>
@@ -140,7 +140,7 @@ class Navbar extends React.Component {
             </Link>
           </li>
           <li className="signupbar">
-            <Link to="/profile" title={sessionStorage.getItem("user")} style={{textDecoration: 'none', color: 'black'}}>
+            <Link to={"/profile/" + sessionStorage.getItem("user")} title="My Profile" style={{textDecoration: 'none', color: 'black'}}>
               <img src={this.state.profile_picture} alt="profile picture" className="small-profile-picture"/>
             </Link>
           </li>
@@ -153,7 +153,7 @@ class Navbar extends React.Component {
       <iconbar id="logobar" className="logobar">
         <li className="home">
           <Link to="/" >
-            <img src={logo} />
+            <img src={logo} title="Home"/>
           </Link>
         </li>
       </iconbar>

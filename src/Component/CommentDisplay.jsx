@@ -327,7 +327,7 @@ export default class CommentDisplay extends React.Component {
   }
 
   showEdit(){
-    if (this.props.userid == sessionStorage.getItem("user")) {
+    if ((this.props.userid == sessionStorage.getItem("user")) && (sessionStorage.getItem("user") != null)) {
       return(
         <div className="comment-indicator-text" onClick={e => this.showModalE()}>
             Edit
@@ -340,6 +340,7 @@ export default class CommentDisplay extends React.Component {
     var rep = this.state.userreaction
     var postID = this.props.post.id
     const comment_text = EditorState.createWithContent(stateFromMarkdown(this.props.post.content))
+    if (sessionStorage.getItem("user") != null){
     return (
         <div className="comment" key={postID}>
             <div className="commentInterations">
@@ -361,7 +362,21 @@ export default class CommentDisplay extends React.Component {
               {this.displayEdit()}
             </div>
           </div>
-  )
+  );
+  } else {
+  return (
+          <div className="comment" key={postID}>
+              <div className="comment-body">
+                <div className="comment-author">
+                  <span className="comment-author-text">{this.props.author}</span>
+                </div>
+                <div className="comment-text">
+                  <Editor editorState={comment_text} readOnly="true" className="editor-comment"/>
+                </div>
+              </div>
+            </div>
+    );
+  }
     }
   //note: time removed from render because time is irrelevant, memes are timeless
 }
