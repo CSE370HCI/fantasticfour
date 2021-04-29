@@ -34,6 +34,10 @@ export default class UserProfile extends React.Component {
         window.location.href = "following";
     };
 
+    toBlockList = () => {
+        window.location.href = "blocklist";
+    }
+
     getUserReputation() {
         fetch(process.env.REACT_APP_API_PATH+"/posts?sort=newest&authorID=" + sessionStorage.getItem("user"), {
             method: "GET",
@@ -163,6 +167,11 @@ export default class UserProfile extends React.Component {
             <a onClick={this.toFollowing}className="text-link">
                 Following: {this.state.following}
             </a>
+            <br/>
+            <a onClick={this.toBlockList}className="text-link">
+                Blocking: {this.state.blocking}
+            </a>
+            <br/>
             <br/>
             <a >
                 Reputation: {this.state.reputation_count}
