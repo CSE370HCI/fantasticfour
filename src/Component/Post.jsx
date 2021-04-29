@@ -306,19 +306,19 @@ export default class Post extends React.Component {
                 Make a comment!
             </div>
           </div>
-          <div className={this.showHideComments()}>
-            <CommentForm
-              onAddComment={this.setCommentCount}
-              parent={this.props.post.id}
-              commentCount={this.getCommentCount()}
-            />
-          </div>
           <div className={this.showHideEdit()}>
             <EditForm
               onAddComment={this.setCommentCount}
               postid={this.props.post.id}
               commentCount={this.getCommentCount()}
               post={this.props.post}
+            />
+          </div>
+          <div className={this.showHideComments()}>
+            <CommentForm
+              onAddComment={this.setCommentCount}
+              parent={this.props.post.id}
+              commentCount={this.getCommentCount()}
             />
           </div>
         </div>
@@ -406,9 +406,28 @@ export default class Post extends React.Component {
             commentCount: result[1]
           });
         }
-      )
+      ).then(console.log("Load Comments"))
       }
   }
+
+  refreshComments = () =>{
+    if(sessionStorage.getItem("user") != null){
+      fetch(process.env.REACT_APP_API_PATH+"/posts?sort=newest&parentID="+this.props.post.id, {
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      }).then(res => res.json()
+      ).then(
+          result => {
+            this.setState({
+              comments: result[0],
+              commentCount: result[1]
+            });
+          }
+        ).then(console.log("Load Comments"))
+        }
+    }
 
   showLikes() {
     if (this.props.source === 'popular'){
@@ -451,7 +470,7 @@ export default class Post extends React.Component {
           {this.conditionalDisplay()}
           <div className="comment-list">
             {comments.map(post => (
-              <CommentDisplay key={post.id} post={post} author={post.author.username} userid={post.author.id} postid={post.id}/>
+              <CommentDisplay key={post.id} post={post} author={post.author.username} userid={post.author.id} postid={post.id} />
                   ))}
           </div>
         </div>
