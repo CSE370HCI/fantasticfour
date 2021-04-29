@@ -30,6 +30,7 @@ import Followers from "./Component/Followers";
 import Following from "./Component/Following";
 import Random from "./Component/Random";
 import PopularList from "./Component/PopularList"
+import BlockList from "./Component/BlockList"
 
 // toggleModal will both show and hide the modal dialog, depending on current state.  Note that the
 // contents of the modal dialog are set separately before calling toggle - this is just responsible
@@ -116,6 +117,11 @@ class App extends React.Component {
             <Route path="/settings">
               <div className="page-template">
                 <EditSettings userid={sessionStorage.getItem("user")} />
+              </div>
+            </Route>
+            <Route path="/blocklist">
+              <div className="page-template">
+                <BlockList userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
             <Route path="/friends">
