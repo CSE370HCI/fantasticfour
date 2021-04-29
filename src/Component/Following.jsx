@@ -127,7 +127,6 @@ export default class Following extends React.Component {
             friendid:friendID,
             is_invalid_selection: false,
         })
-        console.log("Set Friend ID to "+friendID)
     }
 
     clearForm() {
