@@ -145,7 +145,9 @@ export default class EditForm extends React.Component {
           onClick={e => this.deletePost(this.props.postid)}
         />
             <br/>
+            <heading className="edit-title">
             Title
+            </heading>
             <br/>
             <input type="text" cols="70" className="upload-input" value={this.state.post_title}onChange={this.updateTitle} />
             <br/>

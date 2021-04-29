@@ -430,6 +430,18 @@ input {
     cursor: pointer;
 }
 
+.font-type-button {
+    display: inline-block;
+    background: #2D86D8;
+    padding: 20;
+    border: none;
+    color: #FFFFFF;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    margin: 5px;
+    cursor: pointer;
+}
+
 .desktop-tag {
     width: 301.77px;
     height: 159.98px;
@@ -596,4 +608,11 @@ heading{
     background: #fff5f5;
     color: rgb(255, 0, 0);
     padding: 10px;
+}
+
+.edit-title {
+    display: block;
+    position: absolute;
+    text-align: center;
+    left: calc(50% - 25px);
 }
