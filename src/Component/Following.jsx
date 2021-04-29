@@ -118,12 +118,14 @@ export default class Following extends React.Component {
         console.log("field change");
         this.setState({
             [field]: e.target.value,
+            is_invalid_selection: false,
         });
     }
 
     selectAutocomplete(friendID) {
         this.setState({
-            friendid:friendID
+            friendid:friendID,
+            is_invalid_selection: false,
         })
         console.log("Set Friend ID to "+friendID)
     }
