@@ -18,7 +18,7 @@ export default class LoginForm extends React.Component {
       alanmessage: "",
       sessiontoken: "",
       signup: false,
-      passwordmismatch: true,
+      passwordmismatch: false,
       usernameexists: false,
       is_invalid_login: false,
       is_deleted_account: false
@@ -249,7 +249,12 @@ export default class LoginForm extends React.Component {
   };
 
   verifyPassword = (event) => {
-    if (this.state.password === event.target.value) {
+      if (this.state.password.length == 0 || event.target.value.length == 0) {
+          this.setState({
+              passwordmismatch: false
+          });
+      }
+    else if (this.state.password === event.target.value) {
       this.setState({
         passwordmismatch: false
       });
