@@ -199,7 +199,6 @@ export default class TagsBlock extends React.Component {
       }
 
     tagRedirect(){
-        console.log("TAGREDIRECTOOO")
         var checkboxes = document.getElementsByName("hashtag"); 
         var query=""
         for(var i = 0; i < checkboxes.length; i++){  
