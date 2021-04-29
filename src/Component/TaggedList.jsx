@@ -19,13 +19,11 @@ export default class TaggedList extends React.Component {
   }
 
   componentDidMount() {
-    console.log("FOUND TAGGEDLIST")
     var tagsList = (this.props.match.params.tag_names).split("&")
     this.setState({
       tagsList: tagsList
     })
     for (const [key, tag] of Object.entries(tagsList)){
-      console.log("Send a "+tag)
       this.loadPosts(tag);
     }
 
@@ -63,12 +61,10 @@ export default class TaggedList extends React.Component {
                 filtered.push(post)
               }
             }
-            console.log(tag_name+"-filtered: "+JSON.stringify(filtered))
             this.setState({
               isLoaded: true,
               posts: filtered.concat(this.state.posts)
             });
-            console.log("Got Posts");
           }
         },
         error => {
@@ -82,7 +78,6 @@ export default class TaggedList extends React.Component {
   }
 
   render() {
-    console.log("TAG!! "+ this.props.match.params.tag_name)
     //this.loadPosts();
     const {error, isLoaded, posts} = this.state;
     if (error) {
@@ -92,7 +87,6 @@ export default class TaggedList extends React.Component {
     } else if (posts) {
 
       if (posts.length > 0){
-        console.log("posts: "+JSON.stringify(this.state.posts))
       return (
         <div className="post-feed">
           <div className="posting-block">

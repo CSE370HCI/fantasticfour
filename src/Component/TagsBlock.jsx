@@ -2,6 +2,7 @@ import React from "react";
 
 import "../App.css";
 import "./styles/TagsBlock.css";
+import {Redirect} from 'react-router-dom';
 
 export default class TagsBlock extends React.Component {
 
@@ -12,7 +13,8 @@ export default class TagsBlock extends React.Component {
           list: [],
           id: 0,
           addClicked: false,
-          tempTag: ''
+          tempTag: '',
+          tagredirect: false
         };
         this.tagblock = React.createRef();
     }
@@ -180,18 +182,54 @@ export default class TagsBlock extends React.Component {
         }
     }
 
+    filterbyTags(){
+        var checkboxes = document.getElementsByName("hashtags"); 
+        var query=""
+        for(var i = 0; i < checkboxes.length; i++){  
+            if(checkboxes[i].checked)  
+                query = query.concat(checkboxes[i].value).concat("&")
+        } 
+        
+    }
+
+    setRedirect = () => {
+        this.setState({
+          redirect: true
+        })
+      }
+
+    tagRedirect(){
+        console.log("TAGREDIRECTOOO")
+        var checkboxes = document.getElementsByName("hashtag"); 
+        var query=""
+        for(var i = 0; i < checkboxes.length; i++){  
+            console.log("Checked?"+checkboxes[i].checked)
+            if(checkboxes[i].checked)  {
+                query = query.concat(checkboxes[i].value).concat("&")
+            }
+        } 
+        window.location.href = '/tag/'+query;
+
+      }
+
     render() {
         const tagList = this.state.list;
         var elementList = [];
         for (var i = 0; i<tagList.length;i++){
             var link = "/tag/" + tagList[i]
-            elementList.push(<a href={link} key={i}>#{tagList[i]} </a>)
+            elementList.push(<a href={link} key={i} className="tag"> 
+                <label className="tag"><input type="checkbox" name="hashtag" id={tagList[i]} value={tagList[i]} className="checkbox"/> #{tagList[i]} </label>
+            </a>)
         }
+
         return(
             <div > 
                 <p className="tag-header">Tags</p>
                 <div className="tags">
+                <form onSubmit={event => this.tagRedirect}>
                     {elementList}
+                </form>
+                <button onClick={this.tagRedirect} onSubmit={this.tagRedirect}>search tags</button>
                     {this.addTagsButton()}
                 </div>
             </div>

@@ -467,7 +467,7 @@ export default class Post extends React.Component {
             <div className="memeStuff">
               <li className="post-info">
                 <b className="meme-name">{this.props.post.content}</b>
-                <b className="meme-poster"> by {this.props.post.author.username}</b>
+                <b className="meme-poster"> by {this.props.username}</b>
               </li>
               <br/>
             </div>
