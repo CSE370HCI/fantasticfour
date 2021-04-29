@@ -8,7 +8,8 @@ export default class Following extends React.Component {
         this.state = {
             userList: [],
             blockedUsers: [],
-            blockedID: ""
+            blockedID: "",
+            noSelection: false
         };
         this.fieldChangeHandler.bind(this);
     }
@@ -67,7 +68,9 @@ export default class Following extends React.Component {
         //keep the form from actually submitting
         event.preventDefault();
         if (this.state.blockedID === "") {
-            alert("You did not make a selection");
+            this.setState({
+                noSelection: true
+            })
             return;
         }
         console.log(this.state.blockedID);
@@ -97,6 +100,12 @@ export default class Following extends React.Component {
                             <br />
                             <div className="autocomplete">
                                 <Autocomplete suggestions={this.state.userList} selectAutocomplete={e => this.selectAutocomplete(e)} />
+                                {
+                                    this.state.noSelection &&
+                                    (
+                                        <p className="error-message">⚠ Oops, no selection was made. Select a user and try again!</p>
+                                    )
+                                }
                             </div>
                         </label>
                         <br/>

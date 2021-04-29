@@ -588,13 +588,12 @@ heading{
 }
 
 .error-message {
-    margin-top: 0;
-    margin-bottom: 0;
-    margin-left: auto;
-    margin-right: auto;
+    font-size: 0.8em;
+    margin: 0 auto;
     text-align: center;
     width: 75%;
-    background: #FF5959;
-    color: white;
-    padding: 0;
+    max-width: 50vw;
+    background: #fff5f5;
+    color: rgb(255, 0, 0);
+    padding: 10px;
 }
