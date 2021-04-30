@@ -170,7 +170,7 @@ export default class TagsBlock extends React.Component {
         if(this.state.addClicked === false){
             return(
                 <form onSubmit={this.addTag}>
-                    <input type="text" placeholder="hashtag" onChange={this.myChangeHandler} id='field' onSubmit={this.addTag}></input>
+                    <input type="text" placeholder="follow a hashtag" onChange={this.myChangeHandler} id='field' onSubmit={this.addTag}></input>
                     <br/>
                     <button className="addTag" className="desktop-confirm">Add Tag</button>
                 </form>

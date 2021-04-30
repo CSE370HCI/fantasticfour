@@ -408,6 +408,7 @@ input {
     margin-top: 10%;
     cursor: pointer;
     transition-duration: 0.4s;
+    border-radius: 24px;
 }
 
 .desktop-confirm:hover {
