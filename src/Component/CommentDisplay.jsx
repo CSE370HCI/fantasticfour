@@ -8,6 +8,7 @@ import commentIcon from "../assets/comment.svg";
 import upArrow from "../assets/UpArrow.svg";
 import downArrow from "../assets/DownArrow.svg";
 import { parseConfigFileTextToJson, resolveModuleName } from "typescript";
+import {Link} from 'react-router-dom';
 import {stateFromMarkdown} from 'draft-js-import-markdown';
 import {convertToRaw, Editor, EditorState, RichUtils} from 'draft-js';
 
@@ -314,7 +315,7 @@ export default class CommentDisplay extends React.Component {
   displayEdit(){
     if (this.props.userid == sessionStorage.getItem("user")) {
       return(
-        <div className={this.showHideEdit()}>
+        <div className={this.showHideEdit()} tabindex="0">
             <EditComment
               onAddComment={this.setCommentCount}
               postid={this.props.postid}
@@ -327,9 +328,9 @@ export default class CommentDisplay extends React.Component {
   }
 
   showEdit(){
-    if (this.props.userid == sessionStorage.getItem("user")) {
+    if ((this.props.userid == sessionStorage.getItem("user")) && (sessionStorage.getItem("user") != null)) {
       return(
-        <div className="comment-indicator-text" onClick={e => this.showModalE()}>
+        <div className="comment-indicator-text" onClick={e => this.showModalE()} >
             Edit
         </div>
     )
@@ -340,28 +341,43 @@ export default class CommentDisplay extends React.Component {
     var rep = this.state.userreaction
     var postID = this.props.post.id
     const comment_text = EditorState.createWithContent(stateFromMarkdown(this.props.post.content))
+    if (sessionStorage.getItem("user") != null){
     return (
         <div className="comment" key={postID}>
             <div className="commentInterations">
-              <div className={this.commentUp(rep)} onClick={event => this.likeComment(postID)}>
+              <div className={this.commentUp(rep)} onClick={event => this.likeComment(postID)} tabindex="0" >
                 <img src={upArrow} className={(rep === 1) ? 'arrowsLitC' : 'arrowsC'} alt={rep}/>
               </div>
-              <div className={this.commentDown(rep)} onClick={event => this.dislikeComment(postID)}>
+              <div className={this.commentDown(rep)} onClick={event => this.dislikeComment(postID)} tabindex="0">
                 <img src={downArrow} className={(rep === -1) ? 'arrowsLitC' : 'arrowsC'} alt={rep}/>
               </div>
             </div>
             <div className="comment-body">
               <div className="comment-author">
-                <span className="comment-author-text">{this.props.author}</span>
+                <Link to={"/profile/" + this.props.post.author.id} className="comment-author-text" style={{textDecoration: 'none', color: 'blue'}}>{this.props.author}</Link>
                 {this.showEdit()}
               </div>
-              <div className="comment-text">
-                <Editor editorState={comment_text} readOnly="true" className="editor-comment"/>
+              <div className="comment-text" tabindex="0">
+                <Editor editorState={comment_text} readOnly="true" className="editor-comment" tabindex="0"/>
               </div>
               {this.displayEdit()}
             </div>
           </div>
-  )
+  );
+  } else {
+  return (
+          <div className="comment" key={postID}>
+              <div className="comment-body">
+                <div className="comment-author">
+                  <Link to={"/profile/" + this.props.post.author.id} className="comment-author-text" style={{textDecoration: 'none', color: 'blue'}}>{this.props.author}</Link>
+                </div>
+                <div className="comment-text" tabindex="0">
+                  <Editor editorState={comment_text} readOnly="true" className="editor-comment" tabindex="0"/>
+                </div>
+              </div>
+            </div>
+    );
+  }
     }
   //note: time removed from render because time is irrelevant, memes are timeless
 }

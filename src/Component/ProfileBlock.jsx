@@ -12,57 +12,56 @@ export default class ProfileBlock extends React.Component {
           username: "",
           email: "",
           followers: "",
-          following: ""
+          following: "",
+          user_id: this.props.id
         };
     }
 
 componentDidMount() {
-      fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?ownerID=" + sessionStorage.getItem("user") + "&category=profile_picture", {
+      fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?ownerID=" + this.state.user_id + "&category=profile_picture", {
           method: "GET",
           headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer '+sessionStorage.getItem("token")
+              'Content-Type': 'application/json'
           }
       })
           .then(res => res.json())
           .then(
               result => {
-                  if(sessionStorage.getItem("user") != null){
+                  if(result[0][0] != null){
                     if(result[0][0]["url"].charAt(0) == '/'){
                       this.setState({
-                        profile_picture: "https://webdev.cse.buffalo.edu" + result[0][0]["url"],
-                        logged_in: true
+                        profile_picture: "https://webdev.cse.buffalo.edu" + result[0][0]["url"]
                       });
                     } else {
                       this.setState({
-                        profile_picture: result[0][0]["url"],
-                        logged_in: true
+                        profile_picture: result[0][0]["url"]
                       });
                     }
+                  } else {
+                    this.setState({
+                      profile_picture: "https://i.imgur.com/UJ9uaCg.png"
+                    });
                   }
               }
           );
-      fetch(process.env.REACT_APP_API_PATH+"/users/" + sessionStorage.getItem("user"), {
+      fetch(process.env.REACT_APP_API_PATH+"/users/" + this.state.user_id, {
           method: "GET",
           headers: {
               'Content-Type': 'application/json',
-              'Authorization': 'Bearer '+sessionStorage.getItem("token")
           }
       })
           .then(res => res.json())
           .then(
               result => {
                   this.setState({
-                      username: result["username"],
-                      email: result["email"]
+                      username: result["username"]
                   });
               }
           );
-      fetch(process.env.REACT_APP_API_PATH+"/connections?userID=" + sessionStorage.getItem("user"), {
+      fetch(process.env.REACT_APP_API_PATH+"/connections?userID=" + this.state.user_id, {
           method: "GET",
           headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer '+sessionStorage.getItem("token")
+              'Content-Type': 'application/json'
           }
       })
           .then(res => res.json())
@@ -73,11 +72,10 @@ componentDidMount() {
                   });
               }
           );
-      fetch(process.env.REACT_APP_API_PATH+"/connections?connectedUserID=" + sessionStorage.getItem("user"), {
+      fetch(process.env.REACT_APP_API_PATH+"/connections?connectedUserID=" + this.state.user_id, {
           method: "GET",
           headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer '+sessionStorage.getItem("token")
+              'Content-Type': 'application/json'
           }
       })
           .then(res => res.json())
@@ -91,18 +89,19 @@ componentDidMount() {
   }
 
   toFollowers = () => {
-    window.location.href = "followers";
+    window.location.href = "/followers";
   };
 
   toFollowing = () => {
-    window.location.href = "following";
+    window.location.href = "/following";
   };
 
   toProfileInfo = () => {
-    window.location.href = "profileinfo";
+    window.location.href = "/profileinfo";
   };
 
     render() {
+      if(this.state.user_id == sessionStorage.getItem("user")) {
         return(
             <div > 
                 <p className="tag-header">{this.state.username}</p>
@@ -124,6 +123,24 @@ componentDidMount() {
                 />
             </div>
         );
-        
+        } else {
+        return(
+          <div >
+            <p className="tag-header">{this.state.username}</p>
+            <img src={this.state.profile_picture} alt="profile picture" className="profile-picture-block"/>
+            <br/>
+            <content>
+              Followers: {this.state.followers}
+            </content>
+            <br/>
+            <content>
+              Following: {this.state.following}
+            </content>
+            <br/>
+            <br/>
+            <br/>
+          </div>
+          );
+        }
     }
 }

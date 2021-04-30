@@ -12,6 +12,7 @@
   display:block;
   float:right;
   margin-top: 5px;
+  margin-right: 5px;
 }
 
 .comment-indicator-text{
@@ -21,9 +22,19 @@
   font-weight: bold;
   float:right;
   margin-left:10px;
+  margin-right:10px;
   text-align: center;
   user-select: none;
   vertical-align: center;
+  transition-duration: 0.4s;
+}
+
+.comment-indicator-text:hover{
+  color: #2D86D8;
+}
+
+.comment-indicator-text:hover {
+  cursor: pointer;
 }
 
 .comment-count-text{
@@ -41,7 +52,13 @@
   width:40px;
   height:40px;
   float:right;
-  filter: invert(100%)
+  margin-right: 5px;
+  filter: invert(100%);
+}
+
+.comment-icon:hover {
+  cursor: pointer;
+  filter: invert(44%) sepia(89%) saturate(557%) hue-rotate(171deg) brightness(89%) contrast(90%);
 }
 
 .post-comment-block{
@@ -118,11 +135,19 @@
   width:30%;
 }
 
-.meme-poster{
+.meme-by{
   right:0px;
   font-size: 20px;
   text-align:left;
   color: black;
+}
+
+.meme-poster{
+  right:0px;
+  font-size: 20px;
+  text-align:left;
+  font-weight: bold;
+  color: blue;
 }
 
 .comment-side{
@@ -148,7 +173,7 @@
   word-wrap: break-word;
   left: 4%;
   min-height: 1em;
-  width:95%;
+  width: calc(100% - 20px);
   max-width: 95%;
 }
 
@@ -255,7 +280,7 @@ div.DraftEditor-root {
 }
 
 .comments.show{
-  width:100%;
+  width: calc(100% - 2px);
   color:black;
   border-width: 1px;
   border-style: solid;
@@ -276,27 +301,35 @@ div.DraftEditor-root {
 .greyButton {
   position: relative;
   display: block;
+  aspect-ratio: 1 / 1;
+  margin-top: 1px;
   height: 42px;
   width: 50px;
 }
 
 .upButton {
   position: relative;
-  display: flex;
+  display: block;
+  aspect-ratio: 1 / 1;
+  margin-top: 1px;
   height: 42px;
   width: 50px;
 }
 
 .downButton {
   position: relative;
-  display: flex;
+  display: block;
+  aspect-ratio: 1 / 1;
+  margin-top: 1px;
   height: 42px;
   width: 50px;
 }
 
 .upButtonLit {
   position: relative;
-  display: flex;
+  display: block;
+  aspect-ratio: 1 / 1;
+  margin-top: 1px;
   height: 42px;
   width: 50px;
   border-color: #2D86D8;
@@ -304,7 +337,9 @@ div.DraftEditor-root {
 
 .downButtonLit {
   position: relative;
-  display: flex;
+  display: block;
+  aspect-ratio: 1 / 1;
+  margin-top: 1px;
   height: 42px;
   width: 50px;
   border-color: #2D86D8;
@@ -321,4 +356,19 @@ div.DraftEditor-root {
 
 .comment-invite{
   color:black;
+}
+
+.downButtonLit:hover {
+  cursor: pointer;
+}
+.upButtonLit:hover {
+  cursor: pointer;
+}
+
+.upButton:hover {
+  cursor: pointer;
+}
+
+.downButton:hover {
+  cursor: pointer;
 }

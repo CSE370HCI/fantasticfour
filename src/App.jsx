@@ -33,6 +33,7 @@ import Followers from "./Component/Followers";
 import Following from "./Component/Following";
 import Random from "./Component/Random";
 import PopularList from "./Component/PopularList"
+import BlockList from "./Component/BlockList"
 
 // toggleModal will both show and hide the modal dialog, depending on current state.  Note that the
 // contents of the modal dialog are set separately before calling toggle - this is just responsible
@@ -69,6 +70,10 @@ class App extends React.Component {
     });
   }
 
+  onClose(path) {
+    window.location.href = path;
+  }
+
   render() {
 
     return (
@@ -88,45 +93,65 @@ class App extends React.Component {
             <Switch>
             <Route path="/profileinfo">
               <div className="page-template">
+                 <span className="close" onClick={() => this.onClose('profile/' + sessionStorage.getItem("user"))}>
+                  &times;
+                </span>
                 <p className='page-title'>My Profile</p>
                 <UserProfile userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
             <Route path="/changepicture">
               <div className="page-template">
+                 <span className="close" onClick={() => this.onClose('profileinfo')}>
+                  &times;
+                </span>
                 <p className='page-title'>Change Profile Picture</p>
                 <ChangeProfilePicture userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
               <Route path="/followers">
                 <div className="page-template">
+                   <span className="close" onClick={() => this.onClose('profileinfo')}>
+                  &times;
+                </span>
                   <p className='page-title'>Followers</p>
                   <Followers userid={sessionStorage.getItem("user")} />
                 </div>
               </Route>
               <Route path="/following">
                 <div className="page-template">
+                <span className="close" onClick={() => this.onClose('profileinfo')}>
+                  &times;
+                </span>
                   <p className='page-title'>Following</p>
                   <Following userid={sessionStorage.getItem("user")} />
                 </div>
               </Route>
             <Route path="/delete">
               <div className="page-template">
+                <span className="close" onClick={() => this.onClose('settings')}>
+                  &times;
+                </span>
                 <p className='page-title'>Delete Your Account</p>
                 <DeleteAccount userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
             <Route path="/settings">
               <div className="page-template">
+                <span className="close" onClick={() => this.onClose('profileinfo')}>
+                &times;
+              </span>
                 <p className="page-title">Edit Personal Information</p>
                 <EditSettings userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
-            <Route path="/friends">
-              <div>
-                <p>Friends</p>
-                <FriendForm userid={sessionStorage.getItem("user")} />
-                <FriendList userid={sessionStorage.getItem("user")} />
+            <Route path="/blocklist">
+              <div className="page-template">
+                <span className="close" onClick={() => this.onClose('profileinfo')}>
+                  &times;
+                </span>
+                <p className='page-title'>Manage Blocking</p>
+                <BlockList userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
             <Route path="/b">
@@ -150,13 +175,13 @@ class App extends React.Component {
             </Route>
             <Route path="/tag/:tag_names" component={TaggedList} />
             <Route path="/popular">
-              <div className="posting-block">
+              <div className="post-template">
                 <p>Popular</p>
                 <PopularList userid={sessionStorage.getItem("user")}/>
               </div>
             </Route>
             <Route path="/random">
-              <div className="page-template">
+              <div className="post-template">
                 <p className='page-title'>Random</p>
                 <Random userid={sessionStorage.getItem("user")} />
               </div>
@@ -169,6 +194,9 @@ class App extends React.Component {
             </Route>
             <Route path="/upload">
               <div className="page-template">
+                <span className="close" onClick={() => this.onClose('latest')}>
+                  &times;
+                </span>
                 <p className='page-title'>Create a New Post</p>
                 <Upload userid={sessionStorage.getItem("user")} />
               </div>
@@ -181,49 +209,37 @@ class App extends React.Component {
             </Route>
             <Route path="/forgot-password">
               <div className="page-template">
+                <span className="close" onClick={() => this.onClose('login')}>
+                  &times;
+                </span>
                 <p className="page-title">Forgot Your Password?</p>
                 <ForgotPasswordForm/>
               </div>
             </Route>
-            <Route path="/profile">
-              <p>Latest</p>
+            <Route path="/profile/:user_id" component={ProfileList} exact/>
+            <Route path={["/postinglist", "/", "/latest"]}>
               <div className="post-feed">
                 <div className="posting-block">
-                  <ProfileList refresh={this.state.refreshPosts}/>
+                  <PostingList userid={sessionStorage.getItem("user")} refresh={this.state.refreshPosts}/>
                 </div>
                 <div className="right-background"/>
                   <div className="column-view">
-                    <div className="tagBlock">
-                      <ProfileBlock />
+                    <div className="upload-button">
+                      <Link to="/upload" className="upload-button-text">
+                        Upload a Post
+                      </Link>
                     </div>
                   </div>
-                </div>
-            </Route>
-            <Route path={["/postinglist", "/", "/latest"]}>
-              <p>Latest</p>
-              <div className="post-feed">
-                <div className="posting-block">
-                  <PostingList refresh={this.state.refreshPosts}/>
-                </div>
-                <div className="right-background"/>
-                <div className="column-view">
-                  <div className="upload-button">
-                    <Link to="/upload" className="upload-button-text">
-                      Upload a Post
-                    </Link>
-                </div>
-              </div>
-              <div className="posting-block">
-                <PostingList refresh={this.state.refreshPosts}/>
-              </div>
-              <div className="right-background"/>
-              <div className="column-view">
-
-                <div className="tagBlock">
-                  <TagsBlock />
-                </div>
-              </div>
-              </div>
+                  <div className="posting-block">
+                    <PostingList refresh={this.state.refreshPosts}/>
+                  </div>
+                  <div className="right-background"/>
+                    <div className="column-view">
+                      <div className="tagBlock">
+                        <TagsBlock />
+                      </div>
+                    </div>
+                  </div>
             </Route>
             </Switch>
           </div>

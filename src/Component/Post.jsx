@@ -9,7 +9,7 @@ import upArrow from "../assets/UpArrow.svg";
 import downArrow from "../assets/DownArrow.svg";
 import EditForm from "./EditForm.jsx"
 import {Link} from 'react-router-dom';
-import { parseConfigFileTextToJson, resolveModuleName } from "typescript";
+import { createFalse, parseConfigFileTextToJson, resolveModuleName } from "typescript";
 import {stateFromMarkdown} from 'draft-js-import-markdown';
 import {convertToRaw, Editor, EditorState, RichUtils} from 'draft-js';
 
@@ -20,19 +20,32 @@ export default class Post extends React.Component {
       showModal: false,
       showModalE: false,
       commentCount: this.props.post.commentCount,
+      title: "",
       likes: 1,
       dislikes: 0,
       tags: [],
       userreaction: 0,
       comments: [], 
-      tempVal: 0
+      newComment: false
     };
     this.post = React.createRef();
   }
 
   componentDidMount() {
+    this.setState({
+      title: this.props.post.content
+    })
     this.getUserReaction()
     this.getComments(this.props.post.id)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.state.newComment === true){
+      this.getComments(this.props.post.id)
+      this.setState({
+        newComment: false
+      })
+    }
   }
 
   getUserReaction(){
@@ -235,6 +248,22 @@ export default class Post extends React.Component {
     });
   };
 
+  addComment = newC => {
+    this.showModal()
+    const list = [newC, ...this.state.comments]
+    this.setState({
+      comments: list
+    });
+  };
+
+  editTitle = newT => {
+    this.showModalE()
+    this.setState({
+      title: newT
+    })
+
+  }
+
   getCommentCount() {
     if (!this.state.commentCount || this.state.commentCount === "0") {
       return 0;
@@ -300,18 +329,12 @@ export default class Post extends React.Component {
               src={commentIcon}
               className="comment-icon"
               onClick={e => this.showModal()}
-              alt="View Comments"
+              alt="Make a Comment"
+              tabindex="0"
             />
-            <div className="comment-indicator-text" onClick={e => this.showModal()}>
+            <div className="comment-indicator-text" onClick={e => this.showModal()} >
                 Make a comment!
             </div>
-          </div>
-          <div className={this.showHideComments()}>
-            <CommentForm
-              onAddComment={this.setCommentCount}
-              parent={this.props.post.id}
-              commentCount={this.getCommentCount()}
-            />
           </div>
           <div className={this.showHideEdit()}>
             <EditForm
@@ -319,6 +342,15 @@ export default class Post extends React.Component {
               postid={this.props.post.id}
               commentCount={this.getCommentCount()}
               post={this.props.post}
+              updateTitle={this.editTitle}
+            />
+          </div>
+          <div className={this.showHideComments()}>
+            <CommentForm
+              onAddComment={this.setCommentCount}
+              parent={this.props.post.id}
+              commentCount={this.getCommentCount()}
+              updateComments={this.addComment}
             />
           </div>
         </div>
@@ -339,7 +371,7 @@ export default class Post extends React.Component {
   showDelete(){
     if (this.props.userid == sessionStorage.getItem("user")) {
       return(
-        <div className="comment-indicator-text" onClick={e => this.showModalE()}>
+        <div className="comment-indicator-text" onClick={e => this.showModalE()} tabindex="0">
             Edit
         </div>
     );
@@ -392,7 +424,6 @@ export default class Post extends React.Component {
   }
 
   getComments(parentID) {
-  if(sessionStorage.getItem("user") != null){
     fetch(process.env.REACT_APP_API_PATH+"/posts?sort=newest&parentID="+parentID, {
       method: "GET",
       headers: {
@@ -407,8 +438,8 @@ export default class Post extends React.Component {
           });
         }
       )
-      }
   }
+
 
   showLikes() {
     if (this.props.source === 'popular'){
@@ -419,6 +450,43 @@ export default class Post extends React.Component {
   render() {
     const comments = this.state.comments;
     if(sessionStorage.getItem("user") != null){
+      if(comments[0] == null){
+      return(
+      <div className="post-comment-block">
+              <div className="meme-side">
+                <div>
+                  <img src={this.props.post.thumbnailURL} className="meme" alt=""/>
+                </div>
+                <div className="memeStuff">
+                  <li className="post-info" tabindex="0">
+                    <b className="meme-name">{this.state.title}</b>
+                    <b className="meme-by"> by </b>
+                    <Link to={"/profile/" + this.props.userid} className="meme-poster" style={{textDecoration: 'none'}}>{this.props.username}</Link>
+                  </li>
+                  <br/>
+                  <div className="postInterations">
+                    <div className={this.isUp()} onClick={event => this.like(event)} tabindex="0">
+                      <img src={upArrow} className={(this.state.userreaction === 1) ? 'arrowsLit' : 'arrows'} alt={this.state.userreaction}/>
+                    </div>
+                    <div className={this.isDown()} onClick={event => this.dislike(event)} tabindex="0">
+                      <img src={downArrow} className={(this.state.userreaction === -1) ? 'arrowsLit' : 'arrows'} alt={this.state.userreaction}/>
+                    </div>
+                    <div>
+                      {this.showLikes()}
+                    </div>
+                    <div className="comment-count-text">
+                      {this.state.commentCount} Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div  className="comment-side">
+                {this.conditionalDisplay()}
+                <div className="comment-invite" tabindex="0">Now's your chance to make the first comment! </div>
+              </div>
+            </div>
+            );
+      } else {
     return (
       <div className="post-comment-block">
         <div className="meme-side">
@@ -427,8 +495,9 @@ export default class Post extends React.Component {
           </div>
           <div className="memeStuff">
             <li className="post-info">
-              <b className="meme-name">{this.props.post.content}</b>
-              <b className="meme-poster"> by {this.props.username}</b>
+              <b className="meme-name">{this.state.title}</b>
+              <b className="meme-by"> by </b>
+              <Link to={"/profile/" + this.props.userid} className="meme-poster" style={{textDecoration: 'none'}}>{this.props.username}</Link>
             </li>
             <br/>
             <div className="postInterations">
@@ -448,31 +517,66 @@ export default class Post extends React.Component {
           </div>
         </div>
         <div  className="comment-side">
-          {this.conditionalDisplay()}
+
           <div className="comment-list">
-            {comments.map(post => (
-              <CommentDisplay key={post.id} post={post} author={post.author.username} userid={post.author.id} postid={post.id}/>
-                  ))}
+            {this.conditionalDisplay()}
+            {comments.map(post => {
+              if(this.props.blockedUsers && this.props.blockedUsers.includes(post.author.id)) {
+                return
+              }
+              return (
+                <CommentDisplay key={post.id} post={post} author={post.author.username} userid={post.author.id} postid={post.id}/>
+              )
+            }
+            )}
           </div>
         </div>
       </div>
     );
-  } else {
+    }
+    } else {
+      if(comments[0] == null){
+            return (
+                      <div className="post-comment-block">
+                      <div className="meme-side">
+                        <div>
+                          <img src={this.props.post.thumbnailURL} className="meme" alt=""/>
+                        </div>
+                        <div className="memeStuff">
+                          <li className="post-info">
+                            <b className="meme-name">{this.state.title}</b>
+                            <b className="meme-by"> by </b>
+                            <Link to={"/profile/" + this.props.post.author.id} className="meme-poster" style={{textDecoration: 'none'}}>{this.props.username}</Link>
+                          </li>
+                          <br/>
+                        </div>
+                      </div>
+                      <div  className="comment-side">
+                        <div className="comment-indicator-text">
+                            {this.state.commentCount} Comments
+                        </div>
+                        <br/>
+                        <div className="comment-invite">No comments yet. Sign in to speak your mind!</div>
+                      </div>
+                    </div>
+                    )
+      } else {
         return (
           <div className="post-comment-block">
-          <div className="meme-side">
-            <div>
-              <img src={this.props.post.thumbnailURL} className="meme" alt=""/>
+            <div className="meme-side">
+              <div>
+                <img src={this.props.post.thumbnailURL} className="meme" alt=""/>
+              </div>
+              <div className="memeStuff">
+                <li className="post-info" alt={this.state.title+" by "+ this.props.username}>
+                  <b className="meme-name">{this.state.title}</b>
+                  <b className="meme-by"> by </b>
+                  <Link to={"/profile/" + this.props.post.author.id} className="meme-poster" style={{textDecoration: 'none'}}>{this.props.username}</Link>
+                </li>
+                <br/>
+              </div>
             </div>
-            <div className="memeStuff">
-              <li className="post-info">
-                <b className="meme-name">{this.props.post.content}</b>
-                <b className="meme-poster"> by {this.props.username}</b>
-              </li>
-              <br/>
-            </div>
-          </div>
-          <div  className="comment-side">
+            <div  className="comment-side">
             <div className="comment-indicator-text">
                 {this.state.commentCount} Comments
             </div>
@@ -485,5 +589,6 @@ export default class Post extends React.Component {
         </div>
         )}
         }
+      }
   //note: time removed from render because time is irrelevant, memes are timeless
 }

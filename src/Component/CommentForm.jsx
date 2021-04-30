@@ -50,9 +50,11 @@ export default class CommentForm extends React.Component {
       .then(
         result => {
           // update the count in the UI manually, to avoid a database hit
-          console.log("Sent and receive: "+result.content)
+          result.author['username'] = sessionStorage.getItem("username")
           this.props.onAddComment(this.props.commentCount + 1);
+          this.props.updateComments(result)
           
+          console.log("Sent and receive: "+JSON.stringify(result))
         },
         error => {
           alert("error!");
@@ -96,21 +98,21 @@ export default class CommentForm extends React.Component {
   render() {
   if(sessionStorage.getItem("user") != null){
     return (
-      <div>
+      <div className="commentFrame">
         <form onSubmit={this.submitHandler}>
-          <label>
-            Add A Comment to Post
-          </label>
+          <heading>
+            Add a Comment
+          </heading>
           <div>
-              <button onClick={this.onBold.bind(this)}>Bold</button>
-              <button onClick={this.onItalics.bind(this)}>Italics</button>
-              <button onClick={this.onUnderline.bind(this)}>Underline</button>
-              <button onClick={this.onStrike.bind(this)}>Strike</button>
+              <button className="font-type-button" onClick={this.onBold.bind(this)}>Bold</button>
+              <button className="font-type-button" onClick={this.onItalics.bind(this)}>Italics</button>
+              <button className="font-type-button" onClick={this.onUnderline.bind(this)}>Underline</button>
+              <button className="font-type-button" onClick={this.onStrike.bind(this)}>Strike</button>
           </div>
           <div className="commentBox">
             <Editor editorState={this.state.editorState} onChange={this.onChange} customStyleMap={styleMap} textAlignment='left' className="commentBox"/>
           </div>
-          <input type="submit" value="submit" />
+          <input className="submit-button" type="submit" value="Submit" />
           <br />
           {this.state.postmessage}
         </form>

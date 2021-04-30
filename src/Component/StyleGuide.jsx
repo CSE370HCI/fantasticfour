@@ -67,6 +67,16 @@ export default class StyleGuide extends React.Component {
         <br/>
         <br/>
         <heading>
+          Errors
+          <br/>
+          <content>
+            Text with icon
+            <p>Best against a white background</p>
+            <p className="error-message">⚠ Error messages appear like this with close proximity to location of error.</p>
+          </content>
+          <br/>
+        </heading>
+        <heading>
           Fonts
           <br/>
           <content>

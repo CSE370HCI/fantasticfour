@@ -3,7 +3,7 @@
 
 .App {
   text-align: center;
-  background-color: #282c34;
+  background-color: #2D86D8;
 }
 
 .App-logo {
@@ -12,7 +12,7 @@
 
 .App-header {
   
-  background-color: #282c34;
+  background-color: #2D86D8;
   min-height: 100vh;
   display: flex;
   flex-direction: row;
@@ -29,6 +29,9 @@
   padding-left: 20px;
 }
 
+.deleteIcon:hover {
+  cursor: pointer;
+}
 
 .settings{
   width:100%;
@@ -75,7 +78,7 @@ label {
 }
 
 input {
-  width: 80%;
+  width: 75%;
   margin: 10px auto;
 }
 
@@ -175,6 +178,7 @@ input {
   line-height: 42px;
   font-size: 35px;
   font-weight: bold;
+  transition-duration: 0.4s;
 }
 
 .close:hover,
@@ -210,6 +214,10 @@ input {
   overflow: hidden;
 }
 
+.post-template {
+    width: 100%;
+}
+
 .temp-login {
   left: 0px;
 }
@@ -243,7 +251,7 @@ input {
   left: 72%;
   position: fixed;
   top: 0px;
-  background-color: #282c34;
+  background-color: #2D86D8;
   height:100%;
   width: 28%;
 }
@@ -399,18 +407,12 @@ input {
     margin: 20px;
     margin-top: 10%;
     cursor: pointer;
+    transition-duration: 0.4s;
+    border-radius: 24px;
 }
 
 .desktop-confirm:hover {
-}
-
-.desktop-confirm:hover span{
-}
-
-.desktop-confirm:focus span{
-}
-
-.desktop-confirm:focus{
+    background: #26b023;
 }
 
 .desktop-delete {
@@ -424,6 +426,24 @@ input {
     font-family: 'Roboto', sans-serif;
     font-size: 18px;
     cursor: pointer;
+    transition-duration: 0.4s;
+}
+
+.desktop-delete:hover {
+    background: #cc4747;
+}
+.font-type-button {
+    display: inline-block;
+    background: #2D86D8;
+    padding: 20;
+    border: none;
+    color: #FFFFFF;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 11.5px;
+    min-width:15%;
 }
 
 .desktop-tag {
@@ -543,29 +563,32 @@ heading{
   font-size: 18px;
 }
 
-.follower-list {
-  color: black;
-  text-align: left;
-  margin:2%;
-  display: flex;
-  align-items:center;
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .page-template {
+        width: 70%;
+    }
 }
 
-.follower-list img {
-  object-fit: cover;
-  padding-right:5px;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .page-template {
+        width: 50%;
+    }
 }
 
-
-@media screen and (max-width: 1280px) {
-  .follower-column {
-    width: 100%;
-  }
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
     .page-template {
         width: 40%;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .page-template {
+        width: 30%;
     }
 }
 
@@ -578,4 +601,58 @@ heading{
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+}
+
+.error-message {
+    font-size: 0.8em;
+    margin: 0 auto;
+    text-align: center;
+    width: 75%;
+    max-width: 50vw;
+    background: #fff5f5;
+    color: rgb(255, 0, 0);
+    padding: 10px;
+}
+
+.edit-title {
+    display: block;
+    position: absolute;
+    text-align: center;
+    left: calc(50% - 25px);
+}
+
+.allowing-box {
+  display: flex;
+  gap: 5px;
+  width: 80%;
+  margin: 2px auto;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.allowing-button {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: 8px 8px;
+  height: 25px;
+  font-size: 0.5em;
+}
+
+.allowing-button p {
+  display: inline;
+}
+
+.allowing-button button {
+  display: inline;
+  font-size: 10px;
+  margin: 0;
+  background-color: rgb(247, 77, 77);
+  color: white;
+  border: none;
+  margin: 2px 8px 2px 2px;
+}
+
+.allowing-button button:hover {
+  cursor: pointer;
 }

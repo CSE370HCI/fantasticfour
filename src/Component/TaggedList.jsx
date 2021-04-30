@@ -26,7 +26,6 @@ export default class TaggedList extends React.Component {
     for (const [key, tag] of Object.entries(tagsList)){
       this.loadPosts(tag);
     }
-
   }
 
   componentDidUpdate(prevProps) {

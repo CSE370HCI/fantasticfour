@@ -18,8 +18,10 @@ export default class LoginForm extends React.Component {
       alanmessage: "",
       sessiontoken: "",
       signup: false,
-      passwordmismatch: true,
-      usernameexists: false
+      passwordmismatch: false,
+      usernameexists: false,
+      is_invalid_login: false,
+      is_deleted_account: false
     };
     this.refreshPostsFromLogin = this.refreshPostsFromLogin.bind(this);
   }
@@ -70,178 +72,191 @@ export default class LoginForm extends React.Component {
     //keep the form from actually submitting
     event.preventDefault();
 
-    // Check username availability;
-    fetch(process.env.REACT_APP_API_PATH + "/users?username=" + this.state.username, {
-        method: "GET",
+      this.setState({
+          is_invalid_login: false,
+          is_deleted_account: false
+      });
+
+    if (this.state.username) {
+      // Check username availability;
+      fetch(process.env.REACT_APP_API_PATH + "/users?username=" + this.state.username, {
+          method: "GET",
+          headers: {
+              "Content-Type": "application/json"
+          },
+      })
+      .then((res) => res.json())
+      .then((result) => {
+          if (result[1] != 0) {
+              console.log("This username already exists!");
+              this.setState({
+                  usernameexists: true
+              });
+          }
+          else {
+              this.setState({
+                  usernameexists: false
+              });
+          }
+      })
+    }
+
+    if (this.state.signup && !this.state.passwordmismatch && !this.state.usernameexists) {
+      // make the API call in order to signup
+      fetch(process.env.REACT_APP_API_PATH+"/auth/signup", {
+        method: "post",
         headers: {
-            "Content-Type": "application/json"
+        'Content-Type': 'application/json',
         },
-    })
-    .then((res) => res.json())
-    .then((result) => {
-        if (result[1] != 0) {
-            console.log("This username already exists!");
-            this.setState({
-                usernameexists: true
-            });
+        body: JSON.stringify({
+          email: this.state.email,
+          password: this.state.password,
+        })
+      })
+      // sign up continues here
+      .then(res => res.json())
+      .then(result => {
+        if (result.userID) {
+          // set the auth token and user ID in the session state
+          sessionStorage.setItem("token", result.token);
+          sessionStorage.setItem("user", result.userID);
+          sessionStorage.setItem("username", result.username);
+          this.setState({
+              sessiontoken: result.token,
+              alanmessage: result.token
+          });
+
+          // add the username to the user account provided during signup
+          return fetch(process.env.REACT_APP_API_PATH+`/users/${result.userID}`, {
+            method: "PATCH",
+            headers: {
+            'Content-Type': 'application/json',
+            'Authorization' : `Bearer ${result.token}`
+            },
+            body: JSON.stringify({
+              username: this.state.username
+            })
+          })
         }
         else {
-            this.setState({
-                usernameexists: false
-            });
+          // if the login failed, remove any infomation from the session state
+          sessionStorage.removeItem("token");
+          sessionStorage.removeItem("user");
+          this.setState({
+              sessiontoken: "",
+              alanmessage: result.message
+          });
         }
-    })
-    // continue signup or login
-    .then( () => {
-        // in signup mode and passwords match and username does not exist already
-        if (this.state.signup && !this.state.passwordmismatch && !this.state.usernameexists) {
-        // make the api call to the signup page
-        fetch(process.env.REACT_APP_API_PATH+"/auth/signup", {
-            method: "post",
-            headers: {
-            'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-            email: this.state.email,
-            password: this.state.password,
-            })
+      })
+      .then(res => res.json())
+      .then(result => {
+        console.log("signup user id: ", result.id)
+
+        // set default profile picture for user
+        return fetch(process.env.REACT_APP_API_PATH+"/user-artifacts", {
+          method: "POST",
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+ sessionStorage.getItem("token")
+          },
+          body: JSON.stringify({
+              ownerID: result.id,
+              type: "image",
+              //Sets default profile picture. User can change it in their profile settings
+              url: "https://i.imgur.com/UJ9uaCg.png",
+              category: "profile_picture"
+          })
         })
-        .then(res => res.json())
-        .then(result => {
-            if (result.userID) {
+      })
+      .then(res => {
+        if (res.status === 201) {
+          console.log("profile picture uploaded")
+          this.toHome()
+        }
+      })
+    }
+    // not in signup mode
+    // login happens here
+    else if (!this.state.signup) {
+      // make the api call to the login page
+      fetch(process.env.REACT_APP_API_PATH+"/auth/login", {
+        method: "post",
+        headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: this.state.email,
+          password: this.state.password
+        })
+      })
+      .then(res => res.json())
+      .then(result => {
+        if (result.userID) {
+          this.setState({
+              sessiontoken: result.token,
+              alanmessage: result.userID
+          });
+
+          // check if disabled user
+          return fetch(process.env.REACT_APP_API_PATH+"/users?email=" + this.state.email, {
+              method: "GET",
+              headers: {
+              'Content-Type': 'application/json',
+              }
+          });
+        }
+        else {
+          // if the login failed, remove any infomation from the session state
+          sessionStorage.removeItem("token");
+          sessionStorage.removeItem("user");
+          sessionStorage.setItem("username");
+          this.setState({
+              sessiontoken: "",
+              alanmessage: result.message
+          });
+          return
+        }
+      })
+      .then(res => res.json())
+      .then(
+        result => {
+          if (result[0][0]["status"] == "DELETED") {
+            this.setState({
+                is_deleted_account: true,
+            });
+            return
+          }
+          else {
             // set the auth token and user ID in the session state
-            sessionStorage.setItem("token", result.token);
-            sessionStorage.setItem("user", result.userID);
+            sessionStorage.setItem("token", this.state.sessiontoken);
+            sessionStorage.setItem("user", this.state.alanmessage);
+            sessionStorage.setItem("username", result.username);
             this.setState({
-                sessiontoken: result.token,
-                alanmessage: result.token
+            sessiontoken: this.state.sessiontoken,
+            alanmessage: this.state.sessiontoken
             });
 
-            // add the username to the user account provided during signup
-            fetch(process.env.REACT_APP_API_PATH+`/users/${result.userID}`, {
-                method: "PATCH",
-                headers: {
-                'Content-Type': 'application/json',
-                'Authorization' : `Bearer ${result.token}`
-                },
-                body: JSON.stringify({
-                username: this.state.username
-                })
-            })
-            .then(res => res.json())
-            .then(result => {
-
-                console.log("UserID: " + result.id);
-                // set default profile picture for user
-                fetch(process.env.REACT_APP_API_PATH+"/user-artifacts", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer '+ sessionStorage.getItem("token")
-                },
-                body: JSON.stringify({
-                    ownerID: result.id,
-                    type: "image",
-                    //Sets default profile picture. User can change it in their profile settings
-                    url: "https://i.imgur.com/UJ9uaCg.png",
-                    category: "profile_picture"
-                })
-                })
-                .then(res => {
-                // call refresh on the posting list
-                this.refreshPostsFromLogin();
-                }
-                );
-            }, error => {
-                console.log("after signup error: ", error);
-            });
-            } else {
-            // if the login failed, remove any infomation from the session state
-            sessionStorage.removeItem("token");
-            sessionStorage.removeItem("user");
-            this.setState({
-                sessiontoken: "",
-                alanmessage: result.message
-            });
-            }
+            // call refresh on the posting list
+            this.toHome();
+            return
+          }
         },
         error => {
-            alert(error);
-        });
-        }
-        // not in signup mode
-        else if (!this.state.signup) {
-        // make the api call to the login page
-        fetch(process.env.REACT_APP_API_PATH+"/auth/login", {
-            method: "post",
-            headers: {
-            'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-            email: this.state.email,
-            password: this.state.password
-            })
-        })
-            .then(res => res.json())
-            .then(
-            result => {
-                if (result.userID) {
-                this.setState({
-                    sessiontoken: result.token,
-                    alanmessage: result.userID
-                });
-
-                // check if disabled user
-                return fetch(process.env.REACT_APP_API_PATH+"/users?email=" + this.state.email, {
-                    method: "GET",
-                    headers: {
-                    'Content-Type': 'application/json',
-                    }
-                });
-                } else {
-
-                // if the login failed, remove any infomation from the session state
-                sessionStorage.removeItem("token");
-                sessionStorage.removeItem("user");
-                this.setState({
-                    sessiontoken: "",
-                    alanmessage: result.message
-                });
-                }
-            },
-            error => {
-                alert("error!");
-            }
-            )
-            .then(res => res.json())
-            .then(result => {
-            if (result[0][0]["status"] == "DELETED") {
-                alert("This user's account has been deleted!");
-            }
-            else {
-                // set the auth token and user ID in the session state
-                sessionStorage.setItem("token", this.state.sessiontoken);
-                sessionStorage.setItem("user", this.state.alanmessage);
-
-                this.setState({
-                sessiontoken: this.state.sessiontoken,
-                alanmessage: this.state.sessiontoken
-                });
-
-                // call refresh on the posting list
-                this.refreshPostsFromLogin();
-            }
-            },
-            error => {
-            alert("Error retrieving account");
-            console.log(error);
-            });
-        }
-    });
-  };
+          this.setState({
+              is_invalid_login: true
+          });
+          console.log(error);
+      })
+    }
+  }
 
   verifyPassword = (event) => {
-    if (this.state.password === event.target.value) {
+      if (this.state.password.length == 0 || event.target.value.length == 0) {
+          this.setState({
+              passwordmismatch: false
+          });
+      }
+    else if (this.state.password === event.target.value) {
       this.setState({
         passwordmismatch: false
       });
@@ -260,6 +275,19 @@ export default class LoginForm extends React.Component {
       return (
         <div className="temp-login-form">
           <form onSubmit={this.submitHandler}>
+              {
+                  this.state.is_invalid_login ?
+                      <p className="error-message">⚠ Invalid username or password</p>
+                      :
+                      ""
+              }
+              {
+                  this.state.is_deleted_account ?
+                      <p className="error-message">⚠ This account has been deleted</p>
+                      :
+                      ""
+              }
+              <br/>
             <label>
               Email
               <input type="email" onChange={this.emailChangeHandler} />
@@ -271,12 +299,12 @@ export default class LoginForm extends React.Component {
                 <label>
                   Username
                   <input type="text" onChange={this.myChangeHandler} />
-                  <br/>
                   {
                     this.state.usernameexists ? (
-                        <p>Username already exists!</p>
+                        <p className="error-message">⚠ Username already exists!</p>
                     ) : ""
                   }
+                  <br/>
                 
                 </label>
               ) : ""
@@ -294,18 +322,19 @@ export default class LoginForm extends React.Component {
                 <label>
                   Confirm Password
                   <input type="password" onChange={this.verifyPassword} />
-                  <br/>
+
                   {
                   this.state.passwordmismatch ?
-                    <p>Passwords don't match</p>
+                    <p className="error-message">⚠ Passwords don't match</p>
                     :
                     ""
                   }
+                  <br/>
                 </label>
               ) : ""
             }
 
-            <input className="desktop-confirm" type="submit" value="submit" />
+            <input className="desktop-confirm" type="submit" value="Submit" />
 
             {
               this.state.signup ?
@@ -323,7 +352,7 @@ export default class LoginForm extends React.Component {
         </div>
       );
     } else {
-      this.toHome();
+      return <div className="page-template"> Logged in!</div>
     }
   }
 }

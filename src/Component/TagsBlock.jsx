@@ -170,14 +170,15 @@ export default class TagsBlock extends React.Component {
         if(this.state.addClicked === false){
             return(
                 <form onSubmit={this.addTag}>
-                    <input type="text" placeholder="hashtag" onChange={this.myChangeHandler} id='field' onSubmit={this.addTag}></input>
-                    <button className="addTag" >add tag</button>
+                    <input type="text" className="upload-input" placeholder="follow a hashtag" onChange={this.myChangeHandler} id='field' onSubmit={this.addTag}></input>
+                    <br/>
+                    <button className="addTag" className="desktop-confirm">Add Tag</button>
                 </form>
             )
         }
         if(this.state.addClicked === true){
             return(
-                <button className="addTag" onClick={event =>this.changeClick(event.target.value)}>add tag</button>
+                <button className="addTag" className="desktop-confirm"onClick={event =>this.changeClick(event.target.value)}>Add Tag</button>
             )
         }
     }
@@ -215,22 +216,20 @@ export default class TagsBlock extends React.Component {
         const tagList = this.state.list;
         var elementList = [];
         for (var i = 0; i<tagList.length;i++){
-            var link = "tag/" + tagList[i]
-            elementList.push(<a href={link} key={i} className="tag"> 
-                <label className="tag"><input type="checkbox" name="hashtag" id={tagList[i]} value={tagList[i]} className="checkbox"/> #{tagList[i]} </label>
-            </a>)
+            var link = "/tag/" + tagList[i]
+            elementList.push(
+                <label className="tag"><input type="checkbox" name="hashtag" id={tagList[i]} value={tagList[i]} alt={"checkbox for #"+ tagList[i]} className="checkbox"/> <a href={link} key={i} className="tag"> #{tagList[i]}</a> </label>
+            )
         }
 
         return(
             <div > 
                 <p className="tag-header">Tags</p>
-                <div className="tags">
                 <form onSubmit={event => this.tagRedirect}>
                     {elementList}
                 </form>
-                <button onClick={this.tagRedirect} onSubmit={this.tagRedirect}>search tags</button>
-                    {this.addTagsButton()}
-                </div>
+                <button className="desktop-confirm edit-button" onClick={this.tagRedirect} onSubmit={this.tagRedirect}>Search Tags</button>
+                {this.addTagsButton()}
             </div>
         );
         

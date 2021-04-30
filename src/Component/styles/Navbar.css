@@ -22,7 +22,16 @@
    list-style-type: none;
    margin-right: auto;
    margin-left: auto;
+   margin-top: 15px;
    gap: 30px;
+}
+
+.topNav li{
+   transition-duration: 0.4s;
+}
+
+.topNav li:hover{
+   font-size: 25px;
 }
 
 .topNav loginbar{

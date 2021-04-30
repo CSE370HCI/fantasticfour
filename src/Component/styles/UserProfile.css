@@ -1,10 +1,23 @@
 .user-profile-picture {
   object-fit: cover;
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
   border-radius: 50%;
 }
 
 .edit-button {
   background: #2D86D8;
+  transition-duration: 0.4s;
+}
+
+.edit-button:hover {
+  background: #256DB0;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .user-profile-picture {
+    width: 150px;
+    height: 150px;
+  }
 }

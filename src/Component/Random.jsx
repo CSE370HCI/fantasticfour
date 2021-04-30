@@ -81,7 +81,7 @@ export default class Random extends React.Component {
                     <div className="posts">
 
                         {posts.map(post => (
-                            <Post key={post.id} post={post} type={this.props.type} loadPosts={this.loadPosts}/>
+                            <Post key={post.id} post={post} type={this.props.type} loadPosts={this.loadPosts} username={post.author.username} userid={post.author.id}/>
                         ))}
 
                     </div>

@@ -16,6 +16,7 @@
   border-radius: 10px;
   border-color: black;
   min-height: 100px;
+  overflow-y: scroll;
 }
 
 .tag {
@@ -25,4 +26,15 @@
 .checkbox {
   margin-left: 5px;
   max-width:10px;  
+}
+.checkbox:hover {
+  cursor:pointer;
+}
+
+.edit-button {
+  background: #30D82D;
+}
+
+.edit-button:hover {
+  background: #26b023;
 }

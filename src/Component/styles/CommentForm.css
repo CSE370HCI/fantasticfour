@@ -1,10 +1,12 @@
 .commentBox {
-    border: 1px solid #000;
+    position: relative;
     background-color: white;
     height: 3em;
+    width: 90%;
     overflow-y: auto;
     text-align: left;
     align-items: left;
+    left: 5%;
   }
 
 form.DraftEditor-root {
