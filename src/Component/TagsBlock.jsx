@@ -217,9 +217,9 @@ export default class TagsBlock extends React.Component {
         var elementList = [];
         for (var i = 0; i<tagList.length;i++){
             var link = "/tag/" + tagList[i]
-            elementList.push(<a href={link} key={i} className="tag"> 
-                <label className="tag"><input type="checkbox" name="hashtag" id={tagList[i]} value={tagList[i]} className="checkbox"/> #{tagList[i]} </label>
-            </a>)
+            elementList.push(
+                <label className="tag"><input type="checkbox" name="hashtag" id={tagList[i]} value={tagList[i]} className="checkbox"/> <a href={link} key={i} className="tag"> #{tagList[i]}</a> </label>
+            )
         }
 
         return(
