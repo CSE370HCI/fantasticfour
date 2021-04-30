@@ -139,7 +139,6 @@ class ForgotPasswordForm extends React.Component {
         else{
             return !this.state.resetSuccessful ? (
                 <div>
-                    <h1>Reset Password</h1>
                     <form onSubmit={this.submitHandler}>
                         <label>
                             Token
