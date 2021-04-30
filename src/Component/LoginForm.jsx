@@ -235,7 +235,7 @@ export default class LoginForm extends React.Component {
             });
 
             // call refresh on the posting list
-            this.refreshPostsFromLogin();
+            this.toHome();
             return
           }
         },

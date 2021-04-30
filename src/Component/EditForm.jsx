@@ -53,8 +53,6 @@ export default class EditForm extends React.Component {
     }
 
     this.populateAllowing()
-
-    console.log("privacy: ", this.props.post.id)
   }
 
   async populateAllowing() {
@@ -87,9 +85,7 @@ export default class EditForm extends React.Component {
       })
     }
 
-    
-
-    console.log("Allowing: ", this.state.currentAllowing)
+    this.state.allowing.length && console.log("Allowing: ", this.state.currentAllowing)
   }
 
   async addAllowingTag() {
@@ -113,7 +109,6 @@ export default class EditForm extends React.Component {
         this.setState({
           privacy: "specific"
         })
-        console.log("add privacy tag for post: ", this.state.postID)
       })
     }
     
@@ -148,7 +143,6 @@ export default class EditForm extends React.Component {
             })
             .then(res => res.json())
             .then(result => {
-              console.log("add allowing tag for user: ", allowedUsers[i])
               // redirects users back to the posts screen
               window.location.href = "homepage"
             })
@@ -332,7 +326,7 @@ export default class EditForm extends React.Component {
   }
 
   deletePrivacyTag() {
-    console.log("In delete privacy tag, postID " + this.state.postID + " privacy " + this.state.privacy + " privacy ID " + this.state.privacyID)
+    // console.log("In delete privacy tag, postID " + this.state.postID + " privacy " + this.state.privacy + " privacy ID " + this.state.privacyID)
     if (this.state.postID && this.state.privacy === "" && this.state.privacyID) {
       fetch(process.env.REACT_APP_API_PATH+"/post-tags/"+this.state.privacyID, {
         method: "DELETE",
