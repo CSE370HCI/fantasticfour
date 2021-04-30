@@ -616,3 +616,39 @@ heading{
     text-align: center;
     left: calc(50% - 25px);
 }
+
+.allowing-box {
+  display: flex;
+  gap: 5px;
+  width: 80%;
+  margin: 2px auto;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.allowing-button {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: 8px 8px;
+  height: 25px;
+  font-size: 0.5em;
+}
+
+.allowing-button p {
+  display: inline;
+}
+
+.allowing-button button {
+  display: inline;
+  font-size: 10px;
+  margin: 0;
+  background-color: rgb(247, 77, 77);
+  color: white;
+  border: none;
+  margin: 2px 8px 2px 2px;
+}
+
+.allowing-button button:hover {
+  cursor: pointer;
+}

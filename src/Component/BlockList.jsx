@@ -6,7 +6,7 @@ export default class Following extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            authorID: this.props.userid,
+            //authorID: this.props.userid,
             userList: [],
             blocklistID: "",
             blockedUsers: [],
@@ -50,10 +50,10 @@ export default class Following extends React.Component {
     }
 
     async loadBlockedUsers() {
-        console.log("loading blocked users for user: ", this.state.authorID)
+        console.log("loading blocked users for user: ", sessionStorage.getItem("user"))
 
         // check if block list exists, if not, no blocked users.
-        const getGroups = await fetch(process.env.REACT_APP_API_PATH+"/groups?ownerID=" + this.state.authorID + "&name=block", {
+        const getGroups = await fetch(process.env.REACT_APP_API_PATH+"/groups?ownerID=" + sessionStorage.getItem("user") + "&name=block", {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -252,7 +252,6 @@ export default class Following extends React.Component {
                             {this.state.blockedUsers.map(user => (
                                 <div key={user.id} className="follower-list">
                                     <img src={user.photo} alt="profile picture"/>
-                                <p>{console.log(user.photo)}</p>
                                     &nbsp;&nbsp;{user.username}&nbsp;&nbsp;
                                     <input type="button" className="unfollow-button" onClick={() => {this.unblockUser(user.id)}} value="Unblock"/>
                                 </div>

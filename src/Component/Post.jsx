@@ -487,10 +487,16 @@ export default class Post extends React.Component {
         <div  className="comment-side">
           {this.conditionalDisplay()}
           <div className="comment-list">
-            {comments.map(post => (
-              !this.props.blockedUsers.includes(post.author.id) &&
-              <CommentDisplay key={post.id} post={post} author={post.author.username} userid={post.author.id} postid={post.id}/>
-                  ))}
+
+            {comments.map(post => {
+              if(this.props.blockedUsers && this.props.blockedUsers.includes(post.author.id)) {
+                return
+              }
+              return (
+                <CommentDisplay key={post.id} post={post} author={post.author.username} userid={post.author.id} postid={post.id}/>
+              )
+            }
+            )}
           </div>
         </div>
       </div>
