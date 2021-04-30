@@ -30,7 +30,7 @@
 }
 
 .comment-indicator-text:hover{
-  color: blue;
+  color: #2D86D8;
 }
 
 .comment-indicator-text:hover {
@@ -58,6 +58,7 @@
 
 .comment-icon:hover {
   cursor: pointer;
+  filter: invert(44%) sepia(89%) saturate(557%) hue-rotate(171deg) brightness(89%) contrast(90%);
 }
 
 .post-comment-block{

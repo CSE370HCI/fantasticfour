@@ -3,7 +3,7 @@
 
 .App {
   text-align: center;
-  background-color: #282c34;
+  background-color: #2D86D8;
 }
 
 .App-logo {
@@ -12,7 +12,7 @@
 
 .App-header {
   
-  background-color: #282c34;
+  background-color: #2D86D8;
   min-height: 100vh;
   display: flex;
   flex-direction: row;
@@ -251,7 +251,7 @@ input {
   left: 72%;
   position: fixed;
   top: 0px;
-  background-color: #282c34;
+  background-color: #2D86D8;
   height:100%;
   width: 28%;
 }
@@ -442,6 +442,8 @@ input {
     font-size: 18px;
     margin: 5px;
     cursor: pointer;
+    border-radius: 11.5px;
+    min-width:15%;
 }
 
 .desktop-tag {

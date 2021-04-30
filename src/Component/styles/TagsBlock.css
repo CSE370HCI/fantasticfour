@@ -30,3 +30,11 @@
 .checkbox:hover {
   cursor:pointer;
 }
+
+.edit-button {
+  background: #30D82D;
+}
+
+.edit-button:hover {
+  background: #26b023;
+}
