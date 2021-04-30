@@ -48,9 +48,8 @@ export default class EditForm extends React.Component {
                 this.setState({
                   post_message: result.Status
                 });
-                this.addTag(this.state.tag, result["id"])
+                this.props.updateTitle(this.state.post_title)
                 // redirects users back to the posts screen
-                window.location.href = "homepage";
               }
           );
     }

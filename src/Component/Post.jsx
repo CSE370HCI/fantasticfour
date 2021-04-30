@@ -20,6 +20,7 @@ export default class Post extends React.Component {
       showModal: false,
       showModalE: false,
       commentCount: this.props.post.commentCount,
+      title: "",
       likes: 1,
       dislikes: 0,
       tags: [],
@@ -31,6 +32,9 @@ export default class Post extends React.Component {
   }
 
   componentDidMount() {
+    this.setState({
+      title: this.props.post.content
+    })
     this.getUserReaction()
     this.getComments(this.props.post.id)
   }
@@ -252,6 +256,16 @@ export default class Post extends React.Component {
     });
   };
 
+  editTitle = newT => {
+    console.log("New title: "+newT)
+    this.setState({
+      title: newT
+    })
+    this.props.post.content = newT
+    console.log("New prop title: "+this.state.title)
+
+  }
+
   getCommentCount() {
     if (!this.state.commentCount || this.state.commentCount === "0") {
       return 0;
@@ -329,6 +343,7 @@ export default class Post extends React.Component {
               postid={this.props.post.id}
               commentCount={this.getCommentCount()}
               post={this.props.post}
+              updateTitle={this.editTitle}
             />
           </div>
           <div className={this.showHideComments()}>
@@ -445,7 +460,7 @@ export default class Post extends React.Component {
                 </div>
                 <div className="memeStuff">
                   <li className="post-info">
-                    <b className="meme-name">{this.props.post.content}</b>
+                    <b className="meme-name">{this.state.title}</b>
                     <b className="meme-by"> by </b>
                     <Link to={"/profile/" + this.props.userid} className="meme-poster" style={{textDecoration: 'none'}}>{this.props.username}</Link>
                   </li>
@@ -481,7 +496,7 @@ export default class Post extends React.Component {
           </div>
           <div className="memeStuff">
             <li className="post-info">
-              <b className="meme-name">{this.props.post.content}</b>
+              <b className="meme-name">{this.state.title}</b>
               <b className="meme-by"> by </b>
               <Link to={"/profile/" + this.props.userid} className="meme-poster" style={{textDecoration: 'none'}}>{this.props.username}</Link>
             </li>
@@ -524,7 +539,7 @@ export default class Post extends React.Component {
                           </div>
                           <div className="memeStuff">
                             <li className="post-info">
-                              <b className="meme-name">{this.props.post.content}</b>
+                              <b className="meme-name">{this.state.title}</b>
                               <b className="meme-by"> by </b>
                               <Link to={"/profile/" + this.props.post.author.id} className="meme-poster" style={{textDecoration: 'none'}}>{this.props.username}</Link>
                             </li>
@@ -549,7 +564,7 @@ export default class Post extends React.Component {
             </div>
             <div className="memeStuff">
               <li className="post-info">
-                <b className="meme-name">{this.props.post.content}</b>
+                <b className="meme-name">{this.state.title}</b>
                 <b className="meme-by"> by </b>
                 <Link to={"/profile/" + this.props.post.author.id} className="meme-poster" style={{textDecoration: 'none'}}>{this.props.username}</Link>
               </li>
