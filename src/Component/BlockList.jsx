@@ -252,7 +252,6 @@ export default class Following extends React.Component {
                             {this.state.blockedUsers.map(user => (
                                 <div key={user.id} className="follower-list">
                                     <img src={user.photo} alt="profile picture"/>
-                                <p>{console.log(user.photo)}</p>
                                     &nbsp;&nbsp;{user.username}&nbsp;&nbsp;
                                     <input type="button" className="unfollow-button" onClick={() => {this.unblockUser(user.id)}} value="Unblock"/>
                                 </div>
