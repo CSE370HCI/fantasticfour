@@ -26,7 +26,9 @@ export default class TaggedList extends React.Component {
     for (const [key, tag] of Object.entries(tagsList)){
       this.loadPosts(tag);
     }
-
+    this.setState({
+      posts: [...new Set(this.state.posts)]
+    })
   }
 
   componentDidUpdate(prevProps) {
@@ -36,6 +38,9 @@ export default class TaggedList extends React.Component {
       for (const [key, tag] of Object.entries(this.state.tagsList)){
         this.loadPosts(tag);
       }
+      this.setState({
+        posts: [...new Set(this.state.posts)]
+      })
     }
   }
 

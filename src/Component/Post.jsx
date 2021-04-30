@@ -9,7 +9,7 @@ import upArrow from "../assets/UpArrow.svg";
 import downArrow from "../assets/DownArrow.svg";
 import EditForm from "./EditForm.jsx"
 import {Link} from 'react-router-dom';
-import { parseConfigFileTextToJson, resolveModuleName } from "typescript";
+import { createFalse, parseConfigFileTextToJson, resolveModuleName } from "typescript";
 import {stateFromMarkdown} from 'draft-js-import-markdown';
 import {convertToRaw, Editor, EditorState, RichUtils} from 'draft-js';
 
@@ -25,7 +25,7 @@ export default class Post extends React.Component {
       tags: [],
       userreaction: 0,
       comments: [], 
-      tempVal: 0
+      newComment: false
     };
     this.post = React.createRef();
   }
@@ -33,6 +33,15 @@ export default class Post extends React.Component {
   componentDidMount() {
     this.getUserReaction()
     this.getComments(this.props.post.id)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.state.newComment === true){
+      this.getComments(this.props.post.id)
+      this.setState({
+        newComment: false
+      })
+    }
   }
 
   getUserReaction(){
@@ -235,6 +244,14 @@ export default class Post extends React.Component {
     });
   };
 
+  addComment = newC => {
+    const list = [newC, ...this.state.comments]
+    console.log("New list:" + JSON.stringify(list))
+    this.setState({
+      comments: list
+    });
+  };
+
   getCommentCount() {
     if (!this.state.commentCount || this.state.commentCount === "0") {
       return 0;
@@ -319,6 +336,7 @@ export default class Post extends React.Component {
               onAddComment={this.setCommentCount}
               parent={this.props.post.id}
               commentCount={this.getCommentCount()}
+              updateComments={this.addComment}
             />
           </div>
         </div>

@@ -140,6 +140,7 @@ export default class LoginForm extends React.Component {
 
                 console.log("UserID: " + result.id);
                 // set default profile picture for user
+                sessionStorage.setItem("username", result.userID);
                 fetch(process.env.REACT_APP_API_PATH+"/user-artifacts", {
                 method: "POST",
                 headers: {
@@ -228,7 +229,7 @@ export default class LoginForm extends React.Component {
                 // set the auth token and user ID in the session state
                 sessionStorage.setItem("token", this.state.sessiontoken);
                 sessionStorage.setItem("user", this.state.alanmessage);
-
+                sessionStorage.setItem("username", result.username);
                 this.setState({
                 sessiontoken: this.state.sessiontoken,
                 alanmessage: this.state.sessiontoken

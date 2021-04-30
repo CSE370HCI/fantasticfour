@@ -16,6 +16,7 @@
   border-radius: 10px;
   border-color: black;
   min-height: 100px;
+  overflow-y: scroll;
 }
 
 .tag {
