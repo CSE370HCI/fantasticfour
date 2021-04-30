@@ -249,20 +249,18 @@ export default class Post extends React.Component {
   };
 
   addComment = newC => {
+    this.showModal()
     const list = [newC, ...this.state.comments]
-    console.log("New list:" + JSON.stringify(list))
     this.setState({
       comments: list
     });
   };
 
   editTitle = newT => {
-    console.log("New title: "+newT)
+    this.showModalE()
     this.setState({
       title: newT
     })
-    this.props.post.content = newT
-    console.log("New prop title: "+this.state.title)
 
   }
 
