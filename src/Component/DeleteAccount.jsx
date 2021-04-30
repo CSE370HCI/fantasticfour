@@ -58,17 +58,14 @@ export default class DeleteAccount extends React.Component {
                 .then((res) => res.json())
                 .then(
                     (result) => {
-                        console.log("HERE")
-                        console.log(result)
                         for (const artifact of result[0]) {
-                            console.log(artifact["id"])
                             fetch(process.env.REACT_APP_API_PATH + "/user-artifacts/" + artifact["id"], {
                                 method: "DELETE",
                                 headers: {
                                     "Content-Type": "application/json",
                                     Authorization: "Bearer " + sessionStorage.getItem("token"),
                                 },
-                            });
+                            })
                         }
                     }
                 )
@@ -85,11 +82,11 @@ export default class DeleteAccount extends React.Component {
                             },
                         }
                     )
-                })
-                .then( () => {
-                    sessionStorage.removeItem("token", null);
-                    sessionStorage.removeItem("user", null);
-                    window.location.href = "login";
+                        .then( () => {
+                            sessionStorage.removeItem("token", null);
+                            sessionStorage.removeItem("user", null);
+                            window.location.href = "login";
+                        })
                 })
         }
 
