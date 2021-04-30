@@ -208,7 +208,7 @@ export default class TagsBlock extends React.Component {
                 query = query.concat(checkboxes[i].value).concat("&")
             }
         } 
-        window.location.href = 'tag/'+query;
+        window.location.href = '/hci/fantasticfour/tag/'+query;
 
       }
 
@@ -216,7 +216,7 @@ export default class TagsBlock extends React.Component {
         const tagList = this.state.list;
         var elementList = [];
         for (var i = 0; i<tagList.length;i++){
-            var link = "/tag/" + tagList[i]
+            var link = "/hci/fantasticfour/tag/" + tagList[i]
             elementList.push(
                 <label className="tag"><input type="checkbox" name="hashtag" id={tagList[i]} value={tagList[i]} alt={"checkbox for #"+ tagList[i]} className="checkbox"/> <a href={link} key={i} className="tag"> #{tagList[i]}</a> </label>
             )
