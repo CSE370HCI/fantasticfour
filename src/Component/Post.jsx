@@ -517,9 +517,9 @@ export default class Post extends React.Component {
           </div>
         </div>
         <div  className="comment-side">
-          {this.conditionalDisplay()}
-          <div className="comment-list">
 
+          <div className="comment-list">
+            {this.conditionalDisplay()}
             {comments.map(post => {
               if(this.props.blockedUsers && this.props.blockedUsers.includes(post.author.id)) {
                 return

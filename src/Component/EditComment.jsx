@@ -121,10 +121,10 @@ export default class EditComment extends React.Component {
           onClick={e => this.deletePost(this.props.postid)}
         />
           <div>
-              <button onClick={this.onBold.bind(this)}>Bold</button>
-              <button onClick={this.onItalics.bind(this)}>Italics</button>
-              <button onClick={this.onUnderline.bind(this)}>Underline</button>
-              <button onClick={this.onStrike.bind(this)}>Strike</button>
+              <button className="font-type-button" onClick={this.onBold.bind(this)}>Bold</button>
+              <button className="font-type-button" onClick={this.onItalics.bind(this)}>Italics</button>
+              <button className="font-type-button" onClick={this.onUnderline.bind(this)}>Underline</button>
+              <button className="font-type-button" onClick={this.onStrike.bind(this)}>Strike</button>
           </div>
           <div className="commentBox">
             <Editor editorState={this.state.editorState} onChange={this.onChange} customStyleMap={styleMap} textAlignment='left' className="commentBox"/>

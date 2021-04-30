@@ -101,17 +101,17 @@ class Navbar extends React.Component {
         </li>
       </iconbar>
       <ul id="side-menu-items">
-        <li className="home">
+        <li>
           <Link to="/" style={{textDecoration: 'none', color: 'black'}}>
             Home
           </Link>
         </li>
-        <li className="latest">
+        <li>
           <Link to="/latest" style={{textDecoration: 'none', color: 'black'}}>
             Latest
           </Link>
         </li>
-        <li className="popular">
+        <li>
           <Link to="/popular" style={{textDecoration: 'none', color: 'black'}}>
             Popular
           </Link>
@@ -121,12 +121,12 @@ class Navbar extends React.Component {
               Random
           </Link>
             </li>
-        <li className="style guide">
+        <li>
           <Link to="/styleguide" style={{textDecoration: 'none', color: 'black'}}>
             Style Guide
           </Link>
         </li>
-        <li className="upload-post">
+        <li>
           <Link to="/upload" style={{textDecoration: 'none', color: 'black'}}>
             Upload a Post
           </Link>
@@ -158,22 +158,22 @@ class Navbar extends React.Component {
         </li>
       </iconbar>
       <ul id="side-menu-items">
-        <li className="latest">
+        <li>
           <Link to="/latest" style={{textDecoration: 'none', color: 'black'}}>
             Latest
           </Link>
         </li>
-          <li className="popular">
+          <li>
             <Link to="/popular" style={{textDecoration: 'none', color: 'black'}}>
               Popular
             </Link>
           </li>
-          <li className="random">
+          <li>
               <Link to="/random" onClick={this.reloadHandler} style={{textDecoration: 'none', color: 'black'}}>
                   Random
               </Link>
           </li>
-        <li className="style guide">
+        <li>
           <Link to="/styleguide" style={{textDecoration: 'none', color: 'black'}}>
             Style Guide
           </Link>
@@ -181,7 +181,7 @@ class Navbar extends React.Component {
       </ul>
 
       <loginbar id="loginbar" className="loginbar">
-        <li className="login">
+        <li>
           <Link to="/login" style={{textDecoration: 'none', color: 'black'}}>
             Login / Sign Up
           </Link>

@@ -26,6 +26,11 @@
   text-align: center;
   user-select: none;
   vertical-align: center;
+  transition-duration: 0.4s;
+}
+
+.comment-indicator-text:hover{
+  color: blue;
 }
 
 .comment-indicator-text:hover {

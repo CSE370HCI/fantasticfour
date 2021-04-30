@@ -8,6 +8,31 @@
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
   cursor: pointer;
+  transition-duration: 0.4s;
+}
+
+.submit-button:hover {
+  background: #26b023;
+}
+
+.fileUpload{
+  display: inline;
+  align-items: center;
+}
+
+input::-webkit-file-upload-button{
+  background: #2D86D8;
+  padding: 3px;
+  border: none;
+  color: #FFFFFF;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+}
+
+input::-webkit-file-upload-button:hover {
+  background: #256DB0;
 }
 
 .image-preview {

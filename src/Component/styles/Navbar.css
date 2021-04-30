@@ -26,6 +26,14 @@
    gap: 30px;
 }
 
+.topNav li{
+   transition-duration: 0.4s;
+}
+
+.topNav li:hover{
+   font-size: 25px;
+}
+
 .topNav loginbar{
     display:flex;
     align-items: center;

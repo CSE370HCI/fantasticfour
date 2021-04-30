@@ -171,13 +171,14 @@ export default class TagsBlock extends React.Component {
             return(
                 <form onSubmit={this.addTag}>
                     <input type="text" placeholder="hashtag" onChange={this.myChangeHandler} id='field' onSubmit={this.addTag}></input>
-                    <button className="addTag" >add tag</button>
+                    <br/>
+                    <button className="addTag" className="desktop-confirm">Add Tag</button>
                 </form>
             )
         }
         if(this.state.addClicked === true){
             return(
-                <button className="addTag" onClick={event =>this.changeClick(event.target.value)}>add tag</button>
+                <button className="addTag" className="desktop-confirm"onClick={event =>this.changeClick(event.target.value)}>Add Tag</button>
             )
         }
     }
@@ -224,13 +225,11 @@ export default class TagsBlock extends React.Component {
         return(
             <div > 
                 <p className="tag-header">Tags</p>
-                <div className="tags">
                 <form onSubmit={event => this.tagRedirect}>
                     {elementList}
                 </form>
-                <button onClick={this.tagRedirect} onSubmit={this.tagRedirect}>search tags</button>
-                    {this.addTagsButton()}
-                </div>
+                <button className="desktop-confirm edit-button" onClick={this.tagRedirect} onSubmit={this.tagRedirect}>Search Tags</button>
+                {this.addTagsButton()}
             </div>
         );
         
