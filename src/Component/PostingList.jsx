@@ -115,6 +115,7 @@ export default class PostingList extends React.Component {
 
     return filteredPosts
   }
+
   async loadBlockedUsers() {
     // check if block list exists, if not, no blocked users.
     const getGroups = await fetch(process.env.REACT_APP_API_PATH+"/groups?ownerID=" + sessionStorage.getItem("user") + "&name=block", {
@@ -134,11 +135,9 @@ export default class PostingList extends React.Component {
         // load group members into blockedUsers array
         this.loadMembers(blockListID)
     }
-    console.log("group id: ", blockListID)
   }
 
   async loadMembers(id) {
-    console.log("In load members with id: ", id)
     const getGroupMembers = await fetch(process.env.REACT_APP_API_PATH+"/group-members?groupID=" + id, {
         method: "GET",
         headers: {
@@ -151,15 +150,15 @@ export default class PostingList extends React.Component {
 
     let users
     if (groupMembersResults[1] > 0) {
-        console.log(groupMembersResults[0])
         users = groupMembersResults[0]
 
+        let blockedUsers = []
         for (let i = 0; i < groupMembersResults[1]; i++) {
-            this.setState({
-                blockedUsers: [...this.state.blockedUsers, users[i].user.id]
-            })
+            blockedUsers.push(users[i].user.id)
         }
+
         this.setState({
+          blockedUsers,
           loadedBlockedUsers: true
         })
     }
@@ -183,17 +182,13 @@ export default class PostingList extends React.Component {
       method: "get",
       headers: {
         'Content-Type': 'application/json'
-
       },
-
     })
     const res = await get.json()
     let posts = res[0];
 
     // filter posts and return
     posts = await this.filterPosts(posts)
-
-    console.log(posts);
 
     this.setState({
       isLoaded: true,

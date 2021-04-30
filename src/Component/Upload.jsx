@@ -104,11 +104,10 @@ export default class Upload extends React.Component {
                     if (this.state.restrictedTo.length > 0) {
                       this.addAllowingTag(result["id"]); // function redirects to home after executing
                     }
-                    else {
-                      //window.location.href = "home";
-                    }
                   }
-                );
+                ).then(result =>{
+                  window.location.href = "home"
+                })
               })
             .catch(error => {
               console.error('Error:', error);
@@ -155,34 +154,33 @@ export default class Upload extends React.Component {
             console.log("Received: " + result.name)
         },
         error => {
-          alert("error!");
           console.log("received bad")
         }
     )
   }
 
   addAllowingTag(postID) {
+    // add privacy tag
+    fetch(process.env.REACT_APP_API_PATH+"/post-tags", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '+sessionStorage.getItem("token")
+      },
+      body: JSON.stringify({
+          postID: postID,
+          userID: sessionStorage.getItem("user"),
+          name: "specific",
+          type: "privacy"
+      })
+    })
+    .then(res => res.json())
+    .then(result => {
+      console.log("add privacy tag for post: ", postID)
+    })
+
     let allowedUsers = this.state.restrictedTo
     for (let i = 0; i < allowedUsers.length; i++) {
-      // add privacy tag
-      fetch(process.env.REACT_APP_API_PATH+"/post-tags", {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer '+sessionStorage.getItem("token")
-        },
-        body: JSON.stringify({
-            postID: postID,
-            userID: sessionStorage.getItem("user"),
-            name: "specific",
-            type: "privacy"
-        })
-      })
-      .then(res => res.json())
-      .then(result => {
-        console.log("add privacy tag for post: ", postID)
-      })
-
       // add allowing tag
       fetch(process.env.REACT_APP_API_PATH+"/post-tags", {
         method: "POST",

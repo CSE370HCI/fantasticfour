@@ -70,6 +70,10 @@ class App extends React.Component {
     });
   }
 
+  onClose(path) {
+    window.location.href = path;
+  }
+
   render() {
 
     return (
@@ -89,51 +93,65 @@ class App extends React.Component {
             <Switch>
             <Route path="/profileinfo">
               <div className="page-template">
+                 <span className="close" onClick={() => this.onClose('profile/' + sessionStorage.getItem("user"))}>
+                  &times;
+                </span>
                 <p className='page-title'>My Profile</p>
                 <UserProfile userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
             <Route path="/changepicture">
               <div className="page-template">
+                 <span className="close" onClick={() => this.onClose('profileinfo')}>
+                  &times;
+                </span>
                 <p className='page-title'>Change Profile Picture</p>
                 <ChangeProfilePicture userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
               <Route path="/followers">
                 <div className="page-template">
+                   <span className="close" onClick={() => this.onClose('profileinfo')}>
+                  &times;
+                </span>
                   <p className='page-title'>Followers</p>
                   <Followers userid={sessionStorage.getItem("user")} />
                 </div>
               </Route>
               <Route path="/following">
                 <div className="page-template">
+                <span className="close" onClick={() => this.onClose('profileinfo')}>
+                  &times;
+                </span>
                   <p className='page-title'>Following</p>
                   <Following userid={sessionStorage.getItem("user")} />
                 </div>
               </Route>
             <Route path="/delete">
               <div className="page-template">
+                <span className="close" onClick={() => this.onClose('settings')}>
+                  &times;
+                </span>
                 <p className='page-title'>Delete Your Account</p>
                 <DeleteAccount userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
             <Route path="/settings">
               <div className="page-template">
+                <span className="close" onClick={() => this.onClose('profileinfo')}>
+                &times;
+              </span>
                 <p className="page-title">Edit Personal Information</p>
                 <EditSettings userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
             <Route path="/blocklist">
               <div className="page-template">
+                <span className="close" onClick={() => this.onClose('profileinfo')}>
+                  &times;
+                </span>
                 <p className='page-title'>Manage Blocking</p>
                 <BlockList userid={sessionStorage.getItem("user")} />
-              </div>
-            </Route>
-            <Route path="/friends">
-              <div>
-                <p>Friends</p>
-                <FriendForm userid={sessionStorage.getItem("user")} />
-                <FriendList userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
             <Route path="/b">
@@ -176,6 +194,9 @@ class App extends React.Component {
             </Route>
             <Route path="/upload">
               <div className="page-template">
+                <span className="close" onClick={() => this.onClose('latest')}>
+                  &times;
+                </span>
                 <p className='page-title'>Create a New Post</p>
                 <Upload userid={sessionStorage.getItem("user")} />
               </div>
@@ -188,6 +209,9 @@ class App extends React.Component {
             </Route>
             <Route path="/forgot-password">
               <div className="page-template">
+                <span className="close" onClick={() => this.onClose('login')}>
+                  &times;
+                </span>
                 <p className="page-title">Forgot Your Password?</p>
                 <ForgotPasswordForm/>
               </div>
