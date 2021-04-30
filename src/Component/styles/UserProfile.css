@@ -7,6 +7,11 @@
 
 .edit-button {
   background: #2D86D8;
+  transition-duration: 0.4s;
+}
+
+.edit-button:hover {
+  background: #256DB0;
 }
 
 /* Extra small devices (phones, 600px and down) */
