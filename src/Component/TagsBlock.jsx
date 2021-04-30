@@ -199,7 +199,6 @@ export default class TagsBlock extends React.Component {
       }
 
     tagRedirect(){
-        console.log("TAGREDIRECTOOO")
         var checkboxes = document.getElementsByName("hashtag"); 
         var query=""
         for(var i = 0; i < checkboxes.length; i++){  
@@ -218,7 +217,7 @@ export default class TagsBlock extends React.Component {
         for (var i = 0; i<tagList.length;i++){
             var link = "/tag/" + tagList[i]
             elementList.push(
-                <label className="tag"><input type="checkbox" name="hashtag" id={tagList[i]} value={tagList[i]} className="checkbox"/> <a href={link} key={i} className="tag"> #{tagList[i]}</a> </label>
+                <label className="tag"><input type="checkbox" name="hashtag" id={tagList[i]} value={tagList[i]} alt={"checkbox for #"+ tagList[i]} className="checkbox"/> <a href={link} key={i} className="tag"> #{tagList[i]}</a> </label>
             )
         }
 

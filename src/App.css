@@ -29,6 +29,9 @@
   padding-left: 20px;
 }
 
+.deleteIcon:hover {
+  cursor: pointer;
+}
 
 .settings{
   width:100%;

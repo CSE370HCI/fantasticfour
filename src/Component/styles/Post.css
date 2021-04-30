@@ -28,6 +28,10 @@
   vertical-align: center;
 }
 
+.comment-indicator-text:hover {
+  cursor: pointer;
+}
+
 .comment-count-text{
   color: black;
   border-radius: 10px;
@@ -45,6 +49,10 @@
   float:right;
   margin-right: 5px;
   filter: invert(100%);
+}
+
+.comment-icon:hover {
+  cursor: pointer;
 }
 
 .post-comment-block{
@@ -342,4 +350,19 @@ div.DraftEditor-root {
 
 .comment-invite{
   color:black;
+}
+
+.downButtonLit:hover {
+  cursor: pointer;
+}
+.upButtonLit:hover {
+  cursor: pointer;
+}
+
+.upButton:hover {
+  cursor: pointer;
+}
+
+.downButton:hover {
+  cursor: pointer;
 }
