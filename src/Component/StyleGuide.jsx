@@ -18,21 +18,6 @@ export default class StyleGuide extends React.Component {
     return (
       <div id="styleguide" className="styleGuide stylepage">
         <heading>
-          Branding
-          <br/>
-          <content>
-            Logo
-            <div className="logo"></div>
-          </content>
-          <br/>
-          <content>
-            Icon
-            <div className="icon"></div>
-          </content>
-        </heading>
-        <br/>
-        <br/>
-        <heading>
           Color Palette
           <content>
             <p></p>
@@ -57,7 +42,7 @@ export default class StyleGuide extends React.Component {
                 <p>Downvotes</p>
               </div>
               <div className="color-main-background block">
-                <code>#C4C4C4</code>
+                <code>#236CB0</code>
                 <p>Main background</p>
               </div>
             </div>
@@ -123,26 +108,11 @@ export default class StyleGuide extends React.Component {
             <br/>
             <button class="desktop-delete"><span>Delete</span></button>
           </content>
-        </heading>
-        <br/>
-        <br/>
-        <heading>
-          Create Content
           <br/>
           <content>
-            Create Post Button
+            Confirmation Button (Edit)
             <br/>
-            <img src={createpost}/>
-          </content>
-          <br/>
-          <content>
-            Post Content Buttons
-            <div className="post-buttons">
-              {/* cancel button */}
-              <div className="button-cancel-post">Cancel</div>
-              {/* post button */}
-              <div className="button-submit-post">Post</div>
-            </div>
+            <button className="desktop-confirm edit-button">Edit</button>
           </content>
         </heading>
         <br/>
@@ -176,22 +146,6 @@ export default class StyleGuide extends React.Component {
         </heading>
         <br/>
         <heading>
-          Tags
-          <br/>
-          <content>
-            Desktop
-            <br/>
-            <button class="desktop-tag"><span>#tag</span></button>
-          </content>
-          <br/>
-          <content>
-            Mobile
-            <br/>
-            <button class="mobile-tag"><span>#tag</span></button>
-          </content>
-        </heading>
-        <br/>
-        <heading>
           Navigation Buttons
           <br/>
           <content>
@@ -199,6 +153,9 @@ export default class StyleGuide extends React.Component {
             <br/>
             <Link className="close" style={{float: 'none'}}>&times;</Link>
           </content>
+          <br/>
+          <br/>
+          <br/>
           <br/>
         </heading>
       </div>

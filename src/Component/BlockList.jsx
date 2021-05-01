@@ -129,8 +129,7 @@ export default class Following extends React.Component {
         })
 
         const userArtifactsResults = await getUserArtifacts.json()
-
-        return userArtifactsResults[0][0].url
+        return userArtifactsResults[0].url
     }
 
     fieldChangeHandler(field, e) {
@@ -251,7 +250,6 @@ export default class Following extends React.Component {
                         <ul>
                             {this.state.blockedUsers.map(user => (
                                 <div key={user.id} className="follower-list">
-                                    <img src={user.photo} alt="profile picture"/>
                                     &nbsp;&nbsp;{user.username}&nbsp;&nbsp;
                                     <input type="button" className="unfollow-button" onClick={() => {this.unblockUser(user.id)}} value="Unblock"/>
                                 </div>
@@ -275,7 +273,7 @@ export default class Following extends React.Component {
                             </div>
                         </label>
                         <br/>
-                        <input className="follow-button" type="submit" value="Block" />
+                        <input className="desktop-confirm" type="submit" value="Block" />
                     </form>
                 </div>
             </div>
