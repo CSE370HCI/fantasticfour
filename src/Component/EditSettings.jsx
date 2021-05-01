@@ -8,25 +8,31 @@ export default class EditSettings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      get_username: "",
+      get_email: "",
       username: "",
       email: "",
-      password: "",
-      confirmpassword: ""
+      no_changes_made: false,
+      is_password_mismatch: false,
+      is_username_taken: false,
+      is_email_taken: false,
+        changes_made_success: false
     };
     this.fieldChangeHandler.bind(this);
   }
 
   fieldChangeHandler(field, e) {
-    console.log("field change");
     this.setState({
-      [field]: e.target.value
+      [field]: e.target.value,
+        no_changes_made: false,
+        is_password_mismatch: false,
+        is_username_taken: false,
+        is_email_taken: false,
+        changes_made_success: false,
     });
   }
 
   componentDidMount() {
-    console.log("In profile");
-    console.log(this.props);
-
     // first fetch the user data to allow update of username
     fetch(process.env.REACT_APP_API_PATH+"/users/"+sessionStorage.getItem("user"), {
       method: "get",
@@ -39,180 +45,178 @@ export default class EditSettings extends React.Component {
       .then(
         result => {
           if (result) {
-            console.log(result);
-
             this.setState({
-              // IMPORTANT!  You need to guard against any of these values being null.  If they are, it will
-              // try and make the form component uncontrolled, which plays havoc with react
               username: result.username || "",
               email: result.email || "",
-              password: result.password || "",
-              confirmpassword: result.confirmpassword || ""
+              get_username: result.username || "",
+              get_email: result.email || "",
             });
           }
-        },
-        error => {
-          alert("error!");
-        }
-      );
-
-    //make the api call to the user API to get the user with all of their attached preferences
-    fetch(process.env.REACT_APP_API_PATH+"/user-preferences?userID="+sessionStorage.getItem("user"), {
-      method: "get",
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer '+sessionStorage.getItem("token")
-      }
-    })
-      .then(res => res.json())
-      .then(
-        result => {
-          if (result) {
-            console.log(result);
-          }
-        },
-        error => {
-          alert("error!");
         }
       );
   }
 
-  submitHandler = event => {
-    //keep the form from actually submitting
-    event.preventDefault();
-    if (this.state.username == "" || this.state.email == "" || this.state.password == "" || this.state.confirmpassword == ""){
-            alert("One or more fields are empty.");
-            event.preventDefault();
-    }
-    if (!this.state.username == "" && (this.state.username.length < 4) || (this.state.username.length > 20)){
-            alert("Username must contain 4-20 characters.");
-            event.preventDefault();
-    }
-    if (!this.state.email == "" && this.state.email.length < 5 && (!this.state.email.includes("@") || !this.state.email.includes("."))){
-            alert("Please provide a valid email address.");
-            event.preventDefault();
-    }
-    if (this.state.password != this.state.confirmpassword){
-        alert("Passwords do not match.");
-        event.preventDefault();
-    }
-    if (!this.state.password == "" && this.state.password.length < 8){
-        alert("Password must contain at least 8 characters.");
-        event.preventDefault();
-    }
-    //make the api call to the user controller
-    fetch(process.env.REACT_APP_API_PATH+"/users/"+sessionStorage.getItem("user"), {
-      method: "PATCH",
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer '+sessionStorage.getItem("token")
-      },
-      body: JSON.stringify({
-
-        username: this.state.username,
-        email: this.state.email,
-        password: this.state.password,
+  editUsername() {
+      fetch(process.env.REACT_APP_API_PATH+ "/users?username=" + this.state.username, {
+          method: "GET",
+          headers: {
+              'Content-Type': 'application/json',
+          },
       })
-    })
-      .then(res => res.json())
-      .then(
-        result => {
-          this.setState({
-            responseMessage: result.Status
-          });
+          .then(res => res.json())
+          .then(
+              result => {
+                  if (result[1] != 0 && this.state.username != this.state.get_username) {
+                      this.setState({
+                          is_username_taken: true,
+                      });
+                  }
+                  else {
+                      fetch(process.env.REACT_APP_API_PATH+ "/users/" + sessionStorage.getItem("user"), {
+                          method: "PATCH",
+                          headers: {
+                              'Content-Type': 'application/json',
+                              'Authorization': 'Bearer '+ sessionStorage.getItem("token")
+                          },
+                          body: JSON.stringify({
+                              username: this.state.username
+                          })
+                      })
+                          .then(() => {
+                              this.setState({
+                                  changes_made_success: true,
+                                  get_username: this.state.username,
+                                  get_email: this.state.email,
+                              });
+                          })
+                  }
+              }
+          );
+  }
+
+  editEmail() {
+    fetch(process.env.REACT_APP_API_PATH+ "/users?email=" + this.state.email, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
         },
-        error => {
-          alert("error!");
-        }
-      );
-
-    let url = process.env.REACT_APP_API_PATH+"/user-preferences";
-    let method = "POST";
-
-
-    //make the api call to the user prefs controller
-    fetch(url, {
-      method: method,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer '+sessionStorage.getItem("token")
-      },
     })
-      .then(res => res.json())
-      .then(
-        result => {
-          this.setState({
-            responseMessage: result.Status
-          });
-        },
-        error => {
-          alert("error!");
-        }
-      );
+        .then(res => res.json())
+        .then(
+            result => {
+                if (result[1] != 0 && this.state.email != this.state.get_email) {
+                    this.setState({
+                        is_email_taken: true,
+                    });
+                }
+                else {
+                    fetch(process.env.REACT_APP_API_PATH+ "/users/" + sessionStorage.getItem("user"), {
+                        method: "PATCH",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer '+ sessionStorage.getItem("token")
+                        },
+                        body: JSON.stringify({
+                            email: this.state.email
+                        })
+                    })
+                        .then(() => {
+                            this.setState({
+                                changes_made_success: true,
+                                get_username: this.state.username,
+                                get_email: this.state.email,
+                            });
+                        })
+                }
+            }
+        );
+  }
 
+  submitHandler = event => {
+      event.preventDefault();
+      this.setState({
+          no_changes_made: false,
+          is_password_mismatch: false,
+          is_username_taken: false,
+          is_email_taken: false,
+          changes_made_success: false,
+      });
+      if ((this.state.username == "" && this.state.email == "") ||
+          (this.state.username == this.state.get_username && this.state.email == this.state.get_email)){
+          this.setState({
+              no_changes_made: true
+          });
+          return;
+      }
+      if(this.state.username != this.state.get_username && this.state.username.length > 0) {
+          this.editUsername()
+      }
+      if(this.state.email != this.state.get_email && this.state.email.length > 0) {
+          this.editEmail()
+      }
   };
 
-    redirect = () => {
+    toDeleteAccount = () => {
         window.location.href = "delete";
     };
 
-    onClose = () => {
-            window.location.href = "profileinfo";
-        };
+    toResetPassword = () => {
+        window.location.href = "forgot-password";
+    }
 
   render() {
-    return (
-                 <form onSubmit={this.submitHandler} style={{'font-size': '15px'}}>
-                    <br/>
-                    <label>
-                        Username
-                    </label>
-                    <input
-                      defaultValue={this.state.username}
-                      type="text"
-                      onChange={e => this.fieldChangeHandler("username", e)}
-                      value={this.state.username}
-                    />
-                    <br/><br/>
-                    <label>
-                      Email Address
-                    </label>
-                    <input
-                      defaultValue={this.state.email}
-                      type="text"
-                      onChange={e => this.fieldChangeHandler("email", e)}
-                      value={this.state.email}
-                    />
-                    <br/><br/>
-                    <label>
-                      Password
-                    </label>
-                    <input
-                      defaultValue={this.state.password}
-                      type="password"
-                      onChange={e => this.fieldChangeHandler("password", e)}
-                      value={this.state.password}
-                    />
-                    <br/><br/>
-                    <label>
-                      Confirm Password
-                    </label>
-                    <input
-                      defaultValue={this.state.password}
-                      type="password"
-                      onChange={e => this.fieldChangeHandler("confirmpassword", e)}
-                      value={this.state.confirmpassword}
-                    />
-                    <br/>
-                    <input className="desktop-confirm" type="submit" value="Confirm" />
-                    <br/>
-                     <input
-                         className="desktop-delete distancedbutton"
-                         type="button"
-                         onClick={this.redirect}
-                         value="Delete Account"
-                     />
-                  </form>
-    );
+      return(
+          <form onSubmit={this.submitHandler} style={{'font-size': '15px'}}>
+              <br/>
+              {
+                  this.state.changes_made_success ? (
+                      <p className="success-message">✔ Changes made successfully!</p>
+                  ) : ""
+              }
+              {
+                  this.state.no_changes_made ? (
+                      <p className="error-message">⚠ You did not make any changes!</p>
+                  ) : ""
+              }
+              <br/>
+              <label>Username</label>
+              <input
+                  defaultValue={this.state.username}
+                  type="text"
+                  onChange={e => this.fieldChangeHandler("username", e)}
+                  value={this.state.username}
+              />
+              {
+                  this.state.is_username_taken ? (
+                      <p className="error-message">⚠ Username already taken!</p>
+                  ) : ""
+              }
+              <br/><br/>
+              <label>Email Address</label>
+              <input
+                  defaultValue={this.state.email}
+                  type="text"
+                  onChange={e => this.fieldChangeHandler("email", e)}
+                  value={this.state.email}
+              />
+              {
+                  this.state.is_email_taken ? (
+                      <p className="error-message">⚠ Email already taken!</p>
+                  ) : ""
+              }
+              <br/>
+              <br/>
+              <a onClick={this.toResetPassword}className="text-link">Reset Password</a>
+              <br/>
+              <input className="desktop-confirm" type="submit" value="Confirm" />
+              <br/>
+              <input
+                  className="desktop-delete distancedbutton"
+                  type="button"
+                  onClick={this.toDeleteAccount}
+                  value="Delete Account"
+              />
+          </form>
+      );
   }
 }
