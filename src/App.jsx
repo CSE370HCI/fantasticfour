@@ -175,10 +175,28 @@ class App extends React.Component {
             </Route>
             <Route path="/tag/:tag_names" component={TaggedList} />
             <Route path="/popular">
-              <div className="post-template">
-                <p>Popular</p>
+            <div className="post-feed">
+                <div className="posting-block">
                 <PopularList userid={sessionStorage.getItem("user")}/>
-              </div>
+                </div>
+                <div className="right-background"/>
+                  <div className="column-view">
+                    <div className="upload-button">
+                      <Link to="/upload" className="upload-button-text">
+                        Upload a Post
+                      </Link>
+                    </div>
+                  </div>
+                  <div className="posting-block">
+                    <PostingList refresh={this.state.refreshPosts}/>
+                  </div>
+                  <div className="right-background"/>
+                    <div className="column-view">
+                      <div className="tagBlock">
+                        <TagsBlock />
+                      </div>
+                    </div>
+                  </div>
             </Route>
             <Route path="/random">
               <div className="post-template">
