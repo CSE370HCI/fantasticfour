@@ -202,7 +202,7 @@ export default class Following extends React.Component {
                                 <div key={connection.id} className="follower-list">
                                     <img src={connection["connectedUser"]["photo"]} alt={connection.connectedUser.username}/>
                                     {connection.connectedUser.username}
-                                    <input type="button" className="unfollow-button" onClick={() => {this.unfollowUser(connection.id)}} value="Unfollow"/>
+                                    <input type="button" className="desktop-delete" onClick={() => {this.unfollowUser(connection.id)}} value="Unfollow"/>
                                 </div>
                             ))}
                         </ul>
@@ -222,7 +222,7 @@ export default class Following extends React.Component {
                                 </div>
                             </label>
                             <br/>
-                            <input className="follow-button" type="submit" value="Follow" />
+                            <input className="desktop-confirm" type="submit" value="Follow" />
                             {this.state.responseMessage}
                         </form>
                     </div>
