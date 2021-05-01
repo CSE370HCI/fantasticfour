@@ -21,13 +21,17 @@ export default class CommentDisplay extends React.Component {
       userreaction: 0,
       showModal: false,
       showModalE: false,
-      comments: []
+      comments: [],
+      content: EditorState.createWithContent(stateFromMarkdown(""))
     };
     this.post = React.createRef();
 
   }
 
   componentDidMount() {
+    this.setState({
+      content: EditorState.createWithContent(stateFromMarkdown(this.props.post.content))
+    })
     this.getCommentReaction(this.props.post.id)
     this.getComments()
   }
@@ -371,21 +375,28 @@ export default class CommentDisplay extends React.Component {
     this.setState({
       showModalE: !this.state.showModalE
     });
-  };
-
+  }
+  
+  editContent = newC => {
+    this.setState({
+      content: EditorState.createWithContent(stateFromMarkdown(newC))
+    })
+    this.showModalE()
+  }
 
   displayEdit(){
     return(
       <div className={this.showHideEdit()} tabindex="0">
           <EditComment
             onAddComment={this.setCommentCount}
-            postid={this.props.postid}
+            postid={this.props.post.id}
             content={this.props.post.content}
+            editComment={this.editContent}
           />
         </div>
     );
-    
   }
+
 
   showEdit(){
     if ((this.props.userid == sessionStorage.getItem("user")) && (sessionStorage.getItem("user") != null)) {
@@ -422,7 +433,7 @@ export default class CommentDisplay extends React.Component {
                   </div>
               </div>
               <div className="comment-text" tabindex="0">
-                <Editor editorState={comment_text} readOnly="true" className="editor-comment" tabindex="0"/>
+                <Editor editorState={this.state.content} readOnly="true" className="editor-comment" tabindex="0"/>
               </div>
               {this.displayEdit()}
               <div className={this.showHideComments()}>
@@ -449,7 +460,7 @@ export default class CommentDisplay extends React.Component {
                   <Link to={"/profile/" + this.props.post.author.id} className="comment-author-text" style={{textDecoration: 'none', color: 'blue'}}>{this.props.author}</Link>
                 </div>
                 <div className="comment-text" tabindex="0">
-                  <Editor editorState={comment_text} readOnly="true" className="editor-comment" tabindex="0"/>
+                  <Editor editorState={this.state.content} readOnly="true" className="editor-comment" tabindex="0"/>
                 </div>
                 <div className="comment-list">
                 {comments.map(post => (

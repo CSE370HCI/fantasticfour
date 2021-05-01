@@ -357,7 +357,7 @@ export default class EditForm extends React.Component {
           Title
           </heading>
           <br/>
-          <input type="text" cols="70" className="upload-input" value={this.state.post_title}onChange={this.updateTitle} />
+          <input type="text" cols="70" className="upload-input" value={this.state.post_title} onChange={this.updateTitle} />
           <br/>
           Limit View to
           <div className="allowing-box">
