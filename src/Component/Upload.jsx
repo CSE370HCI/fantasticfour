@@ -271,7 +271,7 @@ export default class Upload extends React.Component {
             <input type="text" className="upload-input" onChange={this.updateRestrictedTo} placeholder="Usernames to only allow"/>
           <br/>
           <br/>
-          <input className="submit-button" type="submit" value="Post" />
+          <input className="desktop-confirm" type="submit" value="Post" />
           <br/>
           {this.state.post_message}
         </form>
