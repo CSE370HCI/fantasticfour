@@ -330,7 +330,7 @@ export default class Post extends React.Component {
               className="comment-icon"
               onClick={e => this.showModal()}
               alt="Make a Comment"
-              tabindex="0"
+              tabIndex="0"
             />
             <div className="comment-indicator-text" onClick={e => this.showModal()} >
                 Make a comment!
@@ -371,7 +371,7 @@ export default class Post extends React.Component {
   showDelete(){
     if (this.props.userid == sessionStorage.getItem("user")) {
       return(
-        <div className="comment-indicator-text" onClick={e => this.showModalE()} tabindex="0">
+        <div className="comment-indicator-text" onClick={e => this.showModalE()} tabIndex="0">
             Edit
         </div>
     );
@@ -458,18 +458,18 @@ export default class Post extends React.Component {
                   <img src={this.props.post.thumbnailURL} className="meme" alt=""/>
                 </div>
                 <div className="memeStuff">
-                  <li className="post-info" tabindex="0">
-                    <b className="meme-name">{this.state.title}</b>
+                  <li className="post-info" tabIndex="0">
+                    <b className="meme-name" alt={this.state.title+" by "+this.props.username}>{this.state.title}</b>
                     <b className="meme-by"> by </b>
-                    <Link to={"/profile/" + this.props.userid} className="meme-poster" style={{textDecoration: 'none'}}>{this.props.username}</Link>
+                    <Link to={"/profile/" + this.props.userid} className="meme-poster" style={{textDecoration: 'none'}} alt={this.props.username}>{this.props.username}</Link>
                   </li>
                   <br/>
                   <div className="postInterations">
-                    <div className={this.isUp()} onClick={event => this.like(event)} tabindex="0">
-                      <img src={upArrow} className={(this.state.userreaction === 1) ? 'arrowsLit' : 'arrows'} alt={this.state.userreaction}/>
+                    <div className={this.isUp()} onClick={event => this.like(event)} tabIndex="0">
+                      <img src={upArrow} className={(this.state.userreaction === 1) ? 'arrowsLit' : 'arrows'} alt={"like"+this.state.userreaction}/>
                     </div>
-                    <div className={this.isDown()} onClick={event => this.dislike(event)} tabindex="0">
-                      <img src={downArrow} className={(this.state.userreaction === -1) ? 'arrowsLit' : 'arrows'} alt={this.state.userreaction}/>
+                    <div className={this.isDown()} onClick={event => this.dislike(event)} tabIndex="0">
+                      <img src={downArrow} className={(this.state.userreaction === -1) ? 'arrowsLit' : 'arrows'} alt={"dislike"+this.state.userreaction}/>
                     </div>
                     <div className="comment-count-text">
                       {this.state.commentCount} Comments
@@ -479,7 +479,7 @@ export default class Post extends React.Component {
               </div>
               <div  className="comment-side">
                 {this.conditionalDisplay()}
-                <div className="comment-invite" tabindex="0">Now's your chance to make the first comment! </div>
+                <div className="comment-invite" tabIndex="0">Now's your chance to make the first comment! </div>
               </div>
             </div>
             );
@@ -492,17 +492,17 @@ export default class Post extends React.Component {
           </div>
           <div className="memeStuff">
             <li className="post-info">
-              <b className="meme-name">{this.state.title}</b>
+              <b className="meme-name"alt={this.state.title+" by "+this.props.username}>{this.state.title}</b>
               <b className="meme-by"> by </b>
-              <Link to={"/profile/" + this.props.userid} className="meme-poster" style={{textDecoration: 'none'}}>{this.props.username}</Link>
+              <Link to={"/profile/" + this.props.userid} className="meme-poster" style={{textDecoration: 'none'}} alt={this.props.username}>{this.props.username}</Link>
             </li>
             <br/>
             <div className="postInterations">
               <div className={this.isUp()} onClick={event => this.like(event)} >
-                <img src={upArrow} className={(this.state.userreaction === 1) ? 'arrowsLit' : 'arrows'} alt={this.state.userreaction}/>
+                <img src={upArrow} className={(this.state.userreaction === 1) ? 'arrowsLit' : 'arrows'} alt={"like"+this.state.userreaction}/>
               </div>
               <div className={this.isDown()} onClick={event => this.dislike(event)} >
-                <img src={downArrow} className={(this.state.userreaction === -1) ? 'arrowsLit' : 'arrows'} alt={this.state.userreaction}/>
+                <img src={downArrow} className={(this.state.userreaction === -1) ? 'arrowsLit' : 'arrows'} alt={"dislike"+this.state.userreaction}/>
               </div>
               <div className="comment-count-text">
                 {this.state.commentCount} Comments
