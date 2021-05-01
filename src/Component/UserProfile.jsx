@@ -180,9 +180,7 @@ export default class UserProfile extends React.Component {
                 Following: {this.state.following}
             </a>
             <br/>
-            <br/>
-            <br/>
-            <a >
+            <a>
                 Reputation: {this.state.reputation_count}
             </a>
             <br/>

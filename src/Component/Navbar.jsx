@@ -76,6 +76,10 @@ class Navbar extends React.Component {
       }
   }
 
+  profileRedirect = () => {
+    window.location.href = "/profile/" + sessionStorage.getItem("user");
+  };
+
   logout = () => {
     sessionStorage.removeItem("token", null);
     sessionStorage.removeItem("user", null);
@@ -140,7 +144,7 @@ class Navbar extends React.Component {
             </Link>
           </li>
           <li className="signupbar">
-            <Link to={"/profile/" + sessionStorage.getItem("user")} title="My Profile" style={{textDecoration: 'none', color: 'black'}}>
+            <Link onClick={this.profileRedirect} title="My Profile" style={{textDecoration: 'none', color: 'black'}}>
               <img src={this.state.profile_picture} alt="profile picture" className="small-profile-picture"/>
             </Link>
           </li>

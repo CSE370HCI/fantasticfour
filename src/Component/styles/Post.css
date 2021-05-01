@@ -191,10 +191,8 @@
 .comment {
   display: flex;
   flex-direction:row;
-  border-width: 1px;
-  border-style: solid;
-  border-color: black;
-  background-color: #BCBCBC;
+  margin-top: 3px;
+  background-color: #dedede;
 }
 
 .commentInterations{
