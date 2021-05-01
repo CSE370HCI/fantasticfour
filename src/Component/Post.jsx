@@ -471,9 +471,6 @@ export default class Post extends React.Component {
                     <div className={this.isDown()} onClick={event => this.dislike(event)} tabindex="0">
                       <img src={downArrow} className={(this.state.userreaction === -1) ? 'arrowsLit' : 'arrows'} alt={this.state.userreaction}/>
                     </div>
-                    <div>
-                      {this.showLikes()}
-                    </div>
                     <div className="comment-count-text">
                       {this.state.commentCount} Comments
                     </div>
@@ -506,9 +503,6 @@ export default class Post extends React.Component {
               </div>
               <div className={this.isDown()} onClick={event => this.dislike(event)} >
                 <img src={downArrow} className={(this.state.userreaction === -1) ? 'arrowsLit' : 'arrows'} alt={this.state.userreaction}/>
-              </div>
-              <div>
-                {this.showLikes()}
               </div>
               <div className="comment-count-text">
                 {this.state.commentCount} Comments
