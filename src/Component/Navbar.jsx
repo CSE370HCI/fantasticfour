@@ -105,18 +105,13 @@ class Navbar extends React.Component {
       <iconbar id="logobar" className="logobar">
         <li className="home">
           <Link to="/" >
-            <img src={logo} title="Home"/>
+            <img src={logo} title="Latest"/>
           </Link>
         </li>
       </iconbar>
       <ul id="side-menu-items">
         <li>
           <Link to="/" style={{textDecoration: 'none', color: 'black'}}>
-            Home
-          </Link>
-        </li>
-        <li>
-          <Link to="/latest" style={{textDecoration: 'none', color: 'black'}}>
             Latest
           </Link>
         </li>
@@ -162,13 +157,13 @@ class Navbar extends React.Component {
       <iconbar id="logobar" className="logobar">
         <li className="home">
           <Link to="/" >
-            <img src={logo} title="Home"/>
+            <img src={logo} title="Latest"/>
           </Link>
         </li>
       </iconbar>
       <ul id="side-menu-items">
         <li>
-          <Link to="/latest" style={{textDecoration: 'none', color: 'black'}}>
+          <Link to="/" style={{textDecoration: 'none', color: 'black'}}>
             Latest
           </Link>
         </li>
