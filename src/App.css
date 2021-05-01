@@ -610,6 +610,17 @@ heading{
     padding: 10px;
 }
 
+.success-message {
+    font-size: 0.8em;
+    margin: 0 auto;
+    text-align: center;
+    width: 75%;
+    max-width: 50vw;
+    background: #f0fff5;
+    color: rgb(0, 255, 0);
+    padding: 10px;
+}
+
 .edit-title {
     display: block;
     position: absolute;
