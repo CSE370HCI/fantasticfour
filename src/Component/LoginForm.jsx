@@ -142,6 +142,7 @@ export default class LoginForm extends React.Component {
           // if the login failed, remove any infomation from the session state
           sessionStorage.removeItem("token");
           sessionStorage.removeItem("user");
+          sessionStorage.removeItem("username");
           this.setState({
               sessiontoken: "",
               alanmessage: result.message
@@ -209,7 +210,7 @@ export default class LoginForm extends React.Component {
           // if the login failed, remove any infomation from the session state
           sessionStorage.removeItem("token");
           sessionStorage.removeItem("user");
-          sessionStorage.setItem("username");
+          sessionStorage.removeItem("username");
           this.setState({
               sessiontoken: "",
               alanmessage: result.message
@@ -229,8 +230,8 @@ export default class LoginForm extends React.Component {
           else {
             // set the auth token and user ID in the session state
             sessionStorage.setItem("token", this.state.sessiontoken);
-            sessionStorage.setItem("user", this.state.alanmessage);
-            sessionStorage.setItem("username", result.username);
+            sessionStorage.setItem("user", result[0][0].id);
+            sessionStorage.setItem("username", result[0][0].username);
             this.setState({
             sessiontoken: this.state.sessiontoken,
             alanmessage: this.state.sessiontoken

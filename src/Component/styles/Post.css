@@ -185,6 +185,7 @@
   font-size: 24px;
   max-height: 1.25em;
   overflow: hidden;
+  max-width: 50%;
 }
 
 .comment {
@@ -292,9 +293,8 @@ div.DraftEditor-root {
   display: column;
   bottom: 0px;
   right: 0px;
-  min-height: 400px;
-  max-height: 600px;
   width: 100%;
+  max-height: 600px;
   overflow-y: scroll;
 }
 
@@ -371,4 +371,12 @@ div.DraftEditor-root {
 
 .downButton:hover {
   cursor: pointer;
+}
+
+.commenting-objects{
+  flex-direction: row;
+}
+
+.guestNestC {
+  margin-left: 5%;
 }

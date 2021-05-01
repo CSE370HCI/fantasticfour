@@ -51,6 +51,8 @@ export default class CommentForm extends React.Component {
         result => {
           // update the count in the UI manually, to avoid a database hit
           result.author['username'] = sessionStorage.getItem("username")
+          console.log("result.author.username"+result.author['username'])
+          console.log("session.username"+sessionStorage.getItem("username"))
           this.props.onAddComment(this.props.commentCount + 1);
           this.props.updateComments(result)
           
