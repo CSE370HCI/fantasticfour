@@ -89,15 +89,15 @@ componentDidMount() {
   }
 
   toFollowers = () => {
-    window.location.href = "followers";
+    window.location.href = "../followers";
   };
 
   toFollowing = () => {
-    window.location.href = "following";
+    window.location.href = "../following";
   };
 
   toProfileInfo = () => {
-    window.location.href = "profileinfo";
+    window.location.href = "../profileinfo";
   };
 
     render() {
