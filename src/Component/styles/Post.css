@@ -209,12 +209,20 @@
   border-style: solid; 
 }
 
+.upButtonC:hover{
+  cursor: pointer;
+}
+
 .upButtonLitC{
   background-color: #00FF47;
   max-height: 1.5em;
   border-color: #2D86D8;
   border-width: 5%;
   border-style: solid; 
+}
+
+.upButtonLitC:hover{
+  cursor: pointer;
 }
 
 .downButtonC{
@@ -225,6 +233,10 @@
   border-style: solid; 
 }
 
+.downButtonC:hover{
+  cursor: pointer;
+}
+
 .downButtonLitC{
   background-color: #FF8B8B;
   max-height: 1.5em;
@@ -233,12 +245,20 @@
   border-style: solid; 
 }
 
+.downButtonLitC:hover{
+  cursor: pointer;
+}
+
 .greyButtonC{
   background-color: #767373;
   max-height: 1.5em;
   border-color: #767373;
   border-width: 5%;
   border-style: solid; 
+}
+
+.greyButtonC:hover{
+  cursor: pointer;
 }
 
 .arrowsLitC{
@@ -368,6 +388,10 @@ div.DraftEditor-root {
 }
 
 .downButton:hover {
+  cursor: pointer;
+}
+
+.greyButton:hover{
   cursor: pointer;
 }
 
