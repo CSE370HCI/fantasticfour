@@ -197,14 +197,9 @@ export default class StyleGuide extends React.Component {
           <content>
             Back (Desktop)
             <br/>
-            <Link className="desktop-back" style={{textDecoration: 'none'}}>&times;</Link>
+            <Link className="close" style={{float: 'none'}}>&times;</Link>
           </content>
           <br/>
-          <content>
-            Back (Mobile)
-            <br/>
-            <Link><img src={back}/></Link>
-          </content>
         </heading>
       </div>
     );

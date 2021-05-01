@@ -46,7 +46,8 @@ export default class EditComment extends React.Component {
       .then(
         result => {
           // update the count in the UI manually, to avoid a database hit
-          console.log("Sent and receive: "+result.content)
+          console.log("Sent and receive: "+JSON.stringify(result))
+          this.props.editComment(result.content)
         },
         error => {
           alert("error!");

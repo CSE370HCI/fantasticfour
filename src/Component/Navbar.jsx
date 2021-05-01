@@ -76,9 +76,14 @@ class Navbar extends React.Component {
       }
   }
 
-  profileRedirect = () => {
-    window.location.href = "/profile/" + sessionStorage.getItem("user");
-  };
+    profileRedirect = () => {
+      if (!window.location.href.includes("/profile/")) {
+          window.location.href = "profile/" + sessionStorage.getItem("user");
+      }
+      else {
+          window.location.href = "../profile/" + sessionStorage.getItem("user");
+      }
+    };
 
   logout = () => {
     sessionStorage.removeItem("token", null);

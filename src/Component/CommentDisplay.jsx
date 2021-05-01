@@ -19,14 +19,39 @@ export default class CommentDisplay extends React.Component {
       likes: 1,
       dislikes: 0,
       userreaction: 0,
+      showModal: false,
       showModalE: false,
+      comments: [],
+      content: EditorState.createWithContent(stateFromMarkdown(""))
     };
     this.post = React.createRef();
 
   }
 
   componentDidMount() {
+    this.setState({
+      content: EditorState.createWithContent(stateFromMarkdown(this.props.post.content))
+    })
     this.getCommentReaction(this.props.post.id)
+    this.getComments()
+  }
+
+  getComments(){
+    if(this.props.post.commentCount !== 0){
+      fetch(process.env.REACT_APP_API_PATH+"/posts?sort=newest&parentID="+this.props.post.id, {
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      }).then(res => res.json()
+      ).then(
+          result => {
+            this.setState({
+              comments: result[0],
+            });
+          }
+        )
+    }
   }
 
   getCommentReaction(postID){
@@ -304,28 +329,74 @@ export default class CommentDisplay extends React.Component {
     }
     return "comments hide";
   }
+  showModal = e => {
+    this.setState({
+      showModal: !this.state.showModal
+    });
+  };
+
+  setCommentCount = newcount => {
+    this.setState({
+      commentCount: newcount
+    });
+  };
+
+  addComment = newC => {
+    this.showModal()
+    const list = [newC, ...this.state.comments]
+    this.setState({
+      comments: list
+    });
+  };
+
+  editTitle = newT => {
+    this.showModalE()
+    this.setState({
+      title: newT
+    })
+
+  }
+
+  getCommentCount() {
+    if (!this.state.commentCount || this.state.commentCount === "0") {
+      return 0;
+    }
+    return parseInt(this.state.commentCount);
+  }
+
+  showHideComments() {
+    if (this.state.showModal) {
+      return "comments show";
+    }
+    return "comments hide";
+  }
 
   showModalE = e => {
     this.setState({
       showModalE: !this.state.showModalE
     });
-  };
-
+  }
+  
+  editContent = newC => {
+    this.setState({
+      content: EditorState.createWithContent(stateFromMarkdown(newC))
+    })
+    this.showModalE()
+  }
 
   displayEdit(){
-    if (this.props.userid == sessionStorage.getItem("user")) {
-      return(
-        <div className={this.showHideEdit()} tabindex="0">
-            <EditComment
-              onAddComment={this.setCommentCount}
-              postid={this.props.postid}
-              content={this.props.post.content}
-            />
-          </div>
+    return(
+      <div className={this.showHideEdit()} tabindex="0">
+          <EditComment
+            onAddComment={this.setCommentCount}
+            postid={this.props.post.id}
+            content={this.props.post.content}
+            editComment={this.editContent}
+          />
+        </div>
     );
-    }
-    return "";
   }
+
 
   showEdit(){
     if ((this.props.userid == sessionStorage.getItem("user")) && (sessionStorage.getItem("user") != null)) {
@@ -340,6 +411,7 @@ export default class CommentDisplay extends React.Component {
   render() {
     var rep = this.state.userreaction
     var postID = this.props.post.id
+    const comments = this.state.comments;
     const comment_text = EditorState.createWithContent(stateFromMarkdown(this.props.post.content))
     if (sessionStorage.getItem("user") != null){
     return (
@@ -353,27 +425,48 @@ export default class CommentDisplay extends React.Component {
               </div>
             </div>
             <div className="comment-body">
-              <div className="comment-author">
+              <div className="commenting-objects">
                 <Link to={"/profile/" + this.props.post.author.id} className="comment-author-text" style={{textDecoration: 'none', color: 'blue'}}>{this.props.author}</Link>
                 {this.showEdit()}
+                <div className="comment-indicator-text" onClick={e => this.showModal()} >
+                    Reply
+                  </div>
               </div>
               <div className="comment-text" tabindex="0">
-                <Editor editorState={comment_text} readOnly="true" className="editor-comment" tabindex="0"/>
+                <Editor editorState={this.state.content} readOnly="true" className="editor-comment" tabindex="0"/>
               </div>
               {this.displayEdit()}
+              <div className={this.showHideComments()}>
+                  <CommentForm
+                    onAddComment={this.setCommentCount}
+                    parent={this.props.post.id}
+                    commentCount={this.getCommentCount()}
+                    updateComments={this.addComment}
+                  />
+              </div>
+              <div className="comment-list">
+                {comments.map(post => (
+                <CommentDisplay post={post} author={post.author.username} userid={post.author.id}/>
+                  ))}
+              </div>
             </div>
           </div>
   );
   } else {
   return (
           <div className="comment" key={postID}>
-              <div className="comment-body">
+              <div className="comment-body guestNestC">
                 <div className="comment-author">
                   <Link to={"/profile/" + this.props.post.author.id} className="comment-author-text" style={{textDecoration: 'none', color: 'blue'}}>{this.props.author}</Link>
                 </div>
                 <div className="comment-text" tabindex="0">
-                  <Editor editorState={comment_text} readOnly="true" className="editor-comment" tabindex="0"/>
+                  <Editor editorState={this.state.content} readOnly="true" className="editor-comment" tabindex="0"/>
                 </div>
+                <div className="comment-list">
+                {comments.map(post => (
+                <CommentDisplay post={post} author={post.author.username} userid={post.author.id}/>
+                  ))}
+              </div>
               </div>
             </div>
     );
