@@ -144,7 +144,7 @@ export default class EditForm extends React.Component {
             .then(res => res.json())
             .then(result => {
               // redirects users back to the posts screen
-              window.location.href = "homepage"
+              //window.location.href = "homepage"
             })
           }
           else {
@@ -156,7 +156,7 @@ export default class EditForm extends React.Component {
       }
     }
     else {
-      window.location.href = "homepage"
+      //window.location.href = "homepage"
     }
     
     // if (!this.state.userAlreadyBlocked) {
@@ -215,6 +215,7 @@ export default class EditForm extends React.Component {
                   post_message: result.Status
                 });
                 this.props.updateTitle(this.state.post_title)
+                this.addAllowingTag()
                 // redirects users back to the posts screen
               }
           );
