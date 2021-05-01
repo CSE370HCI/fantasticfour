@@ -85,7 +85,7 @@ export default class ChangeProfilePicture extends React.Component {
           <input type="file" id="myFile" name="filename" onChange={this.updateFile} className="fileUpload" accept=".png, .jpeg, .jpg, .gif"/>
           <br/>
           <br/>
-          <input className="submit-button" type="submit" value="Confirm" />
+          <input className="desktop-confirm" type="submit" value="Confirm" />
         </form>
       </div>
     );

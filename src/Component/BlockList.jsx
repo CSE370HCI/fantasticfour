@@ -275,7 +275,7 @@ export default class Following extends React.Component {
                             </div>
                         </label>
                         <br/>
-                        <input className="follow-button" type="submit" value="Block" />
+                        <input className="desktop-confirm" type="submit" value="Block" />
                     </form>
                 </div>
             </div>
