@@ -628,8 +628,8 @@ heading{
 }
 
 .edit-title {
-    display: block;
-    position: absolute;
+    margin-left: 20%;
+    float: center;
     text-align: center;
     left: calc(50% - 25px);
 }

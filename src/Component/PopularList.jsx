@@ -201,10 +201,7 @@ export default class PostingList extends React.Component {
         
         for (let i=0; i < this.state.posts.length; i++) {
           const getPostTags = await fetch(process.env.REACT_APP_API_PATH+"/post-tags?name=upvote&type=reaction&postID="+list[i].id, {
-            method: "GET",
-            headers: {
-              'Authorization': 'Bearer '+sessionStorage.getItem("token")
-            }
+            method: "GET"
           })
 
           const postTagsResults = await getPostTags.json()
@@ -253,6 +250,7 @@ export default class PostingList extends React.Component {
 }
 
 async loadBlockedUsers() {
+  if(sessionStorage.getItem("user") != null){
   console.log("loading blocked users for user: ", sessionStorage.getItem("user"))
 
   // check if block list exists, if not, no blocked users.
@@ -283,9 +281,11 @@ async loadBlockedUsers() {
       })
   }
   console.log("group id: ", blockListID)
+  }
 }
 
 async loadMembers(id) {
+  if(sessionStorage.getItem("user") != null){
   console.log("In load members with id: ", id)
   const getGroupMembers = await fetch(process.env.REACT_APP_API_PATH+"/group-members?groupID=" + id, {
       method: "GET",
@@ -310,6 +310,7 @@ async loadMembers(id) {
       this.setState({
           blockedUsers: blockedUsers
       })
+  }
   }
 }
 

@@ -471,9 +471,6 @@ export default class Post extends React.Component {
                     <div className={this.isDown()} onClick={event => this.dislike(event)} tabIndex="0">
                       <img src={downArrow} className={(this.state.userreaction === -1) ? 'arrowsLit' : 'arrows'} alt={"dislike"+this.state.userreaction}/>
                     </div>
-                    <div className="comment-count-text">
-                      {this.state.commentCount} Comments
-                    </div>
                   </div>
                 </div>
               </div>
@@ -503,9 +500,6 @@ export default class Post extends React.Component {
               </div>
               <div className={this.isDown()} onClick={event => this.dislike(event)} >
                 <img src={downArrow} className={(this.state.userreaction === -1) ? 'arrowsLit' : 'arrows'} alt={"dislike"+this.state.userreaction}/>
-              </div>
-              <div className="comment-count-text">
-                {this.state.commentCount} Comments
               </div>
             </div>
           </div>
@@ -546,9 +540,6 @@ export default class Post extends React.Component {
                         </div>
                       </div>
                       <div  className="comment-side">
-                        <div className="comment-indicator-text">
-                            {this.state.commentCount} Comments
-                        </div>
                         <br/>
                         <div className="comment-invite">No comments yet. Sign in to speak your mind!</div>
                       </div>
@@ -571,9 +562,6 @@ export default class Post extends React.Component {
               </div>
             </div>
             <div  className="comment-side">
-            <div className="comment-indicator-text">
-                {this.state.commentCount} Comments
-            </div>
             <div className="comment-list">
               {comments.map(post => (
                 <CommentDisplay post={post} author={post.author.username}/>

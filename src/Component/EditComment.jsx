@@ -99,11 +99,9 @@ export default class EditComment extends React.Component {
       })
       .then(
         result => {
-        },
-        error => {
-          alert("error!"+error);
         }
       );
+      window.location.reload();
   }
 
   render() {
@@ -130,7 +128,7 @@ export default class EditComment extends React.Component {
           <div className="commentBox">
             <Editor editorState={this.state.editorState} onChange={this.onChange} customStyleMap={styleMap} textAlignment='left' className="commentBox"/>
           </div>
-          <input type="submit" value="submit" />
+          <input className="desktop-confirm" type="submit" value="Submit" />
           <br />
           {this.state.postmessage}
         </form>

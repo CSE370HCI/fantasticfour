@@ -213,6 +213,11 @@ export default class TagsBlock extends React.Component {
       }
 
     render() {
+        if(sessionStorage.getItem("user") == null){
+            return(<div>
+            <p className="tag-header">Login to access more features!</p>
+            </div>);
+        } else {
         const tagList = this.state.list;
         var elementList = [];
         for (var i = 0; i<tagList.length;i++){
@@ -232,6 +237,6 @@ export default class TagsBlock extends React.Component {
                 {this.addTagsButton()}
             </div>
         );
-        
+        }
     }
 }

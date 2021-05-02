@@ -191,8 +191,8 @@
 .comment {
   display: flex;
   flex-direction:row;
-  margin-top: 3px;
-  background-color: #dedede;
+  background: #dedede;
+  border-top: 3px solid #EEEEEE;
 }
 
 .commentInterations{
@@ -301,10 +301,7 @@ div.DraftEditor-root {
 .comments.show{
   width: calc(100% - 2px);
   color:black;
-  border-width: 1px;
-  border-style: solid;
-  border-color: black;
-  background-color: #BCBCBC;
+  background-color: #dedede;
 }
 
 .comment-list {
@@ -401,4 +398,8 @@ div.DraftEditor-root {
 
 .guestNestC {
   margin-left: 5%;
+}
+
+.reply {
+  margin-left: 4%;
 }
