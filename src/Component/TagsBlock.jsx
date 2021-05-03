@@ -44,6 +44,7 @@ export default class TagsBlock extends React.Component {
         for(var i=0;i<count;i++){
             taglist.push(list[i].name);
         }
+        taglist = [...new Set(taglist)];
         this.setState({
             list: taglist
         })
@@ -203,7 +204,6 @@ export default class TagsBlock extends React.Component {
         var checkboxes = document.getElementsByName("hashtag"); 
         var query=""
         for(var i = 0; i < checkboxes.length; i++){  
-            console.log("Checked?"+checkboxes[i].checked)
             if(checkboxes[i].checked)  {
                 query = query.concat(checkboxes[i].value).concat("&")
             }

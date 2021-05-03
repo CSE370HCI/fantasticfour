@@ -20,21 +20,28 @@ export default class TaggedList extends React.Component {
 
   componentDidMount() {
     var tagsList = (this.props.match.params.tag_names).split("&")
+    tagsList = [...new Set(tagsList)]
     this.setState({
       tagsList: tagsList
     })
     for (const [key, tag] of Object.entries(tagsList)){
       this.loadPosts(tag);
     }
+    this.setState({
+      isLoaded: true,
+      posts: [...new Set(this.state.posts)]
+    });
   }
 
   componentDidUpdate(prevProps) {
-    console.log("PrevProps "+prevProps.refresh);
-    console.log("Props "+this.props.refresh);
     if (prevProps.refresh !== this.props.refresh){
       for (const [key, tag] of Object.entries(this.state.tagsList)){
         this.loadPosts(tag);
       }
+      this.setState({
+        isLoaded: true,
+        posts: [...new Set(this.state.posts)]
+      });
     }
   }
 
@@ -61,8 +68,7 @@ export default class TaggedList extends React.Component {
               }
             }
             this.setState({
-              isLoaded: true,
-              posts: filtered.concat(this.state.posts)
+              posts: [...new Set(filtered.concat(this.state.posts))]
             });
           }
         },
