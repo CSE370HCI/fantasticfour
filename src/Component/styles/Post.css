@@ -29,6 +29,19 @@
   transition-duration: 0.4s;
 }
 
+.comment-count-text{
+  color: black;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  float:right;
+  margin-right:15px;
+  text-align: center;
+  user-select: none;
+  vertical-align: center;
+  transition-duration: 0.4s;
+}
+
 .comment-indicator-text:hover{
   color: #2D86D8;
 }
@@ -313,6 +326,13 @@ div.DraftEditor-root {
   overflow-y: scroll;
 }
 
+.comment-list-nested {
+  display: column;
+  bottom: 0px;
+  right: 0px;
+  width: 100%;
+}
+
 .greyButton {
   position: relative;
   display: block;
@@ -401,5 +421,5 @@ div.DraftEditor-root {
 }
 
 .reply {
-  margin-left: 4%;
+  margin-left:4%;
 }

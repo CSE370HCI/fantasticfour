@@ -38,3 +38,8 @@
 .edit-button:hover {
   background: #26b023;
 }
+
+.postInterations {
+  float:top;
+  margin-top: 1%;
+}

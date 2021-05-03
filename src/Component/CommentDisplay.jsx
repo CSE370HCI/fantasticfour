@@ -432,12 +432,12 @@ export default class CommentDisplay extends React.Component {
             </div>
           </div>
           <div className="comment-body">
+            {this.showEdit()}
+            <div className="comment-indicator-text" onClick={e => this.showModal()} >
+                Reply
+            </div>
             <div className="commenting-objects">
               <Link onClick={this.viewUser} className="comment-author-text" style={{textDecoration: 'none', color: 'blue'}}>{this.props.author}</Link>
-              {this.showEdit()}
-              <div className="comment-indicator-text" onClick={e => this.showModal()} >
-                  Reply
-                </div>
             </div>
             <div className="comment-text" tabindex="0">
               <Editor editorState={this.state.content} readOnly="true" className="editor-comment" tabindex="0"/>
@@ -453,7 +453,7 @@ export default class CommentDisplay extends React.Component {
             </div>
           </div>
         </div>
-        <div className="comment-list">
+        <div className="comment-list-nested">
           <div className="reply">
             {comments.map(post => (
             <CommentDisplay post={post} author={post.author.username} userid={post.author.id} commentCount={this.props.commentCount} onAddComment={this.props.onAddComment}/>
@@ -475,7 +475,7 @@ export default class CommentDisplay extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="comment-list">
+            <div className="comment-list-nested">
                                                 <div className="reply">
                                                   {comments.map(post => (
                                                   <CommentDisplay post={post} author={post.author.username} userid={post.author.id} commentCount={this.props.commentCount} onAddComment={this.props.onAddComment}/>

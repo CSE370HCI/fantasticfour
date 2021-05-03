@@ -505,7 +505,7 @@ export default class Post extends React.Component {
                 <img src={downArrow} className={(this.state.userreaction === -1) ? 'arrowsLit' : 'arrows'} alt={"dislike"+this.state.userreaction}/>
               </div>
             </div>
-            <div className="comment-indicator-text">
+            <div className="comment-count-text">
                 {this.state.commentCount} Comments
             </div>
           </div>
@@ -568,14 +568,14 @@ export default class Post extends React.Component {
                   <Link to={"/profile/" + this.props.post.author.id} className="meme-poster" style={{textDecoration: 'none'}}>{this.props.username}</Link>
                 </li>
                 <br/>
-                <div className="comment-indicator-text">
+                <div className="comment-count-text">
                 {this.state.commentCount} Comments
             </div>
               </div>
               
             </div>
             <div  className="comment-side">
-              <div className="comment-indicator-text">
+              <div className="comment-count-text">
                   {this.state.commentCount} Comments
               </div>
               <div className="comment-list">
