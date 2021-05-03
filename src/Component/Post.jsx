@@ -471,6 +471,9 @@ export default class Post extends React.Component {
                     <div className={this.isDown()} onClick={event => this.dislike(event)} tabIndex="0">
                       <img src={downArrow} className={(this.state.userreaction === -1) ? 'arrowsLit' : 'arrows'} alt={"dislike"+this.state.userreaction}/>
                     </div>
+                    <div className="comment-indicator-text">
+                      {this.state.commentCount} Comments
+                    </div>
                   </div>
                 </div>
               </div>
@@ -502,10 +505,12 @@ export default class Post extends React.Component {
                 <img src={downArrow} className={(this.state.userreaction === -1) ? 'arrowsLit' : 'arrows'} alt={"dislike"+this.state.userreaction}/>
               </div>
             </div>
+            <div className="comment-indicator-text">
+                {this.state.commentCount} Comments
+            </div>
           </div>
         </div>
         <div  className="comment-side">
-
           <div className="comment-list">
             {this.conditionalDisplay()}
             {comments.map(post => {
@@ -513,7 +518,7 @@ export default class Post extends React.Component {
                 return
               }
               return (
-                <CommentDisplay key={post.id} post={post} author={post.author.username} userid={post.author.id} postid={post.id}/>
+                <CommentDisplay key={post.id} post={post} author={post.author.username} userid={post.author.id} postid={post.id} commentCount={this.getCommentCount()} onAddComment={this.setCommentCount}/>
               )
             }
             )}
@@ -538,8 +543,12 @@ export default class Post extends React.Component {
                           </li>
                           <br/>
                         </div>
+                        <div className="comment-indicator-text">
+                {this.state.commentCount} Comments
+            </div>
                       </div>
                       <div  className="comment-side">
+                      
                         <br/>
                         <div className="comment-invite">No comments yet. Sign in to speak your mind!</div>
                       </div>
@@ -559,16 +568,23 @@ export default class Post extends React.Component {
                   <Link to={"/profile/" + this.props.post.author.id} className="meme-poster" style={{textDecoration: 'none'}}>{this.props.username}</Link>
                 </li>
                 <br/>
+                <div className="comment-indicator-text">
+                {this.state.commentCount} Comments
+            </div>
               </div>
+              
             </div>
             <div  className="comment-side">
-            <div className="comment-list">
-              {comments.map(post => (
-                <CommentDisplay post={post} author={post.author.username}/>
-                    ))}
+              <div className="comment-indicator-text">
+                  {this.state.commentCount} Comments
+              </div>
+              <div className="comment-list">
+                {comments.map(post => (
+                  <CommentDisplay post={post} author={post.author.username} commentCount={this.getCommentCount()} onAddComment={this.setCommentCount}/>
+                      ))}
+              </div>
             </div>
           </div>
-        </div>
         )}
         }
       }
