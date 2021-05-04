@@ -114,11 +114,6 @@ export default class TaggedList extends React.Component {
           </div>
           <div className="right-background"/>
           <div className="column-view">
-            <div className="upload-button">
-              <Link to="/upload" className="upload-button-text">
-                Upload a Post
-              </Link>
-          </div>
           <div className="tagBlock">
             <TagsBlock />
           </div>
