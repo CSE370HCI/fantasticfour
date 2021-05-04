@@ -34,6 +34,7 @@ class Navbar extends React.Component {
   }
 
   getProfilePicture = () => {
+    if(sessionStorage.getItem("user") != null){
         fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?ownerID=" + sessionStorage.getItem("user") + "&category=profile_picture", {
             method: "GET",
             headers: {
@@ -64,6 +65,7 @@ class Navbar extends React.Component {
                     }
                 }
             );
+    }
   }
 
   reloadHandler = () => {
@@ -77,11 +79,11 @@ class Navbar extends React.Component {
   }
 
     profileRedirect = () => {
-      if (!window.location.href.includes("/profile/")) {
-          window.location.href = "profile/" + sessionStorage.getItem("user");
+      if (window.location.href.includes("/profile/") || window.location.href.includes("/tag/")) {
+          window.location.href = "../profile/" + sessionStorage.getItem("user");
       }
       else {
-          window.location.href = "../profile/" + sessionStorage.getItem("user");
+          window.location.href = "profile/" + sessionStorage.getItem("user");
       }
     };
 
@@ -92,7 +94,7 @@ class Navbar extends React.Component {
       profile_picture: "",
       logged_in: false
     };
-      window.location.href = "/login";
+      window.location.href = "../login";
   }
 
   render() {

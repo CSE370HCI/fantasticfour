@@ -44,6 +44,7 @@ export default class TagsBlock extends React.Component {
         for(var i=0;i<count;i++){
             taglist.push(list[i].name);
         }
+        taglist = [...new Set(taglist)];
         this.setState({
             list: taglist
         })
@@ -142,7 +143,7 @@ export default class TagsBlock extends React.Component {
                           'Authorization': 'Bearer '+sessionStorage.getItem("token")
                         },
                         body: JSON.stringify({
-                            postID: 4,
+                            postID: 278,
                             userID: sessionStorage.getItem("user"),
                             name: tag,
                             type: "hashtag"
@@ -203,7 +204,6 @@ export default class TagsBlock extends React.Component {
         var checkboxes = document.getElementsByName("hashtag"); 
         var query=""
         for(var i = 0; i < checkboxes.length; i++){  
-            console.log("Checked?"+checkboxes[i].checked)
             if(checkboxes[i].checked)  {
                 query = query.concat(checkboxes[i].value).concat("&")
             }
@@ -213,6 +213,11 @@ export default class TagsBlock extends React.Component {
       }
 
     render() {
+        if(sessionStorage.getItem("user") == null){
+            return(<div>
+            <p className="tag-header">Login to access more features!</p>
+            </div>);
+        } else {
         const tagList = this.state.list;
         var elementList = [];
         for (var i = 0; i<tagList.length;i++){
@@ -221,7 +226,6 @@ export default class TagsBlock extends React.Component {
                 <label className="tag"><input type="checkbox" name="hashtag" id={tagList[i]} value={tagList[i]} alt={"checkbox for #"+ tagList[i]} className="checkbox"/> <a href={link} key={i} className="tag"> #{tagList[i]}</a> </label>
             )
         }
-
         return(
             <div > 
                 <p className="tag-header">Tags</p>
@@ -232,6 +236,6 @@ export default class TagsBlock extends React.Component {
                 {this.addTagsButton()}
             </div>
         );
-        
+        }
     }
 }

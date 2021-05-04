@@ -20,21 +20,28 @@ export default class TaggedList extends React.Component {
 
   componentDidMount() {
     var tagsList = (this.props.match.params.tag_names).split("&")
+    tagsList = [...new Set(tagsList)]
     this.setState({
       tagsList: tagsList
     })
     for (const [key, tag] of Object.entries(tagsList)){
       this.loadPosts(tag);
     }
+    this.setState({
+      isLoaded: true,
+      posts: [...new Set(this.state.posts)]
+    });
   }
 
   componentDidUpdate(prevProps) {
-    console.log("PrevProps "+prevProps.refresh);
-    console.log("Props "+this.props.refresh);
     if (prevProps.refresh !== this.props.refresh){
       for (const [key, tag] of Object.entries(this.state.tagsList)){
         this.loadPosts(tag);
       }
+      this.setState({
+        isLoaded: true,
+        posts: [...new Set(this.state.posts)]
+      });
     }
   }
 
@@ -56,13 +63,14 @@ export default class TaggedList extends React.Component {
           if (result) {
             var filtered = []
             for (const [key, post] of Object.entries(result[0])){
-              if ((post.post.id !== 4 && post.name !== "helloworld") || !(post.post.id === 4 && post.user.id !==sessionStorage.getItem("user"))){
-                filtered.push(post)
+              if ((post.post.id !== 278 && post.name !== "admin") || !(post.post.id === 278 && post.user.id !==sessionStorage.getItem("user"))){
+                if(this.existNot(post.post.id)){
+                  filtered.push(post)
+                }
               }
             }
             this.setState({
-              isLoaded: true,
-              posts: filtered.concat(this.state.posts)
+              posts: [...new Set(filtered.concat(this.state.posts))]
             });
           }
         },
@@ -74,6 +82,15 @@ export default class TaggedList extends React.Component {
           console.log("ERROR loading Posts")
         }
       );
+  }
+
+  existNot(postid){
+    for (const [key, post] of Object.entries(this.state.posts)){
+      if (post.post.id === postid){
+        return false
+      }
+    }
+    return true
   }
 
   render() {

@@ -197,7 +197,6 @@ export default class PostingList extends React.Component {
   }
 
   render() {
-    
     //this.loadPosts();
     const {error, isLoaded, posts} = this.state;
     if (error) {
@@ -210,13 +209,10 @@ export default class PostingList extends React.Component {
       return (
 
         <div className="posts">
-
-          {posts.map(post => (
-            <Post key={post.id} post={post} type={this.props.type} loadPosts={this.loadPosts} username={post.author.username} userid={post.author.id} blockedUsers={this.state.blockedUsers}/>
+          {posts.map((post, index) => (
+            <Post key={index} post={post} type={this.props.type} loadPosts={this.loadPosts} username={post.author.username} userid={post.author.id} blockedUsers={this.state.blockedUsers}/>
           ))}
-
         </div>
-
       );
       } else {
           return (<div> No Posts Found </div>);

@@ -32,6 +32,7 @@ export default class Post extends React.Component {
   }
 
   componentDidMount() {
+
     this.setState({
       title: this.props.post.content
     })
@@ -291,7 +292,9 @@ export default class Post extends React.Component {
     });
   };
 
-  deletePost(postID) {
+  deletePost = e => {
+  console.log("Post Delete")
+  const postID = this.props.post.id
   if(sessionStorage.getItem("user") != null){
     //make the api call to post
     fetch(process.env.REACT_APP_API_PATH+"/posts/"+postID, {
@@ -303,7 +306,8 @@ export default class Post extends React.Component {
       })
       .then(
         result => {
-          this.props.loadPosts();
+          console.log("postindex: "+this.props.index)
+          this.props.onDelete(this.props.index)
         },
         error => {
           alert("error!"+error);
@@ -343,6 +347,7 @@ export default class Post extends React.Component {
               commentCount={this.getCommentCount()}
               post={this.props.post}
               updateTitle={this.editTitle}
+              onDelete={this.deletePost}
             />
           </div>
           <div className={this.showHideComments()}>
@@ -447,6 +452,11 @@ export default class Post extends React.Component {
     }
   }
 
+  renderComments(){
+
+
+  }
+
   render() {
     const comments = this.state.comments;
     if(sessionStorage.getItem("user") != null){
@@ -458,24 +468,24 @@ export default class Post extends React.Component {
                   <img src={this.props.post.thumbnailURL} className="meme" alt=""/>
                 </div>
                 <div className="memeStuff">
-                  <li className="post-info" tabIndex="0">
-                    <b className="meme-name" alt={this.state.title+" by "+this.props.username}>{this.state.title}</b>
-                    <b className="meme-by"> by </b>
-                    <Link to={"/profile/" + this.props.userid} className="meme-poster" style={{textDecoration: 'none'}} alt={this.props.username}>{this.props.username}</Link>
-                  </li>
-                  <br/>
-                  <div className="postInterations">
-                    <div className={this.isUp()} onClick={event => this.like(event)} tabIndex="0">
-                      <img src={upArrow} className={(this.state.userreaction === 1) ? 'arrowsLit' : 'arrows'} alt={"like"+this.state.userreaction}/>
-                    </div>
-                    <div className={this.isDown()} onClick={event => this.dislike(event)} tabIndex="0">
-                      <img src={downArrow} className={(this.state.userreaction === -1) ? 'arrowsLit' : 'arrows'} alt={"dislike"+this.state.userreaction}/>
-                    </div>
-                    <div className="comment-count-text">
-                      {this.state.commentCount} Comments
-                    </div>
-                  </div>
-                </div>
+            <li className="post-info">
+              <b className="meme-name"alt={this.state.title+" by "+this.props.username}>{this.state.title}</b>
+              <b className="meme-by"> by </b>
+              <Link to={"/profile/" + this.props.userid} className="meme-poster" style={{textDecoration: 'none'}} alt={this.props.username}>{this.props.username}</Link>
+            </li>
+            <br/>
+            <div className="postInterations">
+              <div className={this.isUp()} onClick={event => this.like(event)} >
+                <img src={upArrow} className={(this.state.userreaction === 1) ? 'arrowsLit' : 'arrows'} alt={"like"+this.state.userreaction}/>
+              </div>
+              <div className={this.isDown()} onClick={event => this.dislike(event)} >
+                <img src={downArrow} className={(this.state.userreaction === -1) ? 'arrowsLit' : 'arrows'} alt={"dislike"+this.state.userreaction}/>
+              </div>
+              <div className="comment-count-text">
+                {this.state.commentCount} Comments
+              </div>
+            </div>
+          </div>
               </div>
               <div  className="comment-side">
                 {this.conditionalDisplay()}
@@ -511,15 +521,14 @@ export default class Post extends React.Component {
           </div>
         </div>
         <div  className="comment-side">
-
           <div className="comment-list">
             {this.conditionalDisplay()}
-            {comments.map(post => {
+            {comments.map((post, index) => {
               if(this.props.blockedUsers && this.props.blockedUsers.includes(post.author.id)) {
                 return
               }
               return (
-                <CommentDisplay key={post.id} post={post} author={post.author.username} userid={post.author.id} postid={post.id}/>
+                <CommentDisplay index={index} onDelete={this.deletePost} key={post.id} post={post} author={post.author.username} userid={post.author.id} postid={post.id} commentCount={this.getCommentCount()} onAddComment={this.setCommentCount}/>
               )
             }
             )}
@@ -544,11 +553,12 @@ export default class Post extends React.Component {
                           </li>
                           <br/>
                         </div>
-                      </div>
-                      <div  className="comment-side">
                         <div className="comment-indicator-text">
                             {this.state.commentCount} Comments
                         </div>
+                      </div>
+                      <div  className="comment-side">
+                      
                         <br/>
                         <div className="comment-invite">No comments yet. Sign in to speak your mind!</div>
                       </div>
@@ -569,18 +579,18 @@ export default class Post extends React.Component {
                 </li>
                 <br/>
               </div>
+              <div className="comment-count-text">
+                {this.state.commentCount} Comments
+              </div>
             </div>
             <div  className="comment-side">
-            <div className="comment-indicator-text">
-                {this.state.commentCount} Comments
-            </div>
-            <div className="comment-list">
-              {comments.map(post => (
-                <CommentDisplay post={post} author={post.author.username}/>
-                    ))}
+              <div className="comment-list">
+                {comments.map((post, index) => (
+                  <CommentDisplay index={index} onDelete={this.deletePost} post={post} author={post.author.username} commentCount={this.getCommentCount()} onAddComment={this.setCommentCount}/>
+                      ))}
+              </div>
             </div>
           </div>
-        </div>
         )}
         }
       }

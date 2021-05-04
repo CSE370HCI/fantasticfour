@@ -258,17 +258,17 @@ export default class Upload extends React.Component {
                 ) : ""
             }
             <br/>
-            <input type="file" id="myFile" name="filename" onChange={this.updateFile} className="fileUpload" accept=".png, .jpeg, .jpg, .gif"/>
+            <input type="file" id="myFile" name="filename" onChange={this.updateFile} className="fileUpload" accept=".jpeg, .jpg, .gif"/>
             <br/>
             <br/>
-            Communities
+            Tags
             <br/>
             <input type="text" cols="70" className="upload-input" onChange={this.updateTag} />
             <br/>
             <br/>
             Limit View
             <br/>
-            <input type="text" className="upload-input" onChange={this.updateRestrictedTo} placeholder="Usernames to only allow"/>
+            <input type="text" className="upload-input" onChange={this.updateRestrictedTo} placeholder="Only show post to these people"/>
           <br/>
           <br/>
           <input className="desktop-confirm" type="submit" value="Post" />

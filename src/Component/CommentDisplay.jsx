@@ -49,7 +49,9 @@ export default class CommentDisplay extends React.Component {
             this.setState({
               comments: result[0],
             });
+            this.props.onAddComment(this.props.commentCount + result[1]);
           }
+
         )
     }
   }
@@ -408,6 +410,10 @@ export default class CommentDisplay extends React.Component {
       };
   }
 
+  viewUser = () =>{
+    window.location.href = "../profile/" + this.props.post.author.id;
+  }
+
   render() {
     var rep = this.state.userreaction
     var postID = this.props.post.id
@@ -415,60 +421,68 @@ export default class CommentDisplay extends React.Component {
     const comment_text = EditorState.createWithContent(stateFromMarkdown(this.props.post.content))
     if (sessionStorage.getItem("user") != null){
     return (
+      <div>
         <div className="comment" key={postID}>
-            <div className="commentInterations">
-              <div className={this.commentUp(rep)} onClick={event => this.likeComment(postID)} tabindex="0" >
-                <img src={upArrow} className={(rep === 1) ? 'arrowsLitC' : 'arrowsC'} alt={rep}/>
-              </div>
-              <div className={this.commentDown(rep)} onClick={event => this.dislikeComment(postID)} tabindex="0">
-                <img src={downArrow} className={(rep === -1) ? 'arrowsLitC' : 'arrowsC'} alt={rep}/>
-              </div>
+          <div className="commentInterations">
+            <div className={this.commentUp(rep)} onClick={event => this.likeComment(postID)} tabindex="0" >
+              <img src={upArrow} className={(rep === 1) ? 'arrowsLitC' : 'arrowsC'} alt={rep}/>
             </div>
-            <div className="comment-body">
-              <div className="commenting-objects">
-                <Link to={"/profile/" + this.props.post.author.id} className="comment-author-text" style={{textDecoration: 'none', color: 'blue'}}>{this.props.author}</Link>
-                {this.showEdit()}
-                <div className="comment-indicator-text" onClick={e => this.showModal()} >
-                    Reply
-                  </div>
-              </div>
-              <div className="comment-text" tabindex="0">
-                <Editor editorState={this.state.content} readOnly="true" className="editor-comment" tabindex="0"/>
-              </div>
-              {this.displayEdit()}
-              <div className={this.showHideComments()}>
-                  <CommentForm
-                    onAddComment={this.setCommentCount}
-                    parent={this.props.post.id}
-                    commentCount={this.getCommentCount()}
-                    updateComments={this.addComment}
-                  />
-              </div>
-              <div className="comment-list">
-                {comments.map(post => (
-                <CommentDisplay post={post} author={post.author.username} userid={post.author.id}/>
-                  ))}
-              </div>
+            <div className={this.commentDown(rep)} onClick={event => this.dislikeComment(postID)} tabindex="0">
+              <img src={downArrow} className={(rep === -1) ? 'arrowsLitC' : 'arrowsC'} alt={rep}/>
             </div>
           </div>
+          <div className="comment-body">
+            {this.showEdit()}
+            <div className="comment-indicator-text" onClick={e => this.showModal()} >
+                Reply
+            </div>
+            <div className="commenting-objects">
+              <Link onClick={this.viewUser} className="comment-author-text" style={{textDecoration: 'none', color: 'blue'}}>{this.props.author}</Link>
+            </div>
+            <div className="comment-text" tabindex="0">
+              <Editor editorState={this.state.content} readOnly="true" className="editor-comment" tabindex="0"/>
+            </div>
+            {this.displayEdit()}
+            <div className={this.showHideComments()}>
+                <CommentForm
+                  onAddComment={this.setCommentCount}
+                  parent={this.props.post.id}
+                  commentCount={this.getCommentCount()}
+                  updateComments={this.addComment}
+                />
+            </div>
+          </div>
+        </div>
+        <div className="comment-list-nested">
+          <div className="reply">
+            {comments.map(post => (
+            <CommentDisplay post={post} author={post.author.username} userid={post.author.id} commentCount={this.props.commentCount} onAddComment={this.props.onAddComment}/>
+              ))}
+          </div>
+        </div>
+      </div>
   );
   } else {
   return (
+  <div>
           <div className="comment" key={postID}>
               <div className="comment-body guestNestC">
                 <div className="comment-author">
-                  <Link to={"/profile/" + this.props.post.author.id} className="comment-author-text" style={{textDecoration: 'none', color: 'blue'}}>{this.props.author}</Link>
+                  <Link onClick={this.viewUser} className="comment-author-text" style={{textDecoration: 'none', color: 'blue'}}>{this.props.author}</Link>
                 </div>
                 <div className="comment-text" tabindex="0">
                   <Editor editorState={this.state.content} readOnly="true" className="editor-comment" tabindex="0"/>
                 </div>
-                <div className="comment-list">
-                {comments.map(post => (
-                <CommentDisplay post={post} author={post.author.username} userid={post.author.id}/>
-                  ))}
-              </div>
               </div>
             </div>
+            <div className="comment-list-nested">
+                                                <div className="reply">
+                                                  {comments.map(post => (
+                                                  <CommentDisplay post={post} author={post.author.username} userid={post.author.id} commentCount={this.props.commentCount} onAddComment={this.props.onAddComment}/>
+                                                    ))}
+                                                </div>
+                                                </div>
+                                                </div>
     );
   }
     }

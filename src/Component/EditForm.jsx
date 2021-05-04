@@ -382,7 +382,7 @@ export default class EditForm extends React.Component {
             <p className="error-message">⚠ Username does not exist</p>
           }
           <br/>
-          <input className="submit-button" type="submit" value="submit" />
+          <input className="desktop-confirm" type="submit" value="Submit" />
           <br/>
           {this.state.post_message}
         </form>
