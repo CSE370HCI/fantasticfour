@@ -411,7 +411,7 @@ export default class CommentDisplay extends React.Component {
   }
 
   viewUser = () =>{
-    window.location.href = "../profile/" + this.props.post.author.id;
+    window.location.href = "/profile/" + this.props.post.author.id;
   }
 
   render() {
