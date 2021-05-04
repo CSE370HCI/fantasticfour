@@ -64,7 +64,9 @@ export default class TaggedList extends React.Component {
             var filtered = []
             for (const [key, post] of Object.entries(result[0])){
               if ((post.post.id !== 4 && post.name !== "helloworld") || !(post.post.id === 4 && post.user.id !==sessionStorage.getItem("user"))){
-                filtered.push(post)
+                if(this.existNot(post.post.id)){
+                  filtered.push(post)
+                }
               }
             }
             this.setState({
@@ -80,6 +82,15 @@ export default class TaggedList extends React.Component {
           console.log("ERROR loading Posts")
         }
       );
+  }
+
+  existNot(postid){
+    for (const [key, post] of Object.entries(this.state.posts)){
+      if (post.post.id === postid){
+        return false
+      }
+    }
+    return true
   }
 
   render() {
