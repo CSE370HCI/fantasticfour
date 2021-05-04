@@ -143,7 +143,7 @@ export default class TagsBlock extends React.Component {
                           'Authorization': 'Bearer '+sessionStorage.getItem("token")
                         },
                         body: JSON.stringify({
-                            postID: 4,
+                            postID: 278,
                             userID: sessionStorage.getItem("user"),
                             name: tag,
                             type: "hashtag"
@@ -226,7 +226,6 @@ export default class TagsBlock extends React.Component {
                 <label className="tag"><input type="checkbox" name="hashtag" id={tagList[i]} value={tagList[i]} alt={"checkbox for #"+ tagList[i]} className="checkbox"/> <a href={link} key={i} className="tag"> #{tagList[i]}</a> </label>
             )
         }
-
         return(
             <div > 
                 <p className="tag-header">Tags</p>

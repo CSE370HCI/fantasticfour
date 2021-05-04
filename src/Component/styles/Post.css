@@ -59,6 +59,7 @@
   text-align: center;
   user-select: none;
   vertical-align: center;
+  float:right;
 }
 
 .comment-icon{

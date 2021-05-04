@@ -120,7 +120,6 @@ export default class LoginForm extends React.Component {
           // set the auth token and user ID in the session state
           sessionStorage.setItem("token", result.token);
           sessionStorage.setItem("user", result.userID);
-          sessionStorage.setItem("username", result.username);
           this.setState({
               sessiontoken: result.token,
               alanmessage: result.token
@@ -172,6 +171,7 @@ export default class LoginForm extends React.Component {
       .then(res => {
         if (res.status === 201) {
           console.log("profile picture uploaded")
+          sessionStorage.setItem("username", res.username);
           this.toHome()
         }
       })

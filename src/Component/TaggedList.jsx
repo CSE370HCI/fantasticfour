@@ -63,7 +63,7 @@ export default class TaggedList extends React.Component {
           if (result) {
             var filtered = []
             for (const [key, post] of Object.entries(result[0])){
-              if ((post.post.id !== 4 && post.name !== "helloworld") || !(post.post.id === 4 && post.user.id !==sessionStorage.getItem("user"))){
+              if ((post.post.id !== 278 && post.name !== "admin") || !(post.post.id === 278 && post.user.id !==sessionStorage.getItem("user"))){
                 if(this.existNot(post.post.id)){
                   filtered.push(post)
                 }
