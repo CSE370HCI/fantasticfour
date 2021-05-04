@@ -94,7 +94,7 @@ class Navbar extends React.Component {
       profile_picture: "",
       logged_in: false
     };
-      window.location.href = "../login";
+      window.location.href = "/hci/fantasticfour/login";
   }
 
   render() {
