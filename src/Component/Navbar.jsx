@@ -68,6 +68,16 @@ class Navbar extends React.Component {
     }
   }
 
+  reloadHandler = () => {
+      console.log(window.location.href)
+      if (window.location.href.includes('/random')) {
+          window.location.reload();
+      }
+      else {
+          window.location.href = "/hci/fantasticfour/random";
+      }
+  }
+
     profileRedirect = () => {
       if (window.location.href.includes("/profile/") || window.location.href.includes("/tag/")) {
           window.location.href = "../profile/" + sessionStorage.getItem("user");
@@ -113,7 +123,7 @@ class Navbar extends React.Component {
           </Link>
         </li>
           <li className="random">
-          <Link to="/random" style={{textDecoration: 'none', color: 'black'}}>
+          <Link to="/random" onClick={this.reloadHandler} style={{textDecoration: 'none', color: 'black'}}>
               Random
           </Link>
             </li>
